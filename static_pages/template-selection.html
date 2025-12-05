@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انتخاب قالب - X-Link</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="template-selection-body">
+    <div class="hero-background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">X-Link</span>
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home" class="nav-link">خانه</a></li>
+                <li><a href="index.html#features" class="nav-link">ویژگی‌ها</a></li>
+                <li><a href="template-selection.html" class="nav-link nav-btn-primary">انتخاب قالب</a></li>
+                <li><a href="create.html" class="nav-link">ساخت کارت</a></li>
+                <li><a href="auth.html" class="nav-link">ورود</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="template-selection">
+        <div class="template-selection-header" data-aos="fade-up">
+            <p class="selector-badge">مرحله ۱ · انتخاب قالب</p>
+            <h1>قالب کارت دیجیتال خود را انتخاب کنید</h1>
+            <p>قبل از وارد کردن اطلاعات کارت، یکی از قالب‌های آینده‌نگر X-Link را انتخاب کنید. همه‌ی متن‌ها و کنترل‌ها به زبان فارسی هستند تا تجربه‌ای روان داشته باشید.</p>
+        </div>
+
+        <div class="category-toolbar" id="categoryToolbar" data-aos="fade-up">
+            <!-- Buttons injected via JS -->
+        </div>
+
+        <div class="selector-layout">
+            <div class="template-gallery" data-aos="fade-left">
+                <div class="slider-controls">
+                    <button class="slider-btn prev" id="sliderPrev" aria-label="قالب قبلی">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="slider-btn next" id="sliderNext" aria-label="قالب بعدی">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+                <div class="template-slider" id="templateSliderTrack">
+                    <!-- Template cards injected via JS -->
+                </div>
+                <div class="slider-pagination" id="sliderPagination"></div>
+            </div>
+
+            <div class="customization-panel" data-aos="fade-right">
+                <div class="panel-header">
+                    <p>مرحله ۲</p>
+                    <h2>شخصی‌سازی پیش‌نمایش</h2>
+                    <span>گزینه‌های فعال بر اساس هر قالب تغییر می‌کنند.</span>
+                </div>
+
+                <div class="panel-section">
+                    <label for="backgroundColor">رنگ پس‌زمینه</label>
+                    <div class="color-picker">
+                        <input type="color" id="backgroundColor" value="#0A0F1F">
+                        <span id="backgroundColorValue">#0A0F1F</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <label for="accentColor">رنگ تاکید</label>
+                    <div class="color-picker">
+                        <input type="color" id="accentColor" value="#3A86FF">
+                        <span id="accentColorValue">#3A86FF</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <p>افکت‌های اختیاری</p>
+                    <ul class="effect-list" id="effectList">
+                        <!-- Filled via JS -->
+                    </ul>
+                </div>
+
+                <div class="live-preview" id="livePreview">
+                    <div class="preview-card">
+                        <div class="preview-header">
+                            <div>
+                                <h3 id="previewName">نام انتخابی</h3>
+                                <p id="previewRole">عنوان شغلی</p>
+                            </div>
+                            <span class="preview-tag" id="previewStyle">سبک قالب</span>
+                        </div>
+                        <p id="previewDescription">جزئیات تم و حس قالب پس از انتخاب نمایش داده می‌شود.</p>
+                        <div class="preview-meta">
+                            <span id="previewCategory">دسته‌بندی</span>
+                            <span id="previewId">ID-000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-actions">
+                    <button class="plan-button secondary" id="resetCustomization">بازنشانی</button>
+                    <button class="plan-button" id="confirmTemplate">
+                        <span>تایید و ادامه ساخت کارت</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+
+                <p class="panel-note">با تایید قالب، تنظیمات شما در نشست ذخیره می‌شود و به مرحله‌ی ساخت کارت منتقل خواهید شد.</p>
+                <div class="selection-status" id="selectionStatus"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">X-Link</h3>
+                    <p class="footer-tagline">هویت دیجیتال شما، همیشه در دسترس</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>محصول</h4>
+                        <ul>
+                            <li><a href="index.html#features">ویژگی‌ها</a></li>
+                            <li><a href="index.html#templates">قالب‌ها</a></li>
+                            <li><a href="index.html#pricing">تعرفه‌ها</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>درباره</h4>
+                        <ul>
+                            <li><a href="index.html#about">ما کیستیم؟</a></li>
+                            <li><a href="#">وبلاگ</a></li>
+                            <li><a href="#">ارتباط</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>قوانین</h4>
+                        <ul>
+                            <li><a href="#">حریم خصوصی</a></li>
+                            <li><a href="#">شرایط استفاده</a></li>
+                            <li><a href="#">امنیت</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>ما را دنبال کنید</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
+                    <div class="enamad-badge">
+                        <div class="badge-placeholder">E-NAMAD</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© ۲۰۲۵ X-Link — همه حقوق محفوظ است.</p>
+                <p>ساخته شده با ❤️ توسط @Anes</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="template-selection.js"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,588 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block page_title %}کارت ایجاد شد - X-Link{% endblock %}
+
+{% block page_content %}
+<div class="success-container">
+    <div class="container">
+        <div class="success-content">
+            <!-- Success Message -->
+            <div class="success-header">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1>کارت شما با موفقیت ایجاد شد!</h1>
+                <p>کارت دیجیتالی شما آماده است و می‌توانید آن را به اشتراک بگذارید</p>
+            </div>
+
+            <!-- Card Info -->
+            <div class="card-info-section">
+                <div class="card-url-box">
+                    <h3>لینک کارت شما:</h3>
+                    <div class="url-display">
+                        <input type="text" value="{{ card_url }}" id="cardUrl" readonly>
+                        <button class="copy-btn" onclick="copyToClipboard('{{ card_url }}')">
+                            <i class="fas fa-copy"></i> کپی
+                        </button>
+                    </div>
+                </div>
+
+                <!-- QR Code -->
+                <div class="qr-code-box">
+                    <h3>کد QR:</h3>
+                    <div class="qr-code-display">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ card_url }}" 
+                             alt="QR Code" class="qr-code-image">
+                    </div>
+                    <button class="download-qr-btn" onclick="downloadQRCode()">
+                        <i class="fas fa-download"></i> دانلود QR
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Preview -->
+            <div class="card-preview-section">
+                <h2>پیش‌نمایش کارت:</h2>
+                <div class="card-preview">
+                    <div class="preview-header">
+                        <h4>{{ user_card.name }}</h4>
+                        <p class="preview-bio">{{ user_card.short_bio }}</p>
+                    </div>
+
+                    <div class="preview-content">
+                        {% if user_card.description %}
+                        <p>{{ user_card.description }}</p>
+                        {% endif %}
+
+                        <div class="preview-info">
+                            {% if user_card.email %}
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>{{ user_card.email }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if user_card.website %}
+                            <div class="info-item">
+                                <i class="fas fa-globe"></i>
+                                <a href="{{ user_card.website }}" target="_blank">{{ user_card.website }}</a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if user_card.skills.all %}
+                        <div class="preview-skills">
+                            <h5>مهارت ها:</h5>
+                            <div class="skills-list">
+                                {% for skill in user_card.skills.all %}
+                                <span class="skill-badge">{{ skill.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="preview-social">
+                        {% if user_card.instagram_username %}
+                        <a href="https://instagram.com/{{ user_card.instagram_username }}" target="_blank" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if user_card.telegram_username %}
+                        <a href="https://t.me/{{ user_card.telegram_username }}" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if user_card.linkedin_username %}
+                        <a href="{{ user_card.linkedin_username }}" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if user_card.youtube_username %}
+                        <a href="https://youtube.com/@{{ user_card.youtube_username }}" target="_blank" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if user_card.twitter_username %}
+                        <a href="https://x.com/{{ user_card.twitter_username }}" target="_blank" title="X/Twitter">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="success-actions">
+                <a href="{% url 'view_card' username=user_card.username %}" class="btn-primary" target="_blank">
+                    <i class="fas fa-eye"></i> نمایش کارت
+                </a>
+                <a href="{% url 'card_builder' %}" class="btn-secondary">
+                    <i class="fas fa-edit"></i> ویرایش کارت
+                </a>
+                <a href="{% url 'home' %}" class="btn-secondary">
+                    <i class="fas fa-home"></i> بازگشت به خانه
+                </a>
+            </div>
+
+            <!-- Share Options -->
+            <div class="share-section">
+                <h3>اشتراک‌گذاری کارت:</h3>
+                <div class="share-buttons">
+                    <button class="share-btn telegram" onclick="shareOnTelegram('{{ card_url }}')">
+                        <i class="fab fa-telegram-plane"></i> تلگرام
+                    </button>
+                    <button class="share-btn whatsapp" onclick="shareOnWhatsApp('{{ card_url }}')">
+                        <i class="fab fa-whatsapp"></i> واتس‌اپ
+                    </button>
+                    <button class="share-btn twitter" onclick="shareOnTwitter('{{ card_url }}')">
+                        <i class="fab fa-x-twitter"></i> X/Twitter
+                    </button>
+                    <button class="share-btn email" onclick="shareViaEmail('{{ card_url }}')">
+                        <i class="fas fa-envelope"></i> ایمیل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Styles -->
+<style>
+.success-container {
+    min-height: 100vh;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, rgba(10, 15, 31, 0.95) 0%, rgba(20, 30, 60, 0.95) 100%);
+}
+
+.success-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.success-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.success-icon {
+    font-size: 80px;
+    color: #00d4aa;
+    margin-bottom: 20px;
+    animation: bounceIn 0.6s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #3A86FF, #00F6FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.success-header p {
+    color: rgba(245, 248, 255, 0.7);
+    font-size: 1.1rem;
+}
+
+/* Card Info Section */
+.card-info-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.card-url-box,
+.qr-code-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 16px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.card-url-box h3,
+.qr-code-box h3 {
+    color: var(--cyan-neon);
+    margin-bottom: 15px;
+}
+
+.url-display {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.url-display input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.copy-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3A86FF, #00F6FF);
+    border: none;
+    border-radius: 8px;
+    color: var(--bg-dark);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+}
+
+.qr-code-display {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.qr-code-image {
+    width: 200px;
+    height: 200px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.download-qr-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(58, 134, 255, 0.2);
+    border: 2px solid var(--cyan-neon);
+    color: var(--cyan-neon);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.download-qr-btn:hover {
+    background: var(--cyan-neon);
+    color: var(--bg-dark);
+}
+
+/* Card Preview Section */
+.card-preview-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-white);
+}
+
+.card-preview {
+    background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(0, 246, 255, 0.1) 100%);
+    border: 2px solid var(--cyan-neon);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 30px rgba(0, 246, 255, 0.2);
+}
+
+.preview-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(58, 134, 255, 0.3);
+}
+
+.preview-header h4 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.preview-bio {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+.preview-content p {
+    margin-bottom: 20px;
+    color: var(--text-gray);
+    line-height: 1.6;
+}
+
+.preview-info {
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    color: var(--text-gray);
+}
+
+.info-item i {
+    color: var(--cyan-neon);
+}
+
+.info-item a {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+.info-item a:hover {
+    text-decoration: underline;
+    color: var(--cyan-neon);
+}
+
+.preview-skills {
+    margin: 25px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(58, 134, 255, 0.3);
+}
+
+.preview-skills h5 {
+    margin-bottom: 15px;
+    color: var(--text-white);
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-badge {
+    display: inline-block;
+    background: rgba(58, 134, 255, 0.2);
+    border: 1px solid var(--cyan-neon);
+    color: var(--cyan-neon);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.preview-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(58, 134, 255, 0.3);
+}
+
+.preview-social a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(58, 134, 255, 0.2);
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 50%;
+    color: var(--cyan-neon);
+    transition: all 0.3s ease;
+}
+
+.preview-social a:hover {
+    background: var(--cyan-neon);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+}
+
+/* Action Buttons */
+.success-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3A86FF, #00F6FF);
+    color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 246, 255, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--text-gray);
+    color: var(--text-gray);
+}
+
+.btn-secondary:hover {
+    border-color: var(--cyan-neon);
+    color: var(--cyan-neon);
+}
+
+/* Share Section */
+.share-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.share-section h3 {
+    margin-bottom: 25px;
+    color: var(--text-white);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.share-btn.telegram {
+    background: #0088cc;
+}
+
+.share-btn.whatsapp {
+    background: #25d366;
+}
+
+.share-btn.twitter {
+    background: #000;
+}
+
+.share-btn.email {
+    background: #ea4335;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .card-info-section {
+        grid-template-columns: 1fr;
+    }
+
+    .success-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .card-preview {
+        padding: 25px;
+    }
+
+    .success-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .share-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .share-btn {
+        justify-content: center;
+    }
+}
+</style>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('لینک کپی شد!');
+    });
+}
+
+function downloadQRCode() {
+    const link = document.createElement('a');
+    const cardUrl = document.getElementById('cardUrl').value;
+    link.href = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${cardUrl}`;
+    link.download = 'card-qr-code.png';
+    link.click();
+}
+
+function shareOnTelegram(url) {
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}`, '_blank');
+}
+
+function shareOnWhatsApp(url) {
+    window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
+}
+
+function shareOnTwitter(url) {
+    window.open(`https://x.com/intent/post?url=${encodeURIComponent(url)}`, '_blank');
+}
+
+function shareViaEmail(url) {
+    window.location.href = `mailto:?subject=کارت دیجیتالی من&body=${encodeURIComponent(url)}`;
+}
+</script>
+{% endblock %}
