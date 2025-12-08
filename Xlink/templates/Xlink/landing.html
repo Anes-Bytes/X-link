@@ -13,26 +13,6 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <span class="logo-text">{{ site_context.site_name }}</span>
-                </div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="nav-link">خانه</a></li>
-                    <li><a href="#features" class="nav-link">قابلیت ها</a></li>
-                    <li><a href="#templates" class="nav-link">قالب ها</a></li>
-                    <li><a href="#about" class="nav-link">درباره ایکس لینک</a></li>
-                    <li><a href="#" class="nav-link nav-btn">ورود/ثبت نام</a></li>
-                    <li><a href="#" class="nav-link nav-btn-primary">پنل کاربری</a></li>
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </nav>
 
         <!-- Hero Content -->
         <div class="hero-content">
@@ -44,7 +24,7 @@
                 <p class="hero-description">
                     {{ site_context.hero_section_text_description }}
                 </p>
-                <a href="{% url 'core:card_builder' %}" class="cta-button">
+                <a href="{% url 'card_builder' %}" class="cta-button">
                     <span>رایگان شروع کنید</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -54,43 +34,20 @@
         <!-- Hero Slider -->
         <div class="hero-slider">
             <div class="slider-container" id="heroSlider">
-                <div class="slide active">
+                {% for banner in banners %}
+                <div class="slide {% if forloop.counter == 1 %}active{% endif %}">
                     <div class="slide-content">
-                        <h3>Smart & Stylish</h3>
-                        <p>Create professional digital cards in minutes</p>
+                        <h3>{{ banner.title }}</h3>
+                        <p>{{ banner.description }}</p>
                     </div>
                 </div>
-                <div class="slide">
-                    <div class="slide-content">
-                        <h3>Instantly Shareable</h3>
-                        <p>Share your card with a single link or QR code</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="slide-content">
-                        <h3>Beautifully Designed</h3>
-                        <p>Choose from stunning, customizable templates</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="slide-content">
-                        <h3>Built for the Future</h3>
-                        <p>Advanced analytics and tracking capabilities</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="slide-content">
-                        <h3>Always Accessible</h3>
-                        <p>Your digital card works on any device, anywhere</p>
-                    </div>
-                </div>
+                {% endfor %}
+
             </div>
             <div class="slider-dots">
-                <span class="dot active" data-slide="0"></span>
-                <span class="dot" data-slide="1"></span>
-                <span class="dot" data-slide="2"></span>
-                <span class="dot" data-slide="3"></span>
-                <span class="dot" data-slide="4"></span>
+                {% for banner in banners %}
+                <span class="dot {% if forloop.counter == 1 %}active{% endif %}" data-slide="{{ forloop.counter }}"></span>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -127,43 +84,34 @@
     </section>
 
     <!-- Templates Preview Section -->
-    <section class="templates-section" id="templates">
-        <div class="container">
-            <h2 class="section-title">قالب های تک و جذاب ایکس لینک</h2>
-            
-            <!-- Template Carousel -->
-            <div class="templates-carousel">
-                <button class="carousel-button prev">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="carousel-container">
-                    <div class="carousel-track">
-                        {% for template in templates %}
-                        <div class="template-slide {% if forloop.first %}center{% endif %}" data-template-id="{{ template.template_id }}">
-                            <div class="template-preview">
-                                <img src="{{ template.preview_image.url }}" alt="{{ template.name }}" class="template-image">
+<section class="templates-section" id="templates">
+    <div class="container">
+        <h2 class="section-title">قالب های تک و جذاب ایکس لینک</h2>
 
-                                <h4 class="template-title">{{ template.name }}</h4>
-                                <button class="template-select-btn" onclick="selectTemplate({{ template.template_id }}, '{{ template.name }}')">
-                                    انتخاب
-                                </button>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-                            <p>قالبی موجود نیست</p>
-                        </div>
-                        {% endfor %}
-                    </div>
+        <div class="templates-grid">
+            {% for template in templates %}
+            <div class="template-card">
+                <div class="template-image-wrapper">
+                    <img src="{{ template.preview_image.url }}"
+                         alt="{{ template.name }}"
+                         class="template-image">
                 </div>
 
-                <button class="carousel-button next">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+                <div class="template-info">
+                    <h4 class="template-title">{{ template.name }}</h4>
+
+                    <button class="template-select-btn"
+                            onclick="selectTemplate({{ template.template_id }}, '{{ template.name }}')">
+                    ساخت کارت ویزیت
+                    </button>
+                </div>
             </div>
+            {% empty %}
+            <p style="text-align: center">هیچ قالبی موجود نیست</p>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Pricing Section -->
     <section class="pricing-section" id="pricing">
@@ -188,7 +136,7 @@
                         <li><i class="fas fa-check"></i>{{ feature.name }}</li>
                         {% endfor %}
                     </ul>
-                    <button class="plan-button">Get Started</button>
+                    <button class="plan-button">شروع</button>
                 </div>
                 {% endfor %}
             </div>

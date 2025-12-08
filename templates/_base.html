@@ -11,6 +11,26 @@
 <body>
 
     {% block page_content %} {% endblock %}
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <span class="logo-text">X-link</span>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="{% url 'home' %}" class="nav-link">خانه</a></li>
+                    <li><a href="#features" class="nav-link">قابلیت ها</a></li>
+                    <li><a href="#templates" class="nav-link">قالب ها</a></li>
+                    <li><a href="#about" class="nav-link">درباره ایکس لینک</a></li>
+                    <li><a href="#" class="nav-link nav-btn">ورود/ثبت نام</a></li>
+                    <li><a href="#" class="nav-link nav-btn-primary">پنل کاربری</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
 
     <footer class="footer">
         <div class="container">

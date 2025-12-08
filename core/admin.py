@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, Customers, Templates, SiteContext, Plan, Discount, Feature, UserCard, Skill
+from .models import CustomUser, Customers, Templates, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners
 
 
 # ========== Inline ADMINS ==========
@@ -52,7 +52,7 @@ class UserCardAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('User Info', {
-            'fields': ('user', 'username', 'template')
+            'fields': ('user', 'username', "profile_picture",'template')
         }),
         ('Personal Information', {
             'fields': ('name', 'short_bio', 'description', 'email', 'website')
@@ -62,6 +62,7 @@ class UserCardAdmin(admin.ModelAdmin):
                 'instagram_username',
                 'telegram_username',
                 'linkedin_username',
+                'github_username',
                 'youtube_username',
                 'twitter_username',
             )
@@ -85,7 +86,34 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    pass
+    model = CustomUser
+
+    # نمایش ستون‌ها در لیست کاربران
+    list_display = ('phone', 'full_name', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
+
+    # فیلد مرتب‌سازی
+    ordering = ('phone',)
+
+    # فیلدهایی که در صفحه جزئیات نمایش داده می‌شوند
+    fieldsets = (
+        (None, {'fields': ('phone', 'password')}),
+        ('Personal info', {'fields': ('full_name',)}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+
+    # فیلدهایی که هنگام ایجاد کاربر نمایش داده می‌شوند
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('phone', 'full_name', 'password1', 'password2', 'is_staff', 'is_active'),
+        }),
+    )
+
+    search_fields = ('phone', 'full_name')
+
 
 
 admin.site.register(Discount)
+admin.site.register(Banners)

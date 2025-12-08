@@ -1,11 +1,11 @@
-{% extends '_base.html' %}
+<!DOCTYPE html>
 {% load static %}
-
-{% block page_title %}{{ user_card.name }} - X-Link{% endblock %}
-
-{% block page_content %}
-<!-- Dynamic Theme CSS Selection -->
-{% if user_card.color == "blue" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Business Card - X-Link</title>
+    {% if user_card.color == "blue" %}
 <link rel="stylesheet" href="{% static 'card-template-blue.css' %}">
 {% elif user_card.color == "gold" %}
 <link rel="stylesheet" href="{% static 'card-template-gold.css' %}">
@@ -26,481 +26,222 @@
 {% else %}
 <link rel="stylesheet" href="{% static 'card-template.css' %}">
 {% endif %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-container">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
 
-<div class="card-view-container">
-    <!-- Digital Card -->
-    <div class="digital-card">
-        <!-- Header Section -->
-        <div class="card-header">
-            <div class="card-background-pattern"></div>
-            <div class="card-header-content">
-                <h1 class="card-name">{{ user_card.name }}</h1>
-                {% if user_card.short_bio %}
-                <p class="card-bio">{{ user_card.short_bio }}</p>
+    <!-- Main Card Container -->
+    <div class="card-wrapper">
+        <div class="business-card" id="businessCard">
+            <!-- Profile Section -->
+            <div class="card-section profile-section">
+                <div class="profile-image-wrapper">
+                    <div class="profile-image">
+                        <img src="{{ user_card.profile_picture.url }}" alt="Profile" id="profileImg">
+                        <div class="image-glow"></div>
+                    </div>
+                </div>
+                <h1 class="full-name" id="fullName">{{ user_card.name }}</h1>
+                <p class="job-title" id="jobTitle">{{ user_card.short_bio }}</p>
+                <p class="short-bio" id="shortBio">{{ user_card.description }}</p>
+            </div>
+
+            <!-- Contact Buttons -->
+            <div class="card-section contact-section">
+                {% if user_card.phone_number %}
+                <a href="tel:{{ user_card.phone_number }}" class="contact-btn phone-btn" id="phoneBtn">
+                    <i class="fas fa-phone"></i>
+                    <span id="phoneText">{{ user_card.phone_number }}</span>
+                </a>
+                {% endif %}
+                {% if user_card.email %}
+                <a href="mailto:{{ user_card.email }}" class="contact-btn email-btn" id="emailBtn">
+                    <i class="fas fa-envelope"></i>
+                    <span id="emailText">{{ user_card.email }}</span>
+                </a>
+                {% endif %}
+                {% if user_card.website %}
+                <a href="{{ user_card.website }}" target="_blank" class="contact-btn website-btn" id="websiteBtn">
+                    <i class="fas fa-globe"></i>
+                    <span id="websiteText">{{ user_card.website }}</span>
+                </a>
                 {% endif %}
             </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="card-body">
-            {% if user_card.description %}
-            <div class="card-section description-section">
-                <h3 class="section-title">درباره</h3>
-                <p class="section-content">{{ user_card.description }}</p>
-            </div>
-            {% endif %}
-
-            <!-- Contact Information -->
-            <div class="card-section contact-section">
-                <h3 class="section-title">تماس</h3>
-                <div class="contact-items">
-                    {% if user_card.email %}
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <a href="mailto:{{ user_card.email }}">{{ user_card.email }}</a>
-                    </div>
+            <!-- Social Links -->
+            <div class="card-section social-section">
+                <div class="social-links" id="socialLinks">
+                    {% if user_card.instagram_username %}
+                    <a href="https://instagram.com/{{ user_card.instagram_username }}" class="social-link" data-platform="instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                     {% endif %}
-
-                    {% if user_card.website %}
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <a href="{{ user_card.website }}" target="_blank" rel="noopener noreferrer">
-                            {{ user_card.website }}
-                        </a>
-                    </div>
+                    {% if user_card.telegram_username %}
+                    <a href="https://t.me/{{ user_card.telegram_username }}" class="social-link" data-platform="telegram" aria-label="Telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                    {% endif %}
+                    {% if user_card.linkedin_username %}
+                    <a href="https://www.linkedin.com/in/{{ user_card.linkedin_username }}" class="social-link" data-platform="linkedin" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    {% endif %}
+                    {% if user_card.github_username %}
+                    <a href="https://instagram.com/{{ user_card.github_username }}" class="social-link" data-platform="github" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if user_card.twitter_username %}
+                    <a href="https://x.com/@{{ user_card.twitter_username }}" class="social-link" data-platform="twitter" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    {% endif %}
+                    {% if user_card.instagram_username %}
+                    <a href="#" class="social-link" data-platform="youtube" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
                     {% endif %}
                 </div>
             </div>
 
             <!-- Skills Section -->
-            {% if user_card.skills.all %}
             <div class="card-section skills-section">
-                <h3 class="section-title">مهارت ها</h3>
-                <div class="skills-grid">
+                <h3 class="section-title">توانایی ها</h3>
+                <div class="skills-container" id="skillsContainer">
                     {% for skill in user_card.skills.all %}
-                    <span class="skill-item">{{ skill.name }}</span>
+                    <span class="skill-pill">{{ skill.name  }}</span>
                     {% endfor %}
                 </div>
             </div>
-            {% endif %}
 
-            <!-- Social Media Links -->
-            <div class="card-section social-section">
-                <h3 class="section-title">شبکه های اجتماعی</h3>
-                <div class="social-links">
-                    {% if user_card.instagram_username %}
-                    <a href="https://instagram.com/{{ user_card.instagram_username }}" 
-                       target="_blank" rel="noopener noreferrer" 
-                       class="social-link instagram" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    {% endif %}
-
-                    {% if user_card.telegram_username %}
-                    <a href="https://t.me/{{ user_card.telegram_username }}" 
-                       target="_blank" rel="noopener noreferrer" 
-                       class="social-link telegram" title="Telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                        <span>Telegram</span>
-                    </a>
-                    {% endif %}
-
-                    {% if user_card.linkedin_username %}
-                    <a href="{{ user_card.linkedin_username }}" 
-                       target="_blank" rel="noopener noreferrer" 
-                       class="social-link linkedin" title="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    {% endif %}
-
-                    {% if user_card.youtube_username %}
-                    <a href="https://youtube.com/@{{ user_card.youtube_username }}" 
-                       target="_blank" rel="noopener noreferrer" 
-                       class="social-link youtube" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
-                    </a>
-                    {% endif %}
-
-                    {% if user_card.twitter_username %}
-                    <a href="https://x.com/{{ user_card.twitter_username }}" 
-                       target="_blank" rel="noopener noreferrer" 
-                       class="social-link twitter" title="X/Twitter">
-                        <i class="fab fa-x-twitter"></i>
-                        <span>X/Twitter</span>
-                    </a>
-                    {% endif %}
+            <!-- Services Section -->
+            <div class="card-section services-section">
+                <h3 class="section-title">Services</h3>
+                <div class="services-container" id="servicesContainer">
+                    <div class="service-item">
+                        <i class="fas fa-code"></i>
+                        <span>Web Development</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Apps</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>UI/UX Design</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Consulting</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- QR Code Section -->
-            <div class="card-section qr-section">
-                <h3 class="section-title">اسکن کنید</h3>
-                <div class="qr-code">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={{ user_card.get_card_url }}" 
-                         alt="QR Code" class="qr-image">
+            <!-- Portfolio Section -->
+            <div class="card-section portfolio-section">
+                <h3 class="section-title">Portfolio</h3>
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-thumbnail">
+                            <img src="https://via.placeholder.com/300x200/3A86FF/FFFFFF?text=Project+1" alt="Project 1">
+                            <div class="portfolio-overlay">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="portfolio-title">E-Commerce Platform</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-thumbnail">
+                            <img src="https://via.placeholder.com/300x200/00F6FF/0A0F1F?text=Project+2" alt="Project 2">
+                            <div class="portfolio-overlay">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="portfolio-title">Mobile Banking App</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-thumbnail">
+                            <img src="https://via.placeholder.com/300x200/3A86FF/FFFFFF?text=Project+3" alt="Project 3">
+                            <div class="portfolio-overlay">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="portfolio-title">SaaS Dashboard</p>
+                    </div>
                 </div>
-                <p class="qr-text">برای اشتراک‌گذاری این کارت، این کد QR را اسکن کنید</p>
             </div>
         </div>
-
-        <!-- Footer -->
-        <div class="card-footer">
-            <p>ایجاد شده توسط <strong>X-Link</strong></p>
-            <p class="card-created-date">{{ user_card.created_at|date:"Y-m-d" }}</p>
-        </div>
-    </div>
-
-    <!-- Share/Download Options -->
-    <div class="card-actions">
-        <h2>اقدامات</h2>
-        <div class="action-buttons">
-            <button class="action-btn share-btn" onclick="shareCard('{{ user_card.get_card_url }}')">
-                <i class="fas fa-share-alt"></i> اشتراک‌گذاری
-            </button>
-            <button class="action-btn download-btn" onclick="downloadCard()">
-                <i class="fas fa-download"></i> دانلود
-            </button>
-            <button class="action-btn qr-btn" onclick="downloadQR('{{ user_card.get_card_url }}')">
-                <i class="fas fa-qrcode"></i> دانلود QR
-            </button>
-        </div>
-    </div>
+        <!-- Mini Footer -->
+<div class="mini-footer">
+    <p>
+        با <span class="brand">X-Link</span> کارت ویزیت دیجیتال خودتو بساز
+        <i class="fas fa-bolt"></i>
+    </p>
+    <a href="{% url 'home' %}" target="_blank" class="mini-footer-btn">
+        شروع ساخت کارت
+    </a>
 </div>
 
-<!-- Card View Styles -->
 <style>
-.card-view-container {
-    min-height: 100vh;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, rgba(10, 15, 31, 0.95) 0%, rgba(20, 30, 60, 0.95) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.digital-card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    max-width: 600px;
-    width: 100%;
-    overflow: hidden;
-}
-
-.card-header {
-    position: relative;
-    background: linear-gradient(135deg, #3A86FF 0%, #00F6FF 100%);
-    padding: 60px 30px 40px;
-    color: white;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.card-background-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.1;
-    background-image: 
-        radial-gradient(circle at 20% 50%, white 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, white 0%, transparent 50%);
-}
-
-.card-header-content {
-    position: relative;
-    z-index: 2;
-}
-
-.card-name {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.card-bio {
-    font-size: 1rem;
-    opacity: 0.95;
-    margin: 0;
-}
-
-.card-body {
-    padding: 40px 30px;
-}
-
-.card-section {
-    margin-bottom: 30px;
-}
-
-.section-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #333;
-    display: flex;
-    align-items: center;
-}
-
-.section-title::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 20px;
-    background: linear-gradient(135deg, #3A86FF, #00F6FF);
-    border-radius: 2px;
-    margin-right: 12px;
-}
-
-.section-content {
-    color: #666;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.contact-items {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #666;
-}
-
-.contact-item i {
-    color: #3A86FF;
-    min-width: 20px;
-}
-
-.contact-item a {
-    color: #3A86FF;
-    text-decoration: none;
-    word-break: break-all;
-}
-
-.contact-item a:hover {
-    text-decoration: underline;
-    color: #00F6FF;
-}
-
-.skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.skill-item {
-    display: inline-block;
-    background: #f0f2f7;
-    color: #333;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    border: 1px solid #e0e0e0;
-}
-
-.social-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 15px;
-}
-
-.social-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #333;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.social-link:hover {
-    background: #f0f2f7;
-    color: #3A86FF;
-    border-color: #3A86FF;
-    transform: translateY(-3px);
-}
-
-.social-link i {
-    font-size: 24px;
-}
-
-.social-link span {
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.qr-section {
-    text-align: center;
-}
-
-.qr-code {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 12px;
-}
-
-.qr-image {
-    width: 200px;
-    height: 200px;
-    background: white;
-    padding: 5px;
-    border-radius: 8px;
-}
-
-.qr-text {
-    color: #999;
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-.card-footer {
-    background: #f8f9fa;
-    padding: 20px 30px;
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
-}
-
-.card-footer p {
-    margin: 5px 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.card-created-date {
-    color: #999;
-}
-
-.card-actions {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.card-actions h2 {
-    color: var(--text-white);
-    margin-bottom: 20px;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.action-btn {
-    padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--bg-dark);
-}
-
-.share-btn {
-    background: linear-gradient(135deg, #3A86FF, #00F6FF);
-}
-
-.share-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0, 246, 255, 0.4);
-}
-
-.download-btn,
-.qr-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid var(--cyan-neon);
-    color: var(--cyan-neon);
-}
-
-.download-btn:hover,
-.qr-btn:hover {
-    background: var(--cyan-neon);
-    color: var(--bg-dark);
-}
-
-@media (max-width: 768px) {
-    .card-view-container {
-        padding: 20px 10px;
+    .mini-footer {
+        text-align: center;
+        padding: 20px 15px;
+        margin-top: 40px;
+        color: #fff;
+        font-family: 'Poppins', 'Inter', sans-serif;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        animation: fadeUp 0.8s ease;
     }
 
-    .digital-card {
-        max-width: 100%;
+    .mini-footer .brand {
+        font-weight: 700;
+        color: #00ffcc;
     }
 
-    .card-name {
-        font-size: 1.5rem;
+    .mini-footer-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 22px;
+        border-radius: 12px;
+        color: #0a0f1f;
+        background: linear-gradient(135deg, #00ffcc, #00d4ff);
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.25s;
     }
 
-    .card-header {
-        padding: 40px 20px 30px;
+    .mini-footer-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 255, 204, 0.35);
     }
 
-    .card-body {
-        padding: 25px 20px;
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-
-    .social-links {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    }
-
-    .action-buttons {
-        flex-direction: column;
-    }
-
-    .action-btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
 </style>
 
-<script>
-function shareCard(url) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'کارت دیجیتالی من',
-            text: 'کارت دیجیتالی من را مشاهده کنید',
-            url: url,
-        });
-    } else {
-        // Fallback
-        alert('لینک: ' + url);
-    }
-}
+    </div>
 
-function downloadCard() {
-    // Implement card download logic (could generate PDF)
-    alert('قابلیت دانلود کارت به صورت PDF قریباً اضافه خواهد شد');
-}
+    <script src="card-template.js"></script>
+</body>
+</html>
 
-function downloadQR(url) {
-    const link = document.createElement('a');
-    link.href = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${url}`;
-    link.download = 'card-qr-code.png';
-    link.click();
-}
-</script>
-{% endblock %}
+

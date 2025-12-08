@@ -8,6 +8,8 @@ class UserCardForm(forms.ModelForm):
         fields = [
             'username',
             'name',
+            "phone_number",
+            "profile_picture",
             'short_bio',
             'description',
             'email',
@@ -28,6 +30,11 @@ class UserCardForm(forms.ModelForm):
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'نام کامل',
+                'dir': 'rtl',
+            }),
+            'phone_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'شماره تماس',
                 'dir': 'rtl',
             }),
             'short_bio': forms.TextInput(attrs={
@@ -78,8 +85,9 @@ class UserCardForm(forms.ModelForm):
                 'dir': 'ltr',
             }),
             'color': forms.Select(attrs={
-                'class': 'form-control',
+                'class': 'form-control color-select',
             }),
+
         }
 
 

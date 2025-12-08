@@ -1,19 +1,19 @@
-from .models import SiteContext, UserCard, Skill
+from django.core.cache import cache
+from .models import SiteContext, Banners
 
 
 def site_context(request):
-    context = SiteContext.objects.first()
-    
-    # Add user card if user is authenticated
-    user_card = None
-    skills = []
-    if request.user.is_authenticated:
-        user_card = UserCard.objects.filter(user=request.user).first()
-        if user_card:
-            skills = user_card.skills.all()
-    
+    context = cache.get("site_context")
+    banners = cache.get("banners")
+
+    if context is None:
+        context = SiteContext.objects.first()
+        cache.set("site_context", context, 60 * 60)
+    if banners is None:
+        banners = Banners.objects.all()
+        cache.set("banners", banners, 60 * 60)
+
     return {
         "site_context": context,
-        "user_card": user_card,
-        "skills": skills,
+        "banners": banners,
     }

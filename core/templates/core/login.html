@@ -1,0 +1,94 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block page_title %} ورود & ثبت نام - X-Link {% endblock %}
+
+
+{% block page_content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود & ثبت نام - X-Link</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+    <!-- Background Orbs -->
+    <div class="hero-background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+
+    <!-- Auth Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card" data-aos="fade-up">
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">
+                        ورود
+                    </button>
+                    <button class="auth-tab" data-tab="signup">
+                        ثبت نام
+                    </button>
+                </div>
+
+                <!-- Social Login Buttons -->
+                <div class="social-login">
+                    <button class="social-btn google-btn"
+                            onclick="window.location.href='{% provider_login_url 'google' %}'">
+                        <i class="fab fa-google"></i>
+                        <span>Continue with Google</span>
+                    </button>
+
+                    <button class="social-btn github-btn"
+                            onclick="window.location.href='{% provider_login_url 'github' %}'">
+                        <i class="fab fa-github"></i>
+                        <span>Continue with GitHub</span>
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>یا</span>
+                </div>
+
+                <!-- Login Form -->
+                <form class="auth-form active" action="{% url 'request_otp' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="phone">شماره</label>
+                        <input type="phone" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-options">
+                    </div>
+                    <button type="submit" class="auth-submit-btn">
+                        <span>ورود</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- Signup Form -->
+                <form class="auth-form" action="{% url 'request_otp' %}" method="post" id="signupForm">
+                    <div class="form-group">
+                        <label for="signupPhone">شماره</label>
+                        <input type="phone" id="signupPhone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullname">نام کامل</label>
+                        <input type="password" id="fullname" name="full_name" required>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">
+                        <span>ساخت اکانت</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'auth.js' %}"></script>
+
+
+{% endblock %}

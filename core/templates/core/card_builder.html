@@ -11,9 +11,9 @@
             <p>اطلاعات خود را وارد کنید و کارت دیجیتالی خود را سفارش دهید</p>
         </div>
 
-        <form method="post" class="card-form" id="cardForm">
+        <form method="post" class="card-form" id="cardForm" enctype="multipart/form-data">
             {% csrf_token %}
-            
+
             <!-- Template Selection Section -->
             <div class="form-section">
                 <h2>مرحله 1: انتخاب قالب</h2>
@@ -27,7 +27,7 @@
                         </div>
                         <h4>{{ template.name }}</h4>
                         <label class="template-radio">
-                            <input type="radio" name="template" value="{{ template.id }}" 
+                            <input type="radio" name="template" value="{{ template.id }}"
                                    {% if form.instance.template.id == template.id %}checked{% endif %}>
                             <span>انتخاب</span>
                         </label>
@@ -52,7 +52,7 @@
             <!-- Personal Information Section -->
             <div class="form-section">
                 <h2>مرحله 3: اطلاعات شخصی</h2>
-                
+
                 <div class="form-group">
                     <label for="{{ form.username.id_for_label }}">نام کاربری *</label>
                     {{ form.username }}
@@ -61,7 +61,23 @@
                     {% endif %}
                     <small class="help-text">نام کاربری برای لینک کارت (مثال: example.com/username)</small>
                 </div>
-
+    <div class="form-group">
+        <label for="{{ form.phone_number.id_for_label }}">شماره تماس</label>
+        {{ form.phone_number }}
+        {% if form.phone_number.errors %}
+        <div class="error-message">{{ form.phone_number.errors }}</div>
+        {% endif %}
+        <small class="help-text">مثال: +98 912 345 6789</small>
+    </div>
+<!-- آپلود عکس پروفایل -->
+<div class="form-group">
+    <label for="{{ form.profile_image.id_for_label }}">آپلود عکس پروفایل *</label>
+    {{ form.profile_picture }}
+    {% if form.profile_picture.errors %}
+    <div class="error-message">{{ form.profile_picture.errors }}</div>
+    {% endif %}
+    <small class="help-text">عکس پروفایل شما باید JPG یا PNG باشد</small>
+</div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="{{ form.name.id_for_label }}">نام کامل *</label>
@@ -110,7 +126,7 @@
             <!-- Social Media Section -->
             <div class="form-section">
                 <h2>مرحله 4: شبکه های اجتماعی</h2>
-                
+
                 <div class="social-inputs">
                     <div class="form-group">
                         <label for="{{ form.instagram_username.id_for_label }}">
@@ -167,7 +183,7 @@
             <!-- Skills Section -->
             <div class="form-section">
                 <h2>مرحله 5: مهارت ها</h2>
-                
+
                 <div id="skillsContainer" class="skills-container">
                     {% for skill_form in formset %}
                     <div class="skill-form-group" data-form-index="{{ forloop.counter0 }}">
@@ -376,19 +392,38 @@
     color: var(--text-white);
 }
 
-.template-radio {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    color: var(--text-gray);
+.template-radio input {
+    display: none;
 }
 
-.template-radio input[type="radio"] {
-    width: auto;
-    margin: 0;
+.template-radio span {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #fff;
+    border: 2px solid #4B47FF;
+    color: #4B47FF;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 14px;
+    box-shadow: 0 3px 10px rgba(75, 71, 255, 0.15);
 }
+
+.template-radio:hover span {
+    background: #4B47FF;
+    color: white;
+    box-shadow: 0 5px 15px rgba(75, 71, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.template-radio input:checked + span {
+    background: #4B47FF;
+    color: #fff;
+    border-color: #4B47FF;
+    box-shadow: 0 5px 15px rgba(75, 71, 255, 0.45);
+}
+
 
 /* Social Inputs */
 .social-inputs {
@@ -523,6 +558,46 @@
         justify-content: center;
     }
 }
+/* ظاهر خود Select */
+.color-select {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-white) !important;
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+}
+
+/* منوی باز شونده */
+.color-select option {
+    background: #11192f !important;
+    color: var(--text-white) !important;
+}
+
+/* گزینه hover شده */
+.color-select option:hover {
+    background: rgba(58, 134, 255, 0.3) !important;
+    color: #fff !important;
+}
+
+/* Dark mode for skill inputs */
+.skill-input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.skill-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--cyan-neon);
+    box-shadow: 0 0 15px rgba(0, 246, 255, 0.2);
+}
+
 </style>
 
 <script>
@@ -530,20 +605,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const addSkillBtn = document.getElementById('addSkillBtn');
     const skillsContainer = document.getElementById('skillsContainer');
     const totalFormsInput = document.querySelector('[name="skills-TOTAL_FORMS"]');
-    
+
     if (addSkillBtn) {
         addSkillBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            
+
             const formCount = document.querySelectorAll('.skill-form-group').length;
             const newForm = document.querySelector('[data-form-index="0"]').cloneNode(true);
-            
+
             // Update form indices
             newForm.setAttribute('data-form-index', formCount);
             newForm.innerHTML = newForm.innerHTML.replace(/skills-0/g, `skills-${formCount}`);
-            
+
             skillsContainer.appendChild(newForm);
-            
+
             // Update total forms count
             if (totalFormsInput) {
                 totalFormsInput.value = formCount + 1;
