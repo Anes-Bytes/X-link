@@ -1,14 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
 import json
 
 from .models import UserCard, Skill
 from .forms import UserCardForm, SkillInlineFormSet
 from Xlink.models import CardTemplate
-
 
 
 from django.shortcuts import render, redirect
@@ -17,7 +14,7 @@ from core.models import CustomUser, OTP
 from django.utils import timezone
 import datetime
 import random
-from django.contrib.auth import login, logout
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from melipayamak import Api
 
@@ -115,7 +112,19 @@ def login_view(request):
     return render(request, "core/login.html", {"next": next_page})
 
 
+@login_required
+def dashboard_view(request):
+    user_card = get_object_or_404(UserCard, user=request.user)
+    card_url = user_card.get_card_url()
 
+    return render(
+        request,
+        "core/dashboard.html",
+        context={
+            "user_card": user_card,
+            "card_url": card_url,
+        }
+    )
 
 
 def card_builder_view(request):
@@ -128,14 +137,18 @@ def card_builder_view(request):
         is_new = True
 
     if request.method == 'POST':
-        form = UserCardForm(request.POST, instance=user_card)
+        form = UserCardForm(request.POST, request.FILES, instance=user_card)
         formset = SkillInlineFormSet(request.POST, instance=user_card)
 
         if form.is_valid() and formset.is_valid():
             card = form.save(commit=False)
             card.user = request.user
+            if request.user.plan == CustomUser.UserPlan.PRO:
+                card.black_background = bool(request.POST.get("black_bg"))
+                card.stars_background = bool(request.POST.get("stars_bg"))
+                card.blue_tick = bool(request.POST.get("blue_tick"))
             card.save()
-            
+
             formset.instance = card
             formset.save()
 
@@ -146,7 +159,7 @@ def card_builder_view(request):
         formset = SkillInlineFormSet(instance=user_card) if not is_new else SkillInlineFormSet()
 
     templates = CardTemplate.objects.filter(is_active=True)
-    
+
     context = {
         'form': form,
         'formset': formset,
@@ -162,7 +175,7 @@ def card_success_view(request, card_id):
     """Success page after card creation"""
     user_card = get_object_or_404(UserCard.objects.prefetch_related("skills"), id=card_id, user=request.user)
     card_url = user_card.get_card_url()
-    
+
     context = {
         'user_card': user_card,
         'card_url': card_url,
@@ -174,11 +187,13 @@ def card_success_view(request, card_id):
 def view_card(request, username):
     """Public view to display user's digital card"""
     user_card = get_object_or_404(UserCard.objects.prefetch_related("skills"), username=username, is_published=True)
-    
+    user_card.views += 1
+    user_card.save()
+
     context = {
         'user_card': user_card,
     }
-    
+
     return render(request, 'core/card_view.html', context)
 
 
@@ -222,20 +237,5 @@ def delete_skill_ajax(request, skill_id):
         return JsonResponse({'error': str(e)}, status=500)
 
 
-@require_http_methods(["POST"])
-@login_required
-def publish_card(request, card_id):
-    """Publish or unpublish a user card"""
-    user_card = get_object_or_404(UserCard, id=card_id, user=request.user)
-    user_card.is_published = not user_card.is_published
-    user_card.save()
-    
-    return JsonResponse({
-        'success': True,
-        'is_published': user_card.is_published,
-    })
 
 
-
-def login_view(request):
-    return render(request, 'core/login.html')

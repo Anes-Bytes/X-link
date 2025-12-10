@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Business Card - X-Link</title>
-    {% if user_card.color == "blue" %}
+    {% if user_card.black_background %}
+    <link rel="stylesheet" href="{% static 'card-template-black.css' %}">
+
+    {% elif user_card.color == "blue" %}
 <link rel="stylesheet" href="{% static 'card-template-blue.css' %}">
 {% elif user_card.color == "gold" %}
 <link rel="stylesheet" href="{% static 'card-template-gold.css' %}">
@@ -32,6 +35,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+{% if user_card.stars_background %}
+            <canvas id="star-bg-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+{% endif %}
+
+
     <!-- Animated Background -->
     <div class="background-container">
         <div class="gradient-orb orb-1"></div>
@@ -41,6 +49,7 @@
 
     <!-- Main Card Container -->
     <div class="card-wrapper">
+
         <div class="business-card" id="businessCard">
             <!-- Profile Section -->
             <div class="card-section profile-section">
@@ -50,7 +59,20 @@
                         <div class="image-glow"></div>
                     </div>
                 </div>
-                <h1 class="full-name" id="fullName">{{ user_card.name }}</h1>
+                <h1 class="full-name" id="fullName">{{ user_card.name }} <!-- Telegram-like blue verification badge -->
+<!-- Official-style circular badge -->
+{% if user_card.blue_tick %}
+        <svg width="22" height="22" viewBox="0 0 24 24" class="telegram-badge"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill="#3CAEEB" stroke="#1C96DA" stroke-width="1"
+                  d="M12 1.5l3 2.8 3.9-.6.6 3.9 2.8 3-2.8 3 .6 3.9-3.9-.6-3 2.8-3-2.8-3.9.6.6-3.9-2.8-3 2.8-3-.6-3.9 3.9.6z"/>
+            <path fill="#fff"
+                  d="M10.2 13.7l-2.1-2.2-1.2 1.2 3.3 3.3 6.4-6.6-1.2-1.2z"/>
+        </svg>
+                    {% endif %}
+
+</h1>
+
                 <p class="job-title" id="jobTitle">{{ user_card.short_bio }}</p>
                 <p class="short-bio" id="shortBio">{{ user_card.description }}</p>
             </div>
@@ -239,6 +261,71 @@
 </style>
 
     </div>
+<script>
+const canvas = document.getElementById('star-bg-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
+// Generate stars
+const stars = [];
+for (let i = 0; i < 150; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.2,
+        alpha: Math.random(),
+        speed: Math.random() * 0.02
+    });
+}
+
+// Shooting stars
+let shootingStars = [];
+
+function createShootingStar() {
+    shootingStars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height / 2,
+        length: 100 + Math.random() * 100,
+        speed: 5 + Math.random() * 5,
+        angle: Math.PI / 4
+    });
+}
+
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw stars
+    stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.fill();
+        s.alpha += s.speed;
+        if (s.alpha > 1) s.alpha = 0;
+    });
+
+    // Draw shooting stars
+    shootingStars.forEach((s, i) => {
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.length * Math.cos(s.angle), s.y - s.length * Math.sin(s.angle));
+        ctx.stroke();
+        s.x += s.speed * Math.cos(s.angle);
+        s.y += s.speed * Math.sin(s.angle);
+        if (s.x > canvas.width || s.y > canvas.height) shootingStars.splice(i, 1);
+    });
+
+    // Occasionally spawn shooting stars
+    if (Math.random() < 0.01) createShootingStar();
+
+    requestAnimationFrame(update);
+}
+
+update();
+</script>
 
     <script src="card-template.js"></script>
 </body>

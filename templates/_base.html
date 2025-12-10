@@ -21,8 +21,11 @@
                     <li><a href="#features" class="nav-link">قابلیت ها</a></li>
                     <li><a href="#templates" class="nav-link">قالب ها</a></li>
                     <li><a href="#about" class="nav-link">درباره ایکس لینک</a></li>
-                    <li><a href="#" class="nav-link nav-btn">ورود/ثبت نام</a></li>
-                    <li><a href="#" class="nav-link nav-btn-primary">پنل کاربری</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}" class="nav-link nav-btn-primary">پنل کاربری</a></li>
+                    {% else %}
+                    <li><a href="{% url 'dashboard' %}" class="nav-link nav-btn">ورود/ثبت نام</a></li>
+                    {% endif %}
                 </ul>
                 <div class="hamburger" id="hamburger">
                     <span></span>
@@ -64,8 +67,8 @@
                             <i class="fab fa-instagram"></i>
                         </a>
                         {% endif %}
-                        {% if site_context.footer_linkdin_url %}
-                        <a href="{{ site_context.footer_linkdin_url }}" class="social-icon" aria-label="LinkedIn">
+                        {% if site_context.footer_linkedin_url %}
+                        <a href="{{ site_context.footer_linkedin_url }}" class="social-icon" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                         {% endif %}

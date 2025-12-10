@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>داشبورد کاربر - X-Link</title>
+    <link rel="stylesheet" href="{% static 'dashboard-themed.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        [dir="rtl"] .sidebar { border-right: none; border-left: 1px solid var(--card-border); }
+        [dir="rtl"] .nav-link { border-left: none; border-right: 3px solid transparent; padding-right: 1.5rem; padding-left: 0; }
+        [dir="rtl"] .nav-item.active .nav-link { border-right-color: var(--cyan-neon); border-left: none; }
+        [dir="rtl"] .dashboard-header { text-align: right; }
+        [dir="rtl"] .header-profile { flex-direction: row-reverse; }
+        [dir="rtl"] .notification-dropdown { right: auto; left: 2rem; }
+        [dir="rtl"] .stat-card { flex-direction: row-reverse; }
+        [dir="rtl"] .link-item { flex-direction: row-reverse; }
+        [dir="rtl"] .login-item { flex-direction: row-reverse; }
+        [dir="rtl"] .session-item { flex-direction: row-reverse; }
+        [dir="rtl"] .notification-item { flex-direction: row-reverse; }
+        [dir="rtl"] table { text-align: right; }
+        [dir="rtl"] .detail-row { flex-direction: row-reverse; }
+        [dir="rtl"] .activity-item { flex-direction: row-reverse; }
+        [dir="rtl"] .profile-menu-trigger { flex-direction: row-reverse; }
+    </style>
+</head>
+<body class="x-link-theme">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-link"></i>
+                    <span>ایکس‌لینک</span>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#overview" class="nav-link" data-section="overview">
+                            <i class="fas fa-user"></i>
+                            <span>بررسی اجمالی</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#visit-card" class="nav-link" data-section="visit-card">
+                            <i class="fas fa-id-card"></i>
+                            <span>کارت ویزیت</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#plan" class="nav-link" data-section="plan">
+                            <i class="fas fa-crown"></i>
+                            <span>طرح و اشتراک</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#security" class="nav-link" data-section="security">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>امنیت</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="mode-toggle" id="modeToggle" title="تغییر تم شب">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="#" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>خروج</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>خوش آمدید، <span id="userName">{{ user.first_name }}</span></h1>
+                    <p id="headerDate" class="header-date"></p>
+                </div>
+                <div class="header-right">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">2</span>
+                    </button>
+                    <div class="header-profile">
+                        <img id="headerProfileImg" src="https://via.placeholder.com/40" alt="پروفایل" class="profile-img-small">
+                        <div class="profile-menu-trigger">
+                            <span id="headerUsername">{{ user.username }}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Notifications Dropdown -->
+            <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
+                <div class="notification-header">
+                    <h3>اطلاعیه‌ها</h3>
+                    <button class="close-btn">×</button>
+                </div>
+                <div class="notification-list">
+                    {% if not user.phone %}
+                    <div class="notification-item unread">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="notification-content">
+                            <p class="notification-title">پروفایل خود را تکمیل کنید</p>
+                            <p class="notification-time">۲ ساعت پیش</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="notification-item unread">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="notification-content">
+                            <p class="notification-title">طرح شما در ۷ روز منقضی می‌شود</p>
+                            <p class="notification-time">۱ روز پیش</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="content-wrapper">
+
+                <!-- 1. OVERVIEW SECTION -->
+                <section id="overview-section" class="section active">
+                    <div class="section-header">
+                        <h2>پروفایل کاربر</h2>
+                        <button class="btn btn-primary" id="editProfileBtn">
+                            <i class="fas fa-edit"></i> ویرایش پروفایل
+                        </button>
+                    </div>
+
+                    <div class="overview-grid">
+                        <!-- Profile Card -->
+                        <div class="card profile-card">
+                            <div class="profile-header">
+                                <div class="profile-image-container">
+                                    <img id="profileImg" src="{{ user_card.profile_picture.url }}" alt="پروفایل" class="profile-img">
+                                    <button class="edit-image-btn" id="editImageBtn">
+                                        <i class="fas fa-camera"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="fullName">{{ user.full_name }}</h3>
+                                <p class="username" id="username">{{ user_card.username }}@</p>
+                                <div class="profile-details">
+                                    <div class="detail-row">
+                                        <span class="label">{{ user.email }}</span>
+                                        <span class="value" id="emailDisplay">ایمیل:</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="label">{{ user.phone|default:"تعیین نشده" }}</span>
+                                        <span class="value" id="phoneDisplay">شماره تماس:</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="label">{{ user.date_joined|date:"M d, Y" }}</span>
+                                        <span class="value" id="joinedDate">تاریخ عضویت:</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="label">{{ user.last_login|date:"M d, Y - H:i" }}</span>
+                                        <span class="value" id="lastLogin">آخرین ورود:</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <p class="stat-label">کارت‌های ویزیت</p>
+                                    <p class="stat-value" id="cardCount">1</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-mouse"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <p class="stat-label">کل کلیک‌ها</p>
+                                    <p class="stat-value" id="totalClicks">{{ user_card.views|default:"0" }}</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <p class="stat-label">بازدید پروفایل</p>
+                                    <p class="stat-value" id="profileViews">{{ user_card.views|default:"0" }}</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <p class="stat-label">زمان باقی مانده اشتراک</p>
+                                    <p class="stat-value" id="completion">{{ user.plan_expires }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Completion Progress -->
+
+                </section>
+
+                <!-- 2. VISIT CARD SECTION -->
+                <section id="visit-card-section" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h2>کارت‌های ویزیت شما</h2>
+                        <button class="btn btn-primary" id="createCardBtn">
+                            <i class="fas fa-plus"></i> کارت جدید
+                        </button>
+                    </div>
+
+                    <div class="cards-grid">
+                        <!-- Primary Card -->
+                        <div class="card visit-card-preview">
+                            <div class="card-badge">اصلی</div>
+                            <h3 id="cardTitle">{{ user_card.title|default:"کارت ویزیت من" }}</h3>
+                            <p class="card-link" id="cardLink">
+                                <i class="fas fa-link"></i>
+                                <span>x-link.ir/{{ user_card.username }}</span>
+                            </p>
+
+                <div class="qr-code-box">
+                    <h3>کد QR:</h3>
+                    <div class="qr-code-display">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ card_url }}"
+                             alt="QR Code" class="qr-code-image">
+                    </div>
+                </div>
+
+<div class="card-actions">
+    <a href="{% url 'view_card' user_card.username %}" class="btn btn-secondary btn-small">
+        <i class="fas fa-eye"></i> مشاهده
+    </a>
+
+    <a href="{% url 'card_builder' %}" class="btn btn-secondary btn-small">
+        <i class="fas fa-edit"></i> ویرایش
+    </a>
+
+    <a href="" class="btn btn-secondary btn-small">
+        <i class="fas fa-download"></i> QR
+    </a>
+</div>
+
+                        </div>
+
+                        <!-- Additional Cards Info -->
+                        <div class="card">
+                            <h4>آمار کارت</h4>
+                            <div class="stats-mini">
+                                <div class="stat-mini">
+                                    <span class="label">بازدید</span>
+                                    <span class="value">{{ user_card.views }}</span>
+                                </div>
+                                <div class="stat-mini">
+                                    <span class="label">کلیک</span>
+                                    <span class="value">{{ user_card.views }}</span>
+                                </div>
+                                <div class="stat-mini">
+                                    <span class="label">اشتراک</span>
+                                    <span class="value">بزودی</span>
+                                </div>
+                                <div class="stat-mini">
+                                    <span class="label">نرخ کلیک</span>
+                                    <span class="value">بزودی</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Details -->
+                    <div class="card">
+                        <h3>جزئیات کارت</h3>
+                        <div class="details-grid">
+                            <div class="detail-field">
+                                <label>سبک کارت</label>
+                                <span>{{ user_card.get_color_display }}</span>
+                            </div>
+                            <div class="detail-field">
+                                <label>تاریخ ایجاد</label>
+                                <span>{{ user_card.created_at|date:"M d, Y" }}</span>
+                            </div>
+                            <div class="detail-field">
+                                <label>آخرین تغییر</label>
+                                <span>{{ user_card.updated_at|date:"M d, Y - H:i" }}</span>
+                            </div>
+                            <div class="detail-field">
+                                <label>وضعیت</label>
+                                {% if user_card.is_published %}
+                                <span class="badge badge-success">فعال</span>
+                                {% else %}
+<span class="badge badge-danger">غیرفعال</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. PLAN & SUBSCRIPTION SECTION -->
+                <section id="plan-section" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h2>طرح و اشتراک</h2>
+                    </div>
+
+                    <!-- Current Plan Card -->
+                    <div class="plan-cards">
+                        {% if user.plan == 'basic' %}
+                        <div class="card plan-card active-plan">
+                            <div class="plan-badge">پایه</div>
+                            <h3>پلن پایه</h3>
+                            <p class="plan-price">
+                               <span id="planPrice">35,000</span>
+                                <span class="period">/ماهانه</span>
+                            </p>
+
+                            <div class="plan-features">
+                                <h4>ویژگی‌های شامل:</h4>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> برندسازی پیشرفته</li>
+                                    <li><i class="fas fa-check"></i>دسترسی به قالب و تم های پایه</li>
+                                    <li><i class="fas fa-check"></i>آپتایم 99.9%</li>
+                                </ul>
+                            </div>
+
+                            <div class="plan-expiry">
+                                <p class="expiry-label">انقضا در:</p>
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }}</p>
+                            </div>
+
+                        </div>
+                        {% elif user.plan == "pro" %}
+                        <div class="card plan-card active-plan">
+                            <div class="plan-badge">پرمیوم</div>
+                            <h3>پلن پرمیوم</h3>
+                            <p class="plan-price">
+                               <span id="planPrice">55,000</span>
+                                <span class="period">/ماهانه</span>
+                            </p>
+
+                            <div class="plan-features">
+                                <h4>ویژگی‌های شامل:</h4>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> برندسازی پیشرفته</li>
+                                    <li><i class="fas fa-check"></i>دسترسی به همه قالب و تم ها</li>
+                                    <li><i class="fas fa-check"></i>تیک آبی</li>
+                                    <li><i class="fas fa-check"></i>تمپلیت مشکی</li>
+                                    <li><i class="fas fa-check"></i>بک گراند ستاره ای</li>
+                                    <li><i class="fas fa-check"></i>سرعت لود بیشتر</li>
+                                    <li><i class="fas fa-check"></i>آپتایم 99.9%</li>
+                                </ul>
+                            </div>
+
+                            <div class="plan-expiry">
+                                <p class="expiry-label">انقضا در:</p>
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }}</p>
+                            </div>
+
+                        </div>
+                        {% else %}
+                        <div class="card plan-card active-plan">
+                            <div class="plan-badge">رایگان</div>
+                            <h3>پلن رایگان</h3>
+                            <p class="plan-price">
+                               <span id="planPrice">0</span>
+                                <span class="period">/ماهانه</span>
+                            </p>
+
+                            <div class="plan-features">
+                                <h4>ویژگی‌های شامل:</h4>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> برندسازی پیشرفته</li>
+                                    <li><i class="fas fa-check"></i>دسترسی به قالب پیشفرض ایکس لینک</li>
+                                    <li><i class="fas fa-check"></i>آپتایم 99.9%</li>
+                                </ul>
+                            </div>
+
+                            <div class="plan-expiry">
+                                <p class="expiry-label">انقضا در:</p>
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }}</p>
+                            </div>
+
+                        </div>
+                        {% endif %}
+                        <!-- Usage Stats -->
+                        <div class="card">
+                            <h3>استفاده و محدودیت‌ها</h3>
+                            <div class="usage-item">
+                                <div class="usage-header">
+                                    <span class="label">کارت‌های ویزیت ایجاد‌شده</span>
+                                    <span class="value"><span id="cardsUsed">{{ user_cards.count|default:"3" }}</span> / <span id="cardsMax">{{ user_plan.max_cards|default:"5" }}</span></span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+
+                            <div class="usage-item">
+                                <div class="usage-header">
+                                    <span class="label">اعضای تیم</span>
+                                    <span class="value"><span id="teamUsed">1</span> / <span id="teamMax">3</span></span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 33.33%"></div>
+                                </div>
+                            </div>
+
+                            <div class="usage-item">
+                                <div class="usage-header">
+                                    <span class="label">فضای استفاده‌شده</span>
+                                    <span class="value"><span id="storageUsed">245</span>MB / <span id="storageMax">1000</span>MB</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 24.5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Plan Comparison -->
+                    <div class="card">
+                        <h3>مقایسه طرح‌ها</h3>
+                        <table class="plan-comparison">
+                            <thead>
+                                <tr>
+                                    <th>ویژگی</th>
+                                    <th>رایگان</th>
+                                    <th>پایه</th>
+                                    <th>پرو</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>قالب و تم ها</td>
+                                    <td>پیشفرض ایکس لینک</td>
+                                    <td>همه تمپلیت ها</td>
+                                    <td>همه تملیپت ها + مشکی</td>
+                                </tr>
+                                <tr>
+                                    <td>بخش فروشگاه</td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-check"></i></td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>تیک آبی</td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>بک گراند ستاره ای(دنباله دار)</td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>آپتایم</td>
+                                    <td>99.9%</td>
+                                    <td>99.9%</td>
+                                    <td>99.9%</td>
+                                </tr>
+                                <tr>
+                                    <td>پشتیبانی اولویتی</td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-times"></i></td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Upgrade Button -->
+                    <div class="upgrade-section">
+                        <h3>آیا می‌خواهید ارتقاء دهید؟</h3>
+                        <p>با طرح‌های پریمیوم ما ویژگی‌های بیشتری و امکانات نامحدود دریافت کنید</p>
+                        <button class="btn btn-primary btn-large">
+                            <i class="fas fa-crown"></i> ارتقاء به VIP
+                        </button>
+                    </div>
+                </section>
+
+
+
+                <!-- 6. SECURITY SECTION -->
+                <section id="security-section" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h2>امنیت و حریم‌خصوصی</h2>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="card">
+                        <h3>رمزعبور</h3>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <p class="security-label">تغییر رمزعبور</p>
+                                <p class="security-desc">برای امنیت حساب، به‌طور منظم رمزعبور خود را تغییر دهید</p>
+                            </div>
+                            <button class="btn btn-secondary" id="changePasswordBtn">
+                                <i class="fas fa-key"></i> تغییر رمزعبور
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Two-Factor Authentication -->
+                    <div class="card">
+                        <h3>احراز هویت دو‌مرحله‌ای</h3>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <p class="security-label">احراز هویت دو‌مرحله‌ای (2FA)</p>
+                                <p class="security-desc">لایه امنیتی اضافی با استفاده از برنامه احراز‌کننده اضافه کنید</p>
+                                <p class="security-status" id="2faStatus">وضعیت: <span class="badge badge-danger">غیرفعال</span></p>
+                            </div>
+                            <button class="btn btn-secondary" id="enable2FABtn">
+                                <i class="fas fa-shield-alt"></i> فعال‌سازی
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Login Activity -->
+                    <div class="card">
+                        <h3>فعالیت ورود اخیر</h3>
+                        <div class="login-activity">
+                            <div class="login-item">
+                                <div class="login-info">
+                                    <p class="login-device">
+                                        <i class="fas fa-desktop"></i> رایانه شخصی - Chrome
+                                    </p>
+                                    <p class="login-location">نیویورک، آمریکا (192.168.1.1)</p>
+                                    <p class="login-time">امروز ۲:۳۰ بعدازظهر</p>
+                                </div>
+                                <span class="badge badge-success">فعلی</span>
+                            </div>
+
+                            <div class="login-item">
+                                <div class="login-info">
+                                    <p class="login-device">
+                                        <i class="fas fa-mobile-alt"></i> iPhone - Safari
+                                    </p>
+                                    <p class="login-location">نیویورک، آمریکا (192.168.1.100)</p>
+                                    <p class="login-time">دیروز ۸:۱۵ قبل‌ازظهر</p>
+                                </div>
+                            </div>
+
+                            <div class="login-item">
+                                <div class="login-info">
+                                    <p class="login-device">
+                                        <i class="fas fa-desktop"></i> MacBook Pro - Safari
+                                    </p>
+                                    <p class="login-location">سان‌فرانسیسکو، آمریکا (203.0.113.56)</p>
+                                    <p class="login-time">۳ روز پیش ۵:۴۵ بعدازظهر</p>
+                                </div>
+                            </div>
+
+                            <div class="login-item">
+                                <div class="login-info">
+                                    <p class="login-device">
+                                        <i class="fas fa-desktop"></i> رایانه شخصی - Firefox
+                                    </p>
+                                    <p class="login-location">لندن، انگلستان (198.51.100.45)</p>
+                                    <p class="login-time">۱ هفته پیش ۱۱:۲۰ قبل‌ازظهر</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Management -->
+                    <div class="card">
+                        <h3>جلسه‌های فعال</h3>
+                        <p style="margin-bottom: 1.5rem;">جلسه‌های فعال خود را مدیریت کنید و از دستگاه‌های دیگر خارج شوید</p>
+                        <div class="sessions-list">
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <p class="session-device">جلسه فعلی</p>
+                                    <p class="session-details">رایانه شخصی - Chrome - 192.168.1.1</p>
+                                </div>
+                                <span class="badge badge-success">فعال الآن</span>
+                            </div>
+
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <p class="session-device">iPhone Safari</p>
+                                    <p class="session-details">آخرین فعالیت: دیروز ۸:۱۵ قبل‌ازظهر</p>
+                                </div>
+                                <button class="btn btn-danger btn-small">خروج</button>
+                            </div>
+
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <p class="session-device">MacBook Pro</p>
+                                    <p class="session-details">آخرین فعالیت: ۳ روز پیش</p>
+                                </div>
+                                <button class="btn btn-danger btn-small">خروج</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger btn-block" style="margin-top: 1rem;">
+                            <i class="fas fa-sign-out-alt"></i> خروج از تمام سایر جلسه‌ها
+                        </button>
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <div class="card">
+                        <h3>تنظیمات حریم‌خصوصی</h3>
+                        <form class="settings-form">
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="profileVisibility" checked>
+                                <label for="profileVisibility">پروفایل من را عمومی کنید</label>
+                            </div>
+
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="analyticsVisibility" checked>
+                                <label for="analyticsVisibility">نمایش تحلیلات به‌صورت عمومی</label>
+                            </div>
+
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="searchIndexing">
+                                <label for="searchIndexing">اجازه موتورهای جستجو برای نمایه‌سازی پروفایل</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> ذخیره تنظیمات حریم‌خصوصی
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Edit Profile -->
+    <div class="modal" id="editProfileModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>ویرایش پروفایل</h2>
+                <button class="close-btn" id="closeProfileModal">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm" class="settings-form">
+                    <div class="form-group">
+                        <label for="modalFirstName">نام</label>
+                        <input type="text" id="modalFirstName" placeholder="نام">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalLastName">نام‌خانوادگی</label>
+                        <input type="text" id="modalLastName" placeholder="نام‌خانوادگی">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalPhone">شماره تماس</label>
+                        <input type="tel" id="modalPhone" placeholder="شماره تماس">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalBio">درباره من</label>
+                        <textarea id="modalBio" rows="4" placeholder="درباره خودتان بگویید"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelProfileBtn">لغو</button>
+                <button class="btn btn-primary">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Change Password -->
+    <div class="modal" id="changePasswordModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تغییر رمزعبور</h2>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="settings-form">
+                    <div class="form-group">
+                        <label for="currentPassword">رمزعبور فعلی</label>
+                        <input type="password" id="currentPassword" placeholder="رمزعبور فعلی را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">رمزعبور جدید</label>
+                        <input type="password" id="newPassword" placeholder="رمزعبور جدید را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">تأیید رمزعبور</label>
+                        <input type="password" id="confirmPassword" placeholder="رمزعبور جدید را تأیید کنید">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">لغو</button>
+                <button class="btn btn-primary">بروزرسانی رمزعبور</button>
+            </div>
+        </div>
+    </div>
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('لینک کپی شد!');
+    });
+}
+
+function downloadQRCode() {
+    const link = document.createElement('a');
+    const cardUrl = document.getElementById('cardUrl').value;
+    link.href = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${cardUrl}`;
+    link.download = 'card-qr-code.png';
+    link.click();
+}
+
+function shareOnTelegram(url) {
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}`, '_blank');
+}
+
+function shareOnWhatsApp(url) {
+    window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
+}
+
+function shareOnTwitter(url) {
+    window.open(`https://x.com/intent/post?url=${encodeURIComponent(url)}`, '_blank');
+}
+
+function shareViaEmail(url) {
+    window.location.href = `mailto:?subject=کارت دیجیتالی من&body=${encodeURIComponent(url)}`;
+}
+</script>
+
+    <!-- Script -->
+    <script src="{% static 'dashboard.js' %}"></script>
+</body>
+</html>

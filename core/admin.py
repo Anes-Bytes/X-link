@@ -52,7 +52,7 @@ class UserCardAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('User Info', {
-            'fields': ('user', 'username', "profile_picture",'template')
+            'fields': ('user', 'username', "profile_picture",'template', "black_background", "blue_tick", "stars_background")
         }),
         ('Personal Information', {
             'fields': ('name', 'short_bio', 'description', 'email', 'website')
@@ -98,17 +98,17 @@ class CustomUserAdmin(UserAdmin):
     # فیلدهایی که در صفحه جزئیات نمایش داده می‌شوند
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
-        ('Personal info', {'fields': ('full_name',)}),
+        ('Personal info', {'fields': ('full_name', "plan", "plan_expires_at")}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
     # فیلدهایی که هنگام ایجاد کاربر نمایش داده می‌شوند
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('phone', 'full_name', 'password1', 'password2', 'is_staff', 'is_active'),
-        }),
+        (None, {'fields': ('phone', 'password')}),
+        ('Personal info', {'fields': ('full_name', "phone", "plan", "plan_expires_at")}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
     search_fields = ('phone', 'full_name')

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
+from django.core.validators import MinLengthValidator
 
 class UserManager(BaseUserManager):
     def create_user(self, phone, full_name=None, password=None):
@@ -28,11 +29,19 @@ class UserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    class UserPlan(models.TextChoices):
+        FREE = "free", "Free"
+        BASIC = "basic", "Basic"
+        PRO = "pro", "Pro"
+
     phone = models.CharField(max_length=11, unique=True)
     full_name = models.CharField(max_length=100, blank=True, null=True)
     username = models.CharField(max_length=100, unique=True, blank=True)
+    plan = models.CharField(max_length=10, choices=UserPlan, default=UserPlan.FREE)
+    plan_expires_at = models.DateTimeField()
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -40,6 +49,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["full_name"]
 
     objects = UserManager()
+
+    def plan_expires(self):
+        if not self.plan_expires_at:
+            return 0
+
+        delta = self.plan_expires_at.date() - timezone.now().date()
+        return max(delta.days, 0)
 
     def __str__(self):
         return self.phone
@@ -115,7 +131,7 @@ class SiteContext(models.Model):
 
     footer_section_text_part1 = models.CharField(max_length=200)
     footer_telegram_url = models.URLField()
-    footer_linkdin_url = models.URLField()
+    footer_linkedin_url = models.URLField()
     footer_github_url = models.URLField()
     footer_instagram_url = models.URLField()
 
@@ -125,21 +141,26 @@ class SiteContext(models.Model):
 
 class UserCard(models.Model):
     COLOR_CHOICES = (
-        ('default', 'Default X-Link'),
-        ('blue', 'Blue'),
-        ('gold', 'Gold'),
-        ('orange', 'Orange'),
-        ('gray', 'Gray'),
-        ('mint', 'Mint'),
-        ('pink', 'Pink'),
-        ('purple', 'Purple'),
-        ('red', 'Red'),
-        ('green', 'Green'),
-    )
+    ('default', 'ایکس‌لینک پیش‌فرض'),
+    ('blue', 'آبی'),
+    ('gold', 'طلایی'),
+    ('orange', 'نارنجی'),
+    ('gray', 'خاکستری'),
+    ('mint', 'نعنایی'),
+    ('pink', 'صورتی'),
+    ('purple', 'بنفش'),
+    ('red', 'قرمز'),
+    ('green', 'سبز'),
+)
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='user_card')
-    username = models.SlugField(max_length=255, unique=True)
-    profile_picture = models.ImageField(upload_to='profile_pics', blank=True)
+    blue_tick = models.BooleanField(default=False)
+    stars_background = models.BooleanField(default=False)
+    black_background = models.BooleanField(default=False)
+    views = models.IntegerField(default=0)
+    show_views = models.BooleanField(default=False)
+    username = models.SlugField(max_length=32, unique=True, validators=[])
+    profile_picture = models.ImageField(upload_to='profile_pics')
     template = models.ForeignKey(
         'Xlink.CardTemplate',
         on_delete=models.SET_NULL,
@@ -156,7 +177,7 @@ class UserCard(models.Model):
     description = models.TextField(blank=True)
     email = models.EmailField(blank=True)
     website = models.URLField(blank=True)
-    
+
     # Social Media
     instagram_username = models.CharField(max_length=255, blank=True)
     telegram_username = models.CharField(max_length=255, blank=True)
@@ -167,7 +188,7 @@ class UserCard(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -181,7 +202,7 @@ class UserCard(models.Model):
 
 class Skill(models.Model):
     user_card = models.ForeignKey(UserCard, on_delete=models.CASCADE, related_name='skills')
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

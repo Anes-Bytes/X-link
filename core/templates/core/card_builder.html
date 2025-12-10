@@ -47,6 +47,78 @@
                     <div class="error-message">{{ form.color.errors }}</div>
                     {% endif %}
                 </div>
+                {% if user.plan == "pro" %}
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                    <input
+                        type="checkbox"
+                        id="stars_bg"
+                        name="stars_bg"
+                        {% if form.instance.stars_background %}checked{% endif %}
+                    >
+                    <label for="stars_bg">بک‌گراند ستاره‌ای</label>
+                </div>
+
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                    <input
+                        type="checkbox"
+                        id="black_bg"
+                        name="black_bg"
+                        {% if form.instance.black_background %}checked{% endif %}
+                    >
+                    <label for="black_bg">رنگ مشکی</label>
+                </div>
+
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                    <input
+                        type="checkbox"
+                        id="blue_check"
+                        name="blue_tick"
+                        {% if form.instance.blue_tick %}checked{% endif %}
+                    >
+                    <label for="blue_check" style="cursor: pointer;">تیک آبی</label>
+                </div>
+                {% else %}
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input
+            type="checkbox"
+            id="stars_bg"
+            name="stars_bg"
+            disabled
+        >
+        <label for="stars_bg">بک‌گراند ستاره‌ای</label>
+    </div>
+    <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+</div>
+
+<div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input
+            type="checkbox"
+            id="black_bg"
+            name="black_bg"
+            disabled
+        >
+        <label for="black_bg">رنگ مشکی</label>
+    </div>
+    <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+</div>
+
+<div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input
+            type="checkbox"
+            id="blue_check"
+            name="blue_tick"
+            disabled
+        >
+        <label for="blue_check">تیک آبی</label>
+    </div>
+    <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+</div>
+
+                {% endif %}
+
             </div>
 
             <!-- Personal Information Section -->
@@ -181,37 +253,63 @@
             </div>
 
             <!-- Skills Section -->
-            <div class="form-section">
-                <h2>مرحله 5: مهارت ها</h2>
+<div class="form-section">
+    <h2>مرحله 5: مهارت‌ها</h2>
 
-                <div id="skillsContainer" class="skills-container">
-                    {% for skill_form in formset %}
-                    <div class="skill-form-group" data-form-index="{{ forloop.counter0 }}">
-                        <div class="skill-input-wrapper">
-                            {{ skill_form.name }}
-                            {% if skill_form.DELETE %}
-                            <div class="skill-checkbox">
-                                {{ skill_form.DELETE }}
-                                <label for="{{ skill_form.DELETE.id_for_label }}">حذف</label>
-                            </div>
-                            {% endif %}
-                        </div>
-                        {% if skill_form.errors %}
-                        <div class="error-message">{{ skill_form.errors }}</div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
+    <!-- container مهارت‌ها -->
+    <div id="skillsContainer" class="skills-container">
+        {% for skill_form in formset %}
+        <div class="skill-form-group" data-form-index="{{ forloop.counter0 }}">
+            {{ skill_form.id }}  <!-- hidden field PK فرم‌های موجود -->
+
+            <div class="skill-input-wrapper">
+                {{ skill_form.name }} <!-- نام مهارت -->
+
+                {% if skill_form.DELETE %}
+                <div class="skill-checkbox">
+                    {{ skill_form.DELETE }} <!-- checkbox حذف -->
+                    <label for="{{ skill_form.DELETE.id_for_label }}">حذف</label>
                 </div>
-
-                <button type="button" class="add-skill-btn" id="addSkillBtn">
-                    <i class="fas fa-plus"></i> افزودن مهارت
-                </button>
-
-                <!-- Hidden formset management -->
-                <div id="skillFormsetControl" style="display: none;">
-                    {{ formset.management_form }}
-                </div>
+                {% endif %}
             </div>
+
+            {% if skill_form.errors %}
+            <div class="error-message">{{ skill_form.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="add-skill-btn" id="addSkillBtn">
+        <i class="fas fa-plus"></i> افزودن مهارت
+    </button>
+
+    <!-- hidden formset management -->
+    <div style="display: none;">
+        {{ formset.management_form }}
+    </div>
+</div>
+
+<script>
+const addSkillBtn = document.getElementById('addSkillBtn');
+const skillsContainer = document.getElementById('skillsContainer');
+const totalForms = document.querySelector('#id_form-TOTAL_FORMS');
+
+addSkillBtn.addEventListener('click', () => {
+    const formIdx = parseInt(totalForms.value);
+    const newFormHtml = `
+        <div class="skill-form-group" data-form-index="${formIdx}">
+            <div class="skill-input-wrapper">
+                <input type="text" name="form-${formIdx}-name" id="id_form-${formIdx}-name">
+                <input type="checkbox" name="form-${formIdx}-DELETE" id="id_form-${formIdx}-DELETE">
+                <label for="id_form-${formIdx}-DELETE">حذف</label>
+            </div>
+        </div>
+    `;
+    skillsContainer.insertAdjacentHTML('beforeend', newFormHtml);
+    totalForms.value = formIdx + 1; // آپدیت TOTAL_FORMS
+});
+</script>
 
             <!-- Form Actions -->
             <div class="form-actions">
