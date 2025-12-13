@@ -7,6 +7,7 @@
     <title>{% block page_title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block styles %} {% endblock %}
 </head>
 <body>
 
@@ -18,7 +19,7 @@
                 </div>
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="{% url 'home' %}" class="nav-link">خانه</a></li>
-                    <li><a href="#features" class="nav-link">قابلیت ها</a></li>
+                    <li><a href="{% url 'pricing' %}" class="nav-link">خرید اشتراک</a></li>
                     <li><a href="#templates" class="nav-link">قالب ها</a></li>
                     <li><a href="#about" class="nav-link">درباره ایکس لینک</a></li>
                     {% if user.is_authenticated %}

@@ -1,0 +1,247 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}{{ site_context.site_name }} {% endblock %}
+
+{% block styles %}
+
+    <link rel="stylesheet" href="{% static 'pricing-farsi.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block page_content %}
+    <!-- Navigation -->
+    <nav class="pricing-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-link"></i>
+                <span>X-Link</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">خانه</a></li>
+                <li><a href="#pricing">قیمت‌گذاری</a></li>
+                <li><a href="#faq">سوالات متداول</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Background Animation -->
+    <div class="background-container">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="pricing-container">
+        <!-- Header Section -->
+        <section class="pricing-header">
+            <h1 class="header-title">
+                پلن مناسب خود را انتخاب کنید
+                <span class="title-highlight">امکانات نامحدود را باز کنید</span>
+            </h1>
+            <p class="header-subtitle">با پلن‌های اشتراک انعطاف‌پذیر ما حضور آنلاین خود را گسترش دهید. رایگان شروع کنید و هر زمان ارتقا دهید.</p>
+            
+            <!-- Billing Toggle -->
+            <div class="billing-toggle">
+                <button class="toggle-btn active" data-period="monthly">ماهانه</button>
+                <span class="toggle-label">۲۵٪ تخفیف برای سالانه</span>
+                <button class="toggle-btn" data-period="annual">سالانه</button>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="pricing-cards" id="pricing">
+            <!-- Starter Plan -->
+            {% for plan in plans %}
+
+            <!-- Professional Plan -->
+            <div class="pricing-card professional-card {% if plan.is_special %}featured{% endif %}" data-plan="professional">
+                {% if plan.type == "Pro" %}
+                <div class="featured-badge">پرمیوم</div>
+                {% elif plan.type == "Basic" %}
+                <div class="featured-badge">پرمخاطب</div>
+                {% else %}
+                <div class="featured-badge">رایگان</div>
+                {% endif %}
+                <div class="card-header">
+                    <span class="plan-badge">توصیه شده</span>
+                    <h3 class="plan-name">حرفه‌ای</h3>
+                    <p class="plan-description">برای حرفه‌ای‌های در حال رشد</p>
+                </div>
+
+                <div class="price-section">
+                    <div class="price-wrapper">
+                        <span class="currency">تومان</span>
+                        <span class="price-monthly" data-price="29">{{ plan.get_final_price|floatformat|intcomma }}</span>
+                        <span class="period">/ماه</span>
+                    </div>
+                    {% if plan.discount %}
+                    <div class="price-info">
+                        <span class="original-price" data-original="39">قیمت اصلی: تومان{{ plan.price }}</span>
+                        <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <ul class="features-list">
+                    {% for feature in plan.Features.all %}
+                    <li><i class="fas fa-check"></i><span>{{ feature.name }}</span></li>
+                    {% endfor %}
+                </ul>
+                {% if plan.type == "Pro" %}
+                <button class="cta-button cta-primary" onclick="selectPlan('enterprise', 99)">
+                    <span>انتخاب</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                {% elif plan.type == "Basic" %}
+                <button class="cta-button cta-primary" onclick="selectPlan('enterprise', 99)">
+                    <span>انتخاب</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                {% else %}
+                <button class="cta-button cta-secondary" onclick="selectPlan('professional', 29)">
+                    <span>شروع رایگان</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="comparison-section">
+            <h2>مقایسه تفصیلی ویژگی‌ها</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>رایگان</th>
+                            <th>پایه</th>
+                            <th>پرمیوم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>قالب ها</td>
+                            <td><span class="badge-check">پیشفرض ایکس لینک</span></td>
+                            <td><span class="badge-check">همه قالب ها</span></td>
+                            <td><span class="badge-check">همه قالب ها+مشکی</span></td>
+                        </tr>
+                        <tr>
+                            <td>بخش فروشگاه</td>
+                            <td><span class="badge-cross">ندارد</span></td>
+                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-check">دارد</span></td>
+                        </tr>
+                        <tr>
+                            <td>آپتایم</td>
+                            <td><span class="badge-check">%99.9</span></td>
+                            <td><span class="badge-check">%99.9</span></td>
+                            <td><span class="badge-check">%99.9</span></td>
+                        </tr>
+                        <tr>
+                            <td>تیک آبی</td>
+                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-check">دارد</span></td>
+                        </tr>
+                        <tr>
+                            <td>بک گراند ستاره ای</td>
+                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-check">دارد</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <h2>سوالات متداول</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>آیا می‌توانم پلان خود را بعداً تغییر دهم؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden">
+                        <p>بله! می‌توانید هر زمان پلان خود را ارتقا دهید.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>آیا بازگشت وجه دارید؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden">
+                        <p>ما تضمین بازپرداخت ۳۰ روزه ارائه می‌دهیم. اگر راضی نیستید، با تیم پشتیبانی ما تماس بگیرید.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>آیا دوره آزمایشی رایگان وجود دارد؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden">
+                        <p>بله پلن همیشگی رایگان داریم اما با قابلیت های محدود</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>چه روش‌های پرداخت قبول می‌کنید؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden">
+                        <p>فعلا فقط زرینپال داریم</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>آیا می‌توانم هرزمان خواستم ویزیت کارتم رو ادیت کنم؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden">
+                        <p>البته! ویزیت کارت خودتون رو میتونید از بخش پنل کاربری ادیت کنید.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>آیا تخفیف برای صورت‌حساب سالانه ارائه می‌دهید؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden">
+                        <p>بله! پلان‌های سالانه شامل تخفیف ۲۵٪ در مقایسه با صورت‌حساب ماهانه‌ای هستند.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-final">
+            <h2>آماده شروع هستید؟</h2>
+            <p>به هزاران حرفه‌ای‌ای بپیوندید که از X-Link برای گسترش حضور آنلاین خود استفاده می‌کنند</p>
+            <button class="cta-button cta-large" onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">
+                <span>انتخاب یک پلان</span>
+                <i class="fas fa-arrow-down"></i>
+            </button>
+        </section>
+    </div>
+
+    <script src="{% static 'pricing-farsi.js' %}"></script>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, Customers, Templates, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners
+from .models import CustomUser, Customers, Template, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners
 
 
 # ========== Inline ADMINS ==========
@@ -36,7 +36,7 @@ class SiteContextAdmin(admin.ModelAdmin):
     search_fields = ('site_name',)
 
 
-@admin.register(Templates)
+@admin.register(Template)
 class TemplatesAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
@@ -76,13 +76,6 @@ class UserCardAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user_card', 'created_at')
-    list_filter = ('created_at',)
-    search_fields = ('name', 'user_card__name')
-    readonly_fields = ('created_at',)
-
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -117,3 +110,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(Discount)
 admin.site.register(Banners)
+admin.register(Template)

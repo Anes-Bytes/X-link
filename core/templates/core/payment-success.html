@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرداخت موفق - X-Link</title>
+    <link rel="stylesheet" href="{% static 'payment-success-farsi.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-container">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="success-container">
+        <div class="success-card">
+            <!-- Success Icon -->
+            <div class="success-icon">
+                <div class="checkmark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-content">
+                <h1>پرداخت موفق!</h1>
+                <p class="subtitle">خوش‌آمدید به پلان جدید خود</p>
+
+                <!-- Plan Details -->
+                <div class="plan-details">
+                    <div class="detail-box">
+                        <span class="detail-label">پلان فعال‌شده</span>
+                        <span class="detail-value" id="planName">حرفه‌ای</span>
+                    </div>
+                    <div class="detail-box">
+                        <span class="detail-label">مبلغ پرداخت‌شده</span>
+                        <span class="detail-value" id="amountPaid">$29.00</span>
+                    </div>
+                    <div class="detail-box">
+                        <span class="detail-label">دوره صورت‌حساب</span>
+                        <span class="detail-value" id="billingCycle">ماهانه</span>
+                    </div>
+                </div>
+
+                <!-- Features Unlocked -->
+                <div class="features-unlocked">
+                    <h3>اکنون شما دسترسی دارید به:</h3>
+                    <ul class="features-grid" id="featuresGrid">
+                        <li><i class="fas fa-check-circle"></i><span>کارت‌های دیجیتال نامحدود</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>تجزیه‌وتحلیل پیشرفته</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>پشتیبانی اولویت‌دار</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>دامنه‌های سفارشی</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>همکاری تیمی</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>دسترسی API</span></li>
+                    </ul>
+                </div>
+
+                <!-- Confirmation Details -->
+                <div class="confirmation-details">
+                    <div class="detail-item">
+                        <span class="label">شناسه سفارش</span>
+                        <span class="value" id="orderId">ORD-20250612-12345</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">تاریخ تراکنش</span>
+                        <span class="value" id="transactionDate">۱۲ دسامبر ۲۰۲۵</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">تایید ایمیل</span>
+                        <span class="value">صندوق ورودی خود را بررسی کنید</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="dashboard.html" class="btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>رفتن به داشبورد</span>
+                    </a>
+                    <a href="pricing.html" class="btn-secondary">
+                        <i class="fas fa-home"></i>
+                        <span>بازگشت به خانه</span>
+                    </a>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="next-steps">
+                    <h4>مراحل بعدی:</h4>
+                    <ol>
+                        <li>ایمیل خود را برای فعال‌سازی حساب تایید کنید</li>
+                        <li>تنظیمات پروفایل خود را تکمیل کنید</li>
+                        <li>اولین کارت دیجیتال خود را بسازید</li>
+                        <li>X-Link خود را با دیگران به اشتراک بگذارید</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Download Invoice -->
+            <button class="download-invoice" onclick="downloadInvoice()">
+                <i class="fas fa-download"></i>
+                <span>دانلود صورت‌حساب</span>
+            </button>
+        </div>
+
+        <!-- Confetti Animation Container -->
+        <canvas id="confettiCanvas"></canvas>
+    </div>
+
+    <script src="{% static 'payment-success-farsi.js' %}"></script>
+</body>
+</html>

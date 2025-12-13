@@ -227,6 +227,7 @@
 
                 <!-- 2. VISIT CARD SECTION -->
                 <section id="visit-card-section" class="section" style="display: none;">
+                {% if user_card %}
                     <div class="section-header">
                         <h2>کارت‌های ویزیت شما</h2>
                         <button class="btn btn-primary" id="createCardBtn">
@@ -318,6 +319,18 @@
                             </div>
                         </div>
                     </div>
+                                    {% else %}
+    <div class="empty-card">
+        <i class="fas fa-id-card empty-icon"></i>
+        <h2>هنوز کارت ویزیتی نداری 😕</h2>
+        <p>
+            با ساخت کارت ویزیت دیجیتال، لینک اختصاصی، QR کد و پروفایل حرفه‌ای داشته باش
+        </p>
+        <a href="{% url 'card_builder' %}" class="btn btn-primary btn-lg">
+            🚀 همین الان کارت ویزیت خودتو بساز
+        </a>
+    </div>
+{% endif %}
                 </section>
 
                 <!-- 3. PLAN & SUBSCRIPTION SECTION -->

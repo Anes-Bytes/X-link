@@ -1,0 +1,597 @@
+/* ============================================
+   FAILED PAGE - X-LINK THEME - FARSI (RTL)
+   ============================================ */
+
+:root {
+    /* X-Link Theme Colors */
+    --bg-dark: #0A0F1F;
+    --primary-blue: #3A86FF;
+    --cyan-neon: #00F6FF;
+    --text-white: #F5F8FF;
+    --text-gray: rgba(245, 248, 255, 0.7);
+    --text-gray-dim: rgba(245, 248, 255, 0.5);
+    --danger: #FF4757;
+    --warning: #FFA502;
+
+    /* Card & Border Colors */
+    --card-bg: rgba(58, 134, 255, 0.05);
+    --card-border: rgba(0, 246, 255, 0.2);
+    --card-hover: rgba(58, 134, 255, 0.1);
+
+    /* Shadows & Effects */
+    --shadow-sm: 0 2px 8px rgba(58, 134, 255, 0.1);
+    --shadow-md: 0 8px 24px rgba(58, 134, 255, 0.15);
+    --shadow-lg: 0 20px 40px rgba(58, 134, 255, 0.2);
+    --glow-danger: 0 0 20px rgba(255, 71, 87, 0.3);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Vazirmatn', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+/* ============================================
+   BACKGROUND ANIMATION
+   ============================================ */
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--danger);
+    top: -100px;
+    right: -100px;
+    animation: float-1 25s ease-in-out infinite;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: var(--warning);
+    bottom: -150px;
+    left: -150px;
+    animation: float-2 30s ease-in-out infinite;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: var(--primary-blue);
+    top: 50%;
+    left: 50%;
+    animation: float-3 28s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-50px, -50px); }
+    50% { transform: translate(-100px, 100px); }
+    75% { transform: translate(50px, 50px); }
+}
+
+@keyframes float-2 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(50px, 100px); }
+    50% { transform: translate(100px, -50px); }
+    75% { transform: translate(-50px, -100px); }
+}
+
+@keyframes float-3 {
+    0%, 100% { transform: translate(-50%, -50%); }
+    25% { transform: translate(calc(-50% + 80px), calc(-50% - 80px)); }
+    50% { transform: translate(calc(-50% - 100px), calc(-50% + 100px)); }
+    75% { transform: translate(calc(-50% + 60px), calc(-50% + 60px)); }
+}
+
+/* ============================================
+   FAILED CONTAINER
+   ============================================ */
+
+.failed-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+
+/* ============================================
+   FAILED CARD
+   ============================================ */
+
+.failed-card {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 165, 2, 0.05));
+    border: 2px solid rgba(255, 71, 87, 0.4);
+    border-radius: 30px;
+    padding: 3rem;
+    max-width: 650px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(255, 71, 87, 0.2);
+    animation: failedSlideIn 0.8s ease-out;
+}
+
+@keyframes failedSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.failed-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* ============================================
+   ERROR ICON
+   ============================================ */
+
+.error-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: scaleIn 0.8s ease-out 0.3s both;
+}
+
+.error-symbol {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(255, 165, 2, 0.2));
+    border: 3px solid var(--danger);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 40px rgba(255, 71, 87, 0.4);
+}
+
+.error-symbol svg {
+    width: 60px;
+    height: 60px;
+    stroke: var(--danger);
+    filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.5));
+    animation: shake 0.6s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   FAILED CONTENT
+   ============================================ */
+
+.failed-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.failed-content h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--danger);
+    animation: fadeInDown 0.8s ease-out 0.2s both;
+}
+
+.subtitle {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.8s ease-out 0.3s both;
+}
+
+/* ============================================
+   ERROR DETAILS
+   ============================================ */
+
+.error-details {
+    background: rgba(255, 71, 87, 0.08);
+    border: 1px solid rgba(255, 71, 87, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.detail-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-white);
+    flex-direction: row-reverse;
+}
+
+.detail-box i {
+    color: var(--danger);
+    font-size: 1.5rem;
+}
+
+.detail-box span {
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+/* ============================================
+   PLAN INFO
+   ============================================ */
+
+.plan-info {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+.plan-info h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+    font-size: 1rem;
+}
+
+.plan-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 246, 255, 0.05);
+    flex-direction: row-reverse;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item .label {
+    color: var(--text-gray-dim);
+    font-size: 0.9rem;
+}
+
+.detail-item .value {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+/* ============================================
+   SOLUTIONS
+   ============================================ */
+
+.solutions {
+    background: rgba(255, 165, 2, 0.05);
+    border: 1px solid rgba(255, 165, 2, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: right;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.solutions h4 {
+    margin-bottom: 1rem;
+    color: var(--warning);
+    font-size: 1rem;
+}
+
+.solutions ul {
+    list-style: none;
+}
+
+.solutions li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    transition: var(--transition);
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.solutions li:hover {
+    color: var(--text-white);
+    transform: translateX(-5px);
+}
+
+.solutions i {
+    color: var(--warning);
+    flex-shrink: 0;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.7s both;
+}
+
+@media (max-width: 480px) {
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    flex-direction: row-reverse;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--danger), var(--warning));
+    color: var(--bg-dark);
+    box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 71, 87, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.btn-secondary:hover {
+    background: rgba(58, 134, 255, 0.1);
+    border-color: var(--cyan-neon);
+    color: var(--cyan-neon);
+}
+
+/* ============================================
+   ALTERNATIVE PAYMENT METHODS
+   ============================================ */
+
+.alternative-methods {
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.alternative-methods h4 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+    font-size: 1rem;
+}
+
+.payment-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.payment-option {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+}
+
+.payment-option:hover {
+    background: rgba(58, 134, 255, 0.1);
+    border-color: var(--cyan-neon);
+    color: var(--cyan-neon);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 246, 255, 0.15);
+}
+
+.payment-option i {
+    font-size: 1.5rem;
+}
+
+.payment-option span {
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* ============================================
+   HELPFUL LINKS
+   ============================================ */
+
+.helpful-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 0.9s both;
+}
+
+.helpful-links a {
+    background: rgba(58, 134, 255, 0.08);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    color: var(--primary-blue);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    font-weight: 600;
+    flex-direction: row-reverse;
+}
+
+.helpful-links a:hover {
+    background: rgba(0, 246, 255, 0.1);
+    border-color: var(--cyan-neon);
+    color: var(--cyan-neon);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .failed-card {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+
+    .failed-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .payment-options {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .failed-card {
+        padding: 1.5rem;
+    }
+
+    .failed-content h1 {
+        font-size: 1.3rem;
+    }
+
+    .error-symbol {
+        width: 80px;
+        height: 80px;
+    }
+
+    .error-symbol svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+
+    .helpful-links {
+        flex-direction: column;
+    }
+
+    .helpful-links a {
+        width: 100%;
+        justify-content: center;
+    }
+}

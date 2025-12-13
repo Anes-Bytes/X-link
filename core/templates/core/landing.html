@@ -1,0 +1,147 @@
+{% extends '_base.html' %}
+{% load humanize %}
+{% block page_title %} X-Link - Digital Business Card Platform {% endblock %}
+
+{% block page_content %}
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+        </div>
+
+        <!-- Navigation -->
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">{{ site_context.hero_section_text_part1 }}</span>
+                    <span class="title-line">{{ hero_section_text_part2 }}</span>
+                </h1>
+                <p class="hero-description">
+                    {{ site_context.hero_section_text_description }}
+                </p>
+                <a href="{% url 'card_builder' %}" class="cta-button">
+                    <span>رایگان شروع کنید</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Hero Slider -->
+        <div class="hero-slider">
+            <div class="slider-container" id="heroSlider">
+                {% for banner in banners %}
+                <div class="slide {% if forloop.counter == 1 %}active{% endif %}">
+                    <div class="slide-content">
+                        <h3>{{ banner.title }}</h3>
+                        <p>{{ banner.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="slider-dots">
+                {% for banner in banners %}
+                <span class="dot {% if forloop.counter == 1 %}active{% endif %}" data-slide="{{ forloop.counter }}"></span>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Slider Section -->
+    <section class="brand-slider-section">
+        <div class="brand-slider-container">
+            <div class="brand-slider-track" id="brandSlider">
+                {% for customer in customers %}
+                <div class="brand-item">
+                    {% if customer.company_logo %}
+                    <div class="brand-logo">
+                        <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                    </div>
+                    {% else %}
+                    <div class="brand-logo">{{ customer.company_name }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <!-- Duplicate for continuous scroll -->
+                {% for customer in customers %}
+                <div class="brand-item">
+                    {% if customer.company_logo %}
+                    <div class="brand-logo">
+                        <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                    </div>
+                    {% else %}
+                    <div class="brand-logo">{{ customer.company_name }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Preview Section -->
+<section class="templates-section" id="templates">
+    <div class="container">
+        <h2 class="section-title">قالب های تک و جذاب ایکس لینک</h2>
+
+        <div class="templates-grid">
+            {% for template in templates %}
+            <div class="template-card">
+                <div class="template-image-wrapper">
+                    <img src="{{ template.image.url }}"
+                         alt="{{ template.name }}"
+                         class="template-image">
+                </div>
+
+                <div class="template-info">
+                    <h4 class="template-title">{{ template.name }}</h4>
+
+                    <button class="template-select-btn"
+                            onclick="selectTemplate({{ template.template_id }}, '{{ template.name }}')">
+                    ساخت کارت ویزیت
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p style="text-align: center">هیچ قالبی موجود نیست</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">پلن های قیمت ایکس لینک</h2>
+            <div class="pricing-grid">
+                {% for plan in plans %}
+                <div class="pricing-card {% if plan.is_special %}featured{% endif %}" data-aos="fade-up" {% if plan.is_special %}data-aos-delay="100"{% endif %}>
+                    {% if plan.is_special %}
+                    <div class="popular-badge">پرفروش ترین</div>
+                    {% endif %}
+                    <div class="pricing-header">
+                        <h3 class="plan-name">{{ plan.name }}</h3>
+                        <div class="plan-price">
+                            <span class="currency">تومان</span>
+                            <span class="amount">{{ plan.get_final_price|floatformat|intcomma }}</span>
+                            <span class="period">/ماه</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        {% for feature in plan.Features.all %}
+                        <li><i class="fas fa-check"></i>{{ feature.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button class="plan-button">انتخاب</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

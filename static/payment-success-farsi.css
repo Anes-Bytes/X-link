@@ -1,0 +1,610 @@
+/* ============================================
+   SUCCESS PAGE - X-LINK THEME - FARSI (RTL)
+   ============================================ */
+
+:root {
+    /* X-Link Theme Colors */
+    --bg-dark: #0A0F1F;
+    --primary-blue: #3A86FF;
+    --cyan-neon: #00F6FF;
+    --text-white: #F5F8FF;
+    --text-gray: rgba(245, 248, 255, 0.7);
+    --text-gray-dim: rgba(245, 248, 255, 0.5);
+    --success: #2ED573;
+    --danger: #FF4757;
+
+    /* Card & Border Colors */
+    --card-bg: rgba(58, 134, 255, 0.05);
+    --card-border: rgba(0, 246, 255, 0.2);
+    --card-hover: rgba(58, 134, 255, 0.1);
+
+    /* Shadows & Effects */
+    --shadow-sm: 0 2px 8px rgba(58, 134, 255, 0.1);
+    --shadow-md: 0 8px 24px rgba(58, 134, 255, 0.15);
+    --shadow-lg: 0 20px 40px rgba(58, 134, 255, 0.2);
+    --glow-blue: 0 0 20px rgba(58, 134, 255, 0.3);
+    --glow-cyan: 0 0 20px rgba(0, 246, 255, 0.3);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Vazirmatn', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+/* ============================================
+   BACKGROUND ANIMATION
+   ============================================ */
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--success);
+    top: -100px;
+    right: -100px;
+    animation: float-1 25s ease-in-out infinite;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: var(--cyan-neon);
+    bottom: -150px;
+    left: -150px;
+    animation: float-2 30s ease-in-out infinite;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: var(--primary-blue);
+    top: 50%;
+    left: 50%;
+    animation: float-3 28s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-50px, -50px); }
+    50% { transform: translate(-100px, 100px); }
+    75% { transform: translate(50px, 50px); }
+}
+
+@keyframes float-2 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(50px, 100px); }
+    50% { transform: translate(100px, -50px); }
+    75% { transform: translate(-50px, -100px); }
+}
+
+@keyframes float-3 {
+    0%, 100% { transform: translate(-50%, -50%); }
+    25% { transform: translate(calc(-50% + 80px), calc(-50% - 80px)); }
+    50% { transform: translate(calc(-50% - 100px), calc(-50% + 100px)); }
+    75% { transform: translate(calc(-50% + 60px), calc(-50% + 60px)); }
+}
+
+/* ============================================
+   SUCCESS CONTAINER
+   ============================================ */
+
+.success-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+
+#confettiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ============================================
+   SUCCESS CARD
+   ============================================ */
+
+.success-card {
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.1), rgba(0, 246, 255, 0.05));
+    border: 2px solid rgba(46, 213, 115, 0.4);
+    border-radius: 30px;
+    padding: 3rem;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(46, 213, 115, 0.2);
+    animation: successSlideIn 0.8s ease-out;
+}
+
+@keyframes successSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* ============================================
+   SUCCESS ICON
+   ============================================ */
+
+.success-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: scaleIn 0.8s ease-out 0.3s both;
+}
+
+.checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.2), rgba(0, 246, 255, 0.2));
+    border: 3px solid var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 40px rgba(46, 213, 115, 0.4);
+}
+
+.checkmark svg {
+    width: 60px;
+    height: 60px;
+    stroke: var(--success);
+    filter: drop-shadow(0 0 10px rgba(46, 213, 115, 0.5));
+    animation: checkmarkDraw 0.8s ease-out 0.5s both;
+}
+
+@keyframes checkmarkDraw {
+    0% {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   SUCCESS CONTENT
+   ============================================ */
+
+.success-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.success-content h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--success), var(--cyan-neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInDown 0.8s ease-out 0.2s both;
+}
+
+.subtitle {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.8s ease-out 0.3s both;
+}
+
+/* ============================================
+   PLAN DETAILS
+   ============================================ */
+
+.plan-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.detail-box {
+    background: rgba(46, 213, 115, 0.08);
+    border: 1px solid rgba(46, 213, 115, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.detail-box:hover {
+    background: rgba(46, 213, 115, 0.12);
+    border-color: var(--success);
+    box-shadow: 0 0 20px rgba(46, 213, 115, 0.15);
+}
+
+.detail-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-gray-dim);
+    margin-bottom: 0.5rem;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.detail-value {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--success);
+    font-weight: 800;
+}
+
+/* ============================================
+   FEATURES UNLOCKED
+   ============================================ */
+
+.features-unlocked {
+    background: rgba(0, 246, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+.features-unlocked h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    list-style: none;
+}
+
+.features-grid li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    transition: var(--transition);
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.features-grid li:hover {
+    color: var(--success);
+    transform: translateX(-5px);
+}
+
+.features-grid i {
+    color: var(--success);
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   CONFIRMATION DETAILS
+   ============================================ */
+
+.confirmation-details {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 246, 255, 0.05);
+    flex-direction: row-reverse;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item .label {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.detail-item .value {
+    color: var(--text-white);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.7s both;
+}
+
+@media (max-width: 480px) {
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    flex-direction: row-reverse;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--success), var(--cyan-neon));
+    color: var(--bg-dark);
+    box-shadow: 0 10px 30px rgba(46, 213, 115, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(46, 213, 115, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.btn-secondary:hover {
+    background: rgba(58, 134, 255, 0.1);
+    border-color: var(--cyan-neon);
+    color: var(--cyan-neon);
+}
+
+/* ============================================
+   NEXT STEPS
+   ============================================ */
+
+.next-steps {
+    background: rgba(58, 134, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 0;
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.next-steps h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-blue);
+    font-size: 1rem;
+}
+
+.next-steps ol {
+    list-style-position: inside;
+    color: var(--text-gray);
+    text-align: right;
+}
+
+.next-steps li {
+    padding: 0.5rem 0;
+    transition: var(--transition);
+}
+
+.next-steps li:hover {
+    color: var(--cyan-neon);
+    transform: translateX(-5px);
+}
+
+/* ============================================
+   DOWNLOAD INVOICE
+   ============================================ */
+
+.download-invoice {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    background: rgba(0, 246, 255, 0.1);
+    border: 1px solid var(--cyan-neon);
+    color: var(--cyan-neon);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    animation: fadeIn 1.2s ease-out;
+    flex-direction: row-reverse;
+}
+
+.download-invoice:hover {
+    background: var(--cyan-neon);
+    color: var(--bg-dark);
+    box-shadow: 0 0 30px rgba(0, 246, 255, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .success-card {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+
+    .success-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .plan-details {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .download-invoice {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .success-card {
+        padding: 1.5rem;
+    }
+
+    .success-content h1 {
+        font-size: 1.3rem;
+    }
+
+    .checkmark {
+        width: 80px;
+        height: 80px;
+    }
+
+    .checkmark svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .detail-value {
+        font-size: 1.2rem;
+    }
+}

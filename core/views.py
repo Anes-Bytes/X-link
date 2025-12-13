@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.core.cache import cache
+
 import json
 
-from .models import UserCard, Skill
+from .models import UserCard, Skill, Template, Customers, Plan
 from .forms import UserCardForm, SkillInlineFormSet
-from Xlink.models import CardTemplate
 
 
 from django.shortcuts import render, redirect
@@ -40,7 +41,6 @@ def send_sms(phone, code):
     #
     # response = sms.send(to, _from, text)
     print(f"{phone}, {code}")
-
 
 def request_otp(request):
     if request.method == "POST":
@@ -105,27 +105,55 @@ def verify_otp(request):
 
     return render(request, "core/verify.html")
 
+def landing_view(request):
+    templates = cache.get("landing_templates")
+    customers = cache.get("landing_customers")
+    plans = cache.get("landing_plans")
+
+    if templates is None:
+        templates = list(Template.objects.filter(is_active=True))
+        cache.set("landing_templates", templates, 60 * 60)
+
+    if customers is None:
+        customers = list(Customers.objects.all())
+        cache.set("landing_customers", customers, 60 * 60)
+
+    if plans is None:
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").all())
+        cache.set("landing_plans", plans, 60 * 60)
+
+    return render(
+        request,
+        "core/landing.html",
+        {
+            "templates": templates,
+            "customers": customers,
+            "plans": plans,
+        }
+    )
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("home")
     next_page = request.GET.get("next", "")
     return render(request, "core/login.html", {"next": next_page})
 
-
 @login_required
 def dashboard_view(request):
-    user_card = get_object_or_404(UserCard, user=request.user)
-    card_url = user_card.get_card_url()
+    user_card = UserCard.objects.filter(user=request.user).first()
+
+    card_url = None
+    if user_card:
+        card_url = f"https://x-link.ir/{user_card.username}"
 
     return render(
         request,
         "core/dashboard.html",
-        context={
+        {
             "user_card": user_card,
             "card_url": card_url,
         }
     )
-
 
 def card_builder_view(request):
     """Main card builder view - handles card creation and editing"""
@@ -158,7 +186,7 @@ def card_builder_view(request):
         form = UserCardForm(instance=user_card)
         formset = SkillInlineFormSet(instance=user_card) if not is_new else SkillInlineFormSet()
 
-    templates = CardTemplate.objects.filter(is_active=True)
+    templates = Template.objects.filter(is_active=True)
 
     context = {
         'form': form,
@@ -168,7 +196,6 @@ def card_builder_view(request):
     }
     
     return render(request, 'core/card_builder.html', context)
-
 
 @login_required
 def card_success_view(request, card_id):
@@ -183,7 +210,6 @@ def card_success_view(request, card_id):
     
     return render(request, 'core/card_success.html', context)
 
-
 def view_card(request, username):
     """Public view to display user's digital card"""
     user_card = get_object_or_404(UserCard.objects.prefetch_related("skills"), username=username, is_published=True)
@@ -195,7 +221,6 @@ def view_card(request, username):
     }
 
     return render(request, 'core/card_view.html', context)
-
 
 @require_http_methods(["POST"])
 @login_required
@@ -223,7 +248,6 @@ def add_skill_ajax(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
 @require_http_methods(["DELETE"])
 @login_required
 def delete_skill_ajax(request, skill_id):
@@ -236,6 +260,12 @@ def delete_skill_ajax(request, skill_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+def pricing_view(request):
+    plans = list(Plan.objects.select_related("discount").prefetch_related("Features").all())
+    return render(request, 'core/pricing.html', context={'plans': plans})
 
+def payment_success_view(request):
+    return render(request, 'core/payment-success.html')
 
-
+def payment_failed_view(request):
+    return render(request, 'core/payment-failed.html')

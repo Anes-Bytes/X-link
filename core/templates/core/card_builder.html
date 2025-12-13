@@ -22,7 +22,7 @@
                     {% for template in templates %}
                     <div class="template-option">
                         <div class="template-option-image">
-                            <img src="{{ template.preview_image.url }}" alt="{{ template.name }}">
+                            <img src="{{ template.image.url }}" alt="{{ template.name }}">
 
                         </div>
                         <h4>{{ template.name }}</h4>
@@ -76,6 +76,7 @@
                         {% if form.instance.blue_tick %}checked{% endif %}
                     >
                     <label for="blue_check" style="cursor: pointer;">تیک آبی</label>
+
                 </div>
                 {% else %}
                 <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
@@ -115,6 +116,7 @@
         <label for="blue_check">تیک آبی</label>
     </div>
     <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+
 </div>
 
                 {% endif %}

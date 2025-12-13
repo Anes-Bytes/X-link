@@ -29,7 +29,6 @@ INSTALLED_APPS = [
 
     # project apps:
     'core',
-    'Xlink',
 
     "debug_toolbar",
 
@@ -138,6 +137,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_SIGNUP_FIELDS = ["phone", "password1", "password2"]
 
 INTERNAL_IPS = [
     # ...

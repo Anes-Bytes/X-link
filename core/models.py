@@ -1,7 +1,9 @@
+from datetime import timedelta
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
-from django.core.validators import MinLengthValidator
 
 class UserManager(BaseUserManager):
     def create_user(self, phone, full_name=None, password=None):
@@ -28,6 +30,10 @@ class UserManager(BaseUserManager):
         return user
 
 
+def default_expire_time():
+    return timezone.now() + timedelta(days=30)
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     class UserPlan(models.TextChoices):
         FREE = "free", "Free"
@@ -37,23 +43,26 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=11, unique=True)
     full_name = models.CharField(max_length=100, blank=True, null=True)
     username = models.CharField(max_length=100, unique=True, blank=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
+
+    EMAIL_FIELD = "email"             # ← بسیار مهم
+    USERNAME_FIELD = "phone"
+
+    REQUIRED_FIELDS = ["full_name"]
+
     plan = models.CharField(max_length=10, choices=UserPlan, default=UserPlan.FREE)
-    plan_expires_at = models.DateTimeField()
+    plan_expires_at = models.DateTimeField(default=default_expire_time())
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-
     created_at = models.DateTimeField(auto_now_add=True)
-
-    USERNAME_FIELD = "phone"
-    REQUIRED_FIELDS = ["full_name"]
 
     objects = UserManager()
 
     def plan_expires(self):
         if not self.plan_expires_at:
             return 0
-
         delta = self.plan_expires_at.date() - timezone.now().date()
         return max(delta.days, 0)
 
@@ -84,15 +93,6 @@ class Customers(models.Model):
         return self.company_name
 
 
-class Templates(models.Model):
-    name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='templates')
-    delay = models.IntegerField()
-
-    def __str__(self):
-        return self.name
-
-
 class Feature(models.Model):
     plan = models.ForeignKey('Plan', on_delete=models.CASCADE, related_name='Features')
     name = models.CharField(max_length=200)
@@ -109,6 +109,11 @@ class Discount(models.Model):
 
 
 class Plan(models.Model):
+    class TypeChoices(models.TextChoices):
+        Free = "Free", "Free"
+        Basic = "Basic", "Basic"
+        Pro = "Pro", "Pro"
+    type = models.CharField(max_length=20, choices=TypeChoices.choices)
     name = models.CharField(max_length=200)
     price = models.IntegerField()
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE, related_name='+')
@@ -142,7 +147,6 @@ class SiteContext(models.Model):
 class UserCard(models.Model):
     COLOR_CHOICES = (
     ('default', 'ایکس‌لینک پیش‌فرض'),
-    ('blue', 'آبی'),
     ('gold', 'طلایی'),
     ('orange', 'نارنجی'),
     ('gray', 'خاکستری'),
@@ -162,7 +166,7 @@ class UserCard(models.Model):
     username = models.SlugField(max_length=32, unique=True, validators=[])
     profile_picture = models.ImageField(upload_to='profile_pics')
     template = models.ForeignKey(
-        'Xlink.CardTemplate',
+        'core.Template',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -200,6 +204,14 @@ class UserCard(models.Model):
         return f"https://x-link.ir/{self.username}"
 
 
+
+    def clean(self):
+        if self.user.plan == 'free' and self.color != 'default':
+            raise ValidationError({
+                'color': 'این رنگ فقط برای کاربران پلن پرمیوم و پایه فعال است. شما فقط میتوانید از رنگ پیشفرض ایکس لینک استفاده نمایید.'
+            })
+
+
 class Skill(models.Model):
     user_card = models.ForeignKey(UserCard, on_delete=models.CASCADE, related_name='skills')
     name = models.CharField(max_length=255, blank=True)
@@ -219,3 +231,12 @@ class Banners(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Template(models.Model):
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='templates')
+    delay = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+    def __str__(self):
+        return self.name

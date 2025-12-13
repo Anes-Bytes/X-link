@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرداخت ناموفق - X-Link</title>
+    <link rel="stylesheet" href="{% static 'payment-failed-farsi.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-container">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="failed-container">
+        <div class="failed-card">
+            <!-- Error Icon -->
+            <div class="error-icon">
+                <div class="error-symbol">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div class="failed-content">
+                <h1>پرداخت ناموفق</h1>
+                <p class="subtitle">متاسفانه ما نتوانستیم پرداخت شما را پردازش کنیم</p>
+
+                <!-- Error Details -->
+                <div class="error-details">
+                    <div class="detail-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="errorMessage">کارت شما رد شد. لطفاً جزئیات کارت خود را بررسی کنید.</span>
+                    </div>
+                </div>
+
+                <!-- Plan Info -->
+                <div class="plan-info">
+                    <h3>تلاش برای اشتراک</h3>
+                    <div class="plan-details">
+                        <div class="detail-item">
+                            <span class="label">پلان</span>
+                            <span class="value" id="planName">حرفه‌ای</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">مبلغ</span>
+                            <span class="value" id="amount">$29.00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">زمان تلاش</span>
+                            <span class="value" id="attemptTime">همین الآن</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Possible Solutions -->
+                <div class="solutions">
+                    <h4>دلایل احتمالی:</h4>
+                    <ul>
+                        <li><i class="fas fa-info-circle"></i><span>موجودی ناکافی در حساب شما</span></li>
+                        <li><i class="fas fa-info-circle"></i><span>کارت منقضی یا نامعتبر</span></li>
+                        <li><i class="fas fa-info-circle"></i><span>تنظیمات امنیتی تراکنش را مسدود کرد</span></li>
+                        <li><i class="fas fa-info-circle"></i><span>مشکلات اتصال شبکه</span></li>
+                        <li><i class="fas fa-info-circle"></i><span>جزئیات کارت نادرست</span></li>
+                    </ul>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="retryPayment()">
+                        <i class="fas fa-redo"></i>
+                        <span>تلاش مجدد</span>
+                    </button>
+                    <button class="btn-secondary" onclick="contactSupport()">
+                        <i class="fas fa-life-ring"></i>
+                        <span>تماس با پشتیبانی</span>
+                    </button>
+                </div>
+
+                <!-- Alternative Payment Methods -->
+                <div class="alternative-methods">
+                    <h4>روش‌های پرداخت دیگر</h4>
+                    <div class="payment-options">
+                        <button class="payment-option" onclick="selectPaymentMethod('credit-card')">
+                            <i class="fas fa-credit-card"></i>
+                            <span>کارت اعتباری</span>
+                        </button>
+                        <button class="payment-option" onclick="selectPaymentMethod('paypal')">
+                            <i class="fab fa-paypal"></i>
+                            <span>PayPal</span>
+                        </button>
+                        <button class="payment-option" onclick="selectPaymentMethod('bank-transfer')">
+                            <i class="fas fa-university"></i>
+                            <span>انتقال بانکی</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Helpful Links -->
+                <div class="helpful-links">
+                    <a href="pricing.html">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>بازگشت به قیمت‌گذاری</span>
+                    </a>
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>رفتن به خانه</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'payment-failed-farsi.js' %}"></script>
+</body>
+</html>
