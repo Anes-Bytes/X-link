@@ -156,7 +156,6 @@ def dashboard_view(request):
     )
 
 def card_builder_view(request):
-    """Main card builder view - handles card creation and editing"""
     try:
         user_card = UserCard.objects.get(user=request.user)
         is_new = False
@@ -171,30 +170,39 @@ def card_builder_view(request):
         if form.is_valid() and formset.is_valid():
             card = form.save(commit=False)
             card.user = request.user
-            if request.user.plan == CustomUser.UserPlan.PRO:
+
+            # فقط پرمیوم
+            if request.user.plan.filter(name="Pro").exists():
                 card.black_background = bool(request.POST.get("black_bg"))
                 card.stars_background = bool(request.POST.get("stars_bg"))
                 card.blue_tick = bool(request.POST.get("blue_tick"))
-            card.save()
 
+            card.save()
             formset.instance = card
             formset.save()
 
-            # Redirect to success page
             return redirect('card_success', card_id=card.id)
     else:
         form = UserCardForm(instance=user_card)
         formset = SkillInlineFormSet(instance=user_card) if not is_new else SkillInlineFormSet()
 
-    templates = Template.objects.filter(is_active=True)
+    templates = Template.objects.filter(is_active=True).prefetch_related('allowed_plans')
+    user_plans = request.user.plan.all()
+
+    # 🔥 دسترسی هر تمپلیت
+    template_access = {
+        template.id: template.allowed_plans.filter(id__in=user_plans).exists()
+        for template in templates
+    }
 
     context = {
         'form': form,
         'formset': formset,
         'templates': templates,
+        'template_access': template_access,
         'is_new': is_new,
     }
-    
+
     return render(request, 'core/card_builder.html', context)
 
 @login_required

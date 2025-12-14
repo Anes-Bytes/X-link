@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block page_title %}کارت دیجیتالی - X-Link{% endblock %}
 
@@ -15,27 +16,49 @@
             {% csrf_token %}
 
             <!-- Template Selection Section -->
-            <div class="form-section">
-                <h2>مرحله 1: انتخاب قالب</h2>
-                {% if templates %}
-                <div class="template-grid">
-                    {% for template in templates %}
-                    <div class="template-option">
-                        <div class="template-option-image">
-                            <img src="{{ template.image.url }}" alt="{{ template.name }}">
+<div class="form-section">
+    <h2>مرحله 1: انتخاب قالب</h2>
 
-                        </div>
-                        <h4>{{ template.name }}</h4>
-                        <label class="template-radio">
-                            <input type="radio" name="template" value="{{ template.id }}"
-                                   {% if form.instance.template.id == template.id %}checked{% endif %}>
-                            <span>انتخاب</span>
-                        </label>
+    {% if templates %}
+    <div class="template-grid">
+        {% for template in templates %}
+            {% if template_access|dict_get:template.id %}
+                <!-- تمپلیت قابل انتخاب -->
+                <div class="template-option">
+                    <div class="template-option-image">
+                        <img src="{{ template.image.url }}" alt="{{ template.name }}">
                     </div>
-                    {% endfor %}
+                    <h4>{{ template.name }}</h4>
+                    <label class="template-radio">
+                        <input type="radio" name="template" value="{{ template.id }}"
+                               {% if form.instance.template.id == template.id %}checked{% endif %}>
+                        <span>انتخاب</span>
+                    </label>
                 </div>
-                {% endif %}
-            </div>
+            {% else %}
+                <!-- تمپلیت قفل‌شده -->
+                <div class="template-option locked">
+                    <div class="template-option-image">
+                        <img src="{{ template.image.url }}" alt="{{ template.name }}">
+                    </div>
+                    <h4>{{ template.name }}</h4>
+                    <label class="template-radio" style="
+                        background: #007BFF;
+                        color: white;
+                        padding: 6px 12px;
+                        border-radius: 6px;
+                        display: inline-block;
+                        font-weight: bold;
+                        cursor: not-allowed;">
+                        <input type="radio" disabled>
+                        <span>فقط برای پرمیوم 🔒</span>
+                    </label>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 
             <!-- Color Theme Selection -->
             <div class="form-section">
@@ -696,6 +719,16 @@ addSkillBtn.addEventListener('click', () => {
     background: rgba(255, 255, 255, 0.12);
     border-color: var(--cyan-neon);
     box-shadow: 0 0 15px rgba(0, 246, 255, 0.2);
+}
+.template-option.locked {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.lock-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
 }
 
 </style>

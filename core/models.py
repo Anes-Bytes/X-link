@@ -34,24 +34,31 @@ def default_expire_time():
     return timezone.now() + timedelta(days=30)
 
 
+class UserPlan(models.Model):
+    name = models.CharField(max_length=50, choices=[
+        ("Free", "رایگان"),
+        ("Basic", "پایه"),
+        ("Pro", "پرمیوم"),
+    ])
+
+    def __str__(self):
+        return self.name
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    class UserPlan(models.TextChoices):
-        FREE = "free", "Free"
-        BASIC = "basic", "Basic"
-        PRO = "pro", "Pro"
 
     phone = models.CharField(max_length=11, unique=True)
     full_name = models.CharField(max_length=100, blank=True, null=True)
     username = models.CharField(max_length=100, unique=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
 
-    EMAIL_FIELD = "email"             # ← بسیار مهم
+    EMAIL_FIELD = "email"
     USERNAME_FIELD = "phone"
 
     REQUIRED_FIELDS = ["full_name"]
 
-    plan = models.CharField(max_length=10, choices=UserPlan, default=UserPlan.FREE)
-    plan_expires_at = models.DateTimeField(default=default_expire_time())
+    plan = models.ManyToManyField(UserPlan)
+    plan_expires_at = models.DateTimeField(blank=True, null=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -113,6 +120,7 @@ class Plan(models.Model):
         Free = "Free", "Free"
         Basic = "Basic", "Basic"
         Pro = "Pro", "Pro"
+
     type = models.CharField(max_length=20, choices=TypeChoices.choices)
     name = models.CharField(max_length=200)
     price = models.IntegerField()
@@ -237,6 +245,8 @@ class Template(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='templates')
     delay = models.IntegerField()
+    allowed_plans = models.ManyToManyField(UserPlan, blank=True)
     is_active = models.BooleanField(default=True)
+
     def __str__(self):
         return self.name

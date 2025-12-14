@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, Customers, Template, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners
+from .models import CustomUser, Customers, Template, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners, \
+    UserPlan
 
 
 # ========== Inline ADMINS ==========
@@ -110,4 +111,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(Discount)
 admin.site.register(Banners)
-admin.register(Template)
+admin.site.register(UserPlan)
