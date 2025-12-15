@@ -139,6 +139,8 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_SIGNUP_FIELDS = ["phone", "password1", "password2"]
 
+LOGIN_URL = '/register'
+
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",

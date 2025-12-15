@@ -61,12 +61,6 @@
                             <span>طرح و اشتراک</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#security" class="nav-link" data-section="security">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>امنیت</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
 
@@ -74,7 +68,7 @@
                 <button class="mode-toggle" id="modeToggle" title="تغییر تم شب">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="#" class="logout-btn">
+                <a href="{% url 'logout' %}" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>خروج</span>
                 </a>
@@ -95,7 +89,7 @@
                         <span class="notification-badge">2</span>
                     </button>
                     <div class="header-profile">
-                        <img id="headerProfileImg" src="https://via.placeholder.com/40" alt="پروفایل" class="profile-img-small">
+                        <img id="headerProfileImg" src="{{ user_card.profile_picture }}" alt="پروفایل" class="profile-img-small">
                         <div class="profile-menu-trigger">
                             <span id="headerUsername">{{ user.username }}</span>
                             <i class="fas fa-chevron-down"></i>
@@ -215,7 +209,11 @@
                                 </div>
                                 <div class="stat-content">
                                     <p class="stat-label">زمان باقی مانده اشتراک</p>
-                                    <p class="stat-value" id="completion">{{ user.plan_expires }}</p>
+                                                                    {% if user.plan_expires %}
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
+                                {% else %}
+                                <p class="expiry-date" id="expiryDate">♾️</p>
+                                {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -341,7 +339,7 @@
 
                     <!-- Current Plan Card -->
                     <div class="plan-cards">
-                        {% if user.plan == 'basic' %}
+                        {% if has_basic_plan %}
                         <div class="card plan-card active-plan">
                             <div class="plan-badge">پایه</div>
                             <h3>پلن پایه</h3>
@@ -361,11 +359,15 @@
 
                             <div class="plan-expiry">
                                 <p class="expiry-label">انقضا در:</p>
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }}</p>
+                                {% if user.plan_expires %}
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
+                                {% else %}
+                                <p class="expiry-date" id="expiryDate">♾️♾️♾️♾️♾️</p>
+                                {% endif %}
                             </div>
 
                         </div>
-                        {% elif user.plan == "pro" %}
+                        {% elif has_pro_plan %}
                         <div class="card plan-card active-plan">
                             <div class="plan-badge">پرمیوم</div>
                             <h3>پلن پرمیوم</h3>
@@ -389,7 +391,11 @@
 
                             <div class="plan-expiry">
                                 <p class="expiry-label">انقضا در:</p>
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }}</p>
+                                {% if user.plan_expires %}
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
+                                {% else %}
+                                <p class="expiry-date" id="expiryDate">♾️♾️♾️♾️♾️</p>
+                                {% endif %}
                             </div>
 
                         </div>
@@ -413,7 +419,11 @@
 
                             <div class="plan-expiry">
                                 <p class="expiry-label">انقضا در:</p>
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }}</p>
+                                {% if user.plan_expires %}
+                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
+                                {% else %}
+                                <p class="expiry-date" id="expiryDate">♾️</p>
+                                {% endif %}
                             </div>
 
                         </div>
@@ -519,146 +529,6 @@
 
 
                 <!-- 6. SECURITY SECTION -->
-                <section id="security-section" class="section" style="display: none;">
-                    <div class="section-header">
-                        <h2>امنیت و حریم‌خصوصی</h2>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="card">
-                        <h3>رمزعبور</h3>
-                        <div class="security-item">
-                            <div class="security-info">
-                                <p class="security-label">تغییر رمزعبور</p>
-                                <p class="security-desc">برای امنیت حساب، به‌طور منظم رمزعبور خود را تغییر دهید</p>
-                            </div>
-                            <button class="btn btn-secondary" id="changePasswordBtn">
-                                <i class="fas fa-key"></i> تغییر رمزعبور
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Two-Factor Authentication -->
-                    <div class="card">
-                        <h3>احراز هویت دو‌مرحله‌ای</h3>
-                        <div class="security-item">
-                            <div class="security-info">
-                                <p class="security-label">احراز هویت دو‌مرحله‌ای (2FA)</p>
-                                <p class="security-desc">لایه امنیتی اضافی با استفاده از برنامه احراز‌کننده اضافه کنید</p>
-                                <p class="security-status" id="2faStatus">وضعیت: <span class="badge badge-danger">غیرفعال</span></p>
-                            </div>
-                            <button class="btn btn-secondary" id="enable2FABtn">
-                                <i class="fas fa-shield-alt"></i> فعال‌سازی
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Login Activity -->
-                    <div class="card">
-                        <h3>فعالیت ورود اخیر</h3>
-                        <div class="login-activity">
-                            <div class="login-item">
-                                <div class="login-info">
-                                    <p class="login-device">
-                                        <i class="fas fa-desktop"></i> رایانه شخصی - Chrome
-                                    </p>
-                                    <p class="login-location">نیویورک، آمریکا (192.168.1.1)</p>
-                                    <p class="login-time">امروز ۲:۳۰ بعدازظهر</p>
-                                </div>
-                                <span class="badge badge-success">فعلی</span>
-                            </div>
-
-                            <div class="login-item">
-                                <div class="login-info">
-                                    <p class="login-device">
-                                        <i class="fas fa-mobile-alt"></i> iPhone - Safari
-                                    </p>
-                                    <p class="login-location">نیویورک، آمریکا (192.168.1.100)</p>
-                                    <p class="login-time">دیروز ۸:۱۵ قبل‌ازظهر</p>
-                                </div>
-                            </div>
-
-                            <div class="login-item">
-                                <div class="login-info">
-                                    <p class="login-device">
-                                        <i class="fas fa-desktop"></i> MacBook Pro - Safari
-                                    </p>
-                                    <p class="login-location">سان‌فرانسیسکو، آمریکا (203.0.113.56)</p>
-                                    <p class="login-time">۳ روز پیش ۵:۴۵ بعدازظهر</p>
-                                </div>
-                            </div>
-
-                            <div class="login-item">
-                                <div class="login-info">
-                                    <p class="login-device">
-                                        <i class="fas fa-desktop"></i> رایانه شخصی - Firefox
-                                    </p>
-                                    <p class="login-location">لندن، انگلستان (198.51.100.45)</p>
-                                    <p class="login-time">۱ هفته پیش ۱۱:۲۰ قبل‌ازظهر</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Session Management -->
-                    <div class="card">
-                        <h3>جلسه‌های فعال</h3>
-                        <p style="margin-bottom: 1.5rem;">جلسه‌های فعال خود را مدیریت کنید و از دستگاه‌های دیگر خارج شوید</p>
-                        <div class="sessions-list">
-                            <div class="session-item">
-                                <div class="session-info">
-                                    <p class="session-device">جلسه فعلی</p>
-                                    <p class="session-details">رایانه شخصی - Chrome - 192.168.1.1</p>
-                                </div>
-                                <span class="badge badge-success">فعال الآن</span>
-                            </div>
-
-                            <div class="session-item">
-                                <div class="session-info">
-                                    <p class="session-device">iPhone Safari</p>
-                                    <p class="session-details">آخرین فعالیت: دیروز ۸:۱۵ قبل‌ازظهر</p>
-                                </div>
-                                <button class="btn btn-danger btn-small">خروج</button>
-                            </div>
-
-                            <div class="session-item">
-                                <div class="session-info">
-                                    <p class="session-device">MacBook Pro</p>
-                                    <p class="session-details">آخرین فعالیت: ۳ روز پیش</p>
-                                </div>
-                                <button class="btn btn-danger btn-small">خروج</button>
-                            </div>
-                        </div>
-                        <button class="btn btn-danger btn-block" style="margin-top: 1rem;">
-                            <i class="fas fa-sign-out-alt"></i> خروج از تمام سایر جلسه‌ها
-                        </button>
-                    </div>
-
-                    <!-- Privacy Settings -->
-                    <div class="card">
-                        <h3>تنظیمات حریم‌خصوصی</h3>
-                        <form class="settings-form">
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="profileVisibility" checked>
-                                <label for="profileVisibility">پروفایل من را عمومی کنید</label>
-                            </div>
-
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="analyticsVisibility" checked>
-                                <label for="analyticsVisibility">نمایش تحلیلات به‌صورت عمومی</label>
-                            </div>
-
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="searchIndexing">
-                                <label for="searchIndexing">اجازه موتورهای جستجو برای نمایه‌سازی پروفایل</label>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> ذخیره تنظیمات حریم‌خصوصی
-                            </button>
-                        </form>
-                    </div>
-                </section>
 
             </div>
         </main>

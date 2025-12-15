@@ -12,6 +12,7 @@ urlpatterns = [
     path('card/builder/', views.card_builder_view, name='card_builder'),
     path('card/success/<int:card_id>/', views.card_success_view, name='card_success'),
     path('register', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path("dashboard", views.dashboard_view, name='dashboard'),
     path('<str:username>', views.view_card, name='view_card'),
     path("request-otp/", views.request_otp, name="request_otp"),

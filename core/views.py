@@ -17,6 +17,8 @@ import datetime
 import random
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
 from melipayamak import Api
 
 from environs import Env
@@ -138,6 +140,11 @@ def login_view(request):
     next_page = request.GET.get("next", "")
     return render(request, "core/login.html", {"next": next_page})
 
+@login_required()
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
 @login_required
 def dashboard_view(request):
     user_card = UserCard.objects.filter(user=request.user).first()
@@ -145,6 +152,7 @@ def dashboard_view(request):
     card_url = None
     if user_card:
         card_url = f"https://x-link.ir/{user_card.username}"
+    user_plans = request.user.plan.values_list('name', flat=True)
 
     return render(
         request,
@@ -152,9 +160,13 @@ def dashboard_view(request):
         {
             "user_card": user_card,
             "card_url": card_url,
+            'has_basic_plan': 'Basic' in user_plans,
+            'has_pro_plan': 'Pro' in user_plans,
+            'has_free_plan': 'Free' in user_plans,
         }
     )
 
+@login_required()
 def card_builder_view(request):
     try:
         user_card = UserCard.objects.get(user=request.user)
@@ -194,6 +206,7 @@ def card_builder_view(request):
         template.id: template.allowed_plans.filter(id__in=user_plans).exists()
         for template in templates
     }
+    user_plans = request.user.plan.values_list('name', flat=True)
 
     context = {
         'form': form,
@@ -201,6 +214,8 @@ def card_builder_view(request):
         'templates': templates,
         'template_access': template_access,
         'is_new': is_new,
+        'has_pro_plan': 'Pro' in user_plans,
+
     }
 
     return render(request, 'core/card_builder.html', context)

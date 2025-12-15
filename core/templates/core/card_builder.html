@@ -70,7 +70,7 @@
                     <div class="error-message">{{ form.color.errors }}</div>
                     {% endif %}
                 </div>
-                {% if user.plan == "pro" %}
+                {% if has_pro_plan %}
                 <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
                     <input
                         type="checkbox"
