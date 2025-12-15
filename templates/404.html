@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>صفحه یافت نشد - X-Link</title>
+    <link rel="stylesheet" href="{% static '404-farsi.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="x-link-theme">
+    <!-- Background Animation -->
+    <div class="background-container">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="floating-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+        </div>
+    </div>
+
+    <!-- 404 Container -->
+    <div class="error-container">
+        <div class="error-card">
+            <!-- Large 404 Display -->
+            <div class="error-number">
+                <span class="four">4</span>
+                <span class="zero-icon">
+                    <div class="rotating-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                </span>
+                <span class="four-second">4</span>
+            </div>
+
+            <!-- Error Title and Subtitle -->
+            <div class="error-content">
+                <h1 class="error-title">صفحه یافت نشد</h1>
+                <p class="error-subtitle">متاسفانه صفحه‌ای که به دنبالش می‌گردید وجود ندارد</p>
+            </div>
+
+            <!-- Error Details -->
+            <div class="error-details">
+                <div class="detail-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="detail-text">
+                        <h4>چه اتفاقی افتاد؟</h4>
+                        <p>ممکن است این صفحه حذف شده، تغییر نام داده شده یا دسترسی به آن محدود شده باشد.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Helpful Links -->
+            <div class="helpful-section">
+                <h3>راهنمایی سریع</h3>
+                <div class="suggestions">
+                    <div class="suggestion-item">
+                        <i class="fas fa-home"></i>
+                        <div>
+                            <h5>بازگشت به صفحه اصلی</h5>
+                            <p>شروع دوباره از خانه</p>
+                        </div>
+                    </div>
+                    <div class="suggestion-item">
+                        <i class="fas fa-history"></i>
+                        <div>
+                            <h5>برگشت به عقب</h5>
+                            <p>بازگشت به صفحه قبلی</p>
+                        </div>
+                    </div>
+                    <div class="suggestion-item">
+                        <i class="fas fa-sitemap"></i>
+                        <div>
+                            <h5>نقشه سایت</h5>
+                            <p>مرور تمام صفحات</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="goToHome()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>بازگشت به داشبورد</span>
+                </button>
+                <button class="btn-secondary" onclick="goBack()">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>برگشت به عقب</span>
+                </button>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="support-section">
+                <p>
+                    <i class="fas fa-headset"></i>
+                    هنوز مشکل دارید؟
+                    <a href="#support">تماس با پشتیبانی</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="decoration-top"></div>
+        <div class="decoration-bottom"></div>
+    </div>
+
+    <script>
+        function goToHome() {
+            window.location.href = '/dashboard/';
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorNumber = document.querySelector('.error-number');
+            const rotatingIcon = document.querySelector('.rotating-icon');
+
+            // Add rotation effect on hover
+            errorNumber.addEventListener('mouseenter', function() {
+                rotatingIcon.classList.add('spin');
+            });
+
+            rotatingIcon.addEventListener('animationend', function() {
+                rotatingIcon.classList.remove('spin');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+/* ============================================
+   404 PAGE - X-LINK THEMED STYLES (FARSI)
+   ============================================ */
+
+:root {
+    /* X-Link Theme Colors */
+    --bg-dark: #0A0F1F;
+    --primary-blue: #3A86FF;
+    --cyan-neon: #00F6FF;
+    --text-white: #F5F8FF;
+    --text-gray: rgba(245, 248, 255, 0.7);
+    --text-gray-dim: rgba(245, 248, 255, 0.5);
+    --danger: #FF4757;
+    --warning: #FFA502;
+    --success: #2ED573;
+    --info: #3A86FF;
+
+    /* Card & Border Colors */
+    --card-bg: rgba(58, 134, 255, 0.05);
+    --card-border: rgba(0, 246, 255, 0.2);
+    --card-hover: rgba(58, 134, 255, 0.1);
+    --border-color: rgba(58, 134, 255, 0.15);
+
+    /* Shadows & Effects */
+    --shadow-sm: 0 2px 8px rgba(58, 134, 255, 0.1);
+    --shadow-md: 0 8px 24px rgba(58, 134, 255, 0.15);
+    --shadow-lg: 0 20px 40px rgba(58, 134, 255, 0.2);
+    --glow-blue: 0 0 20px rgba(58, 134, 255, 0.3);
+    --glow-cyan: 0 0 20px rgba(0, 246, 255, 0.3);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Vazirmatn', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ============================================
+   BACKGROUND ANIMATION
+   ============================================ */
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: float 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(58, 134, 255, 0.8), transparent);
+    top: -200px;
+    left: -200px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 246, 255, 0.6), transparent);
+    bottom: -150px;
+    right: -100px;
+    animation-delay: 5s;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(58, 134, 255, 0.5), transparent);
+    top: 50%;
+    right: -150px;
+    animation-delay: 10s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(30px, -30px);
+    }
+}
+
+/* ============================================
+   FLOATING PARTICLES
+   ============================================ */
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--cyan-neon);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: float-particle 15s ease-in-out infinite;
+}
+
+.particle-1 {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.particle-2 {
+    top: 20%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.particle-3 {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+.particle-4 {
+    bottom: 10%;
+    right: 10%;
+    animation-delay: 6s;
+}
+
+.particle-5 {
+    top: 50%;
+    left: 50%;
+    animation-delay: 8s;
+}
+
+@keyframes float-particle {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(20px, 20px);
+        opacity: 0.8;
+    }
+}
+
+/* ============================================
+   404 CONTAINER
+   ============================================ */
+
+.error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    position: relative;
+}
+
+.error-card {
+    background: rgba(58, 134, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 700px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   ERROR NUMBER DISPLAY
+   ============================================ */
+
+.error-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-size: 5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-blue), var(--cyan-neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 40px rgba(0, 246, 255, 0.3);
+}
+
+.four,
+.four-second {
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.zero-icon {
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rotating-icon {
+    font-size: 4rem;
+    color: var(--cyan-neon);
+    filter: drop-shadow(0 0 20px rgba(0, 246, 255, 0.4));
+    transition: var(--transition);
+}
+
+.rotating-icon.spin {
+    animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateY(0) rotateX(0);
+    }
+    50% {
+        transform: rotateY(180deg) rotateX(10deg);
+    }
+    100% {
+        transform: rotateY(360deg) rotateX(0);
+    }
+}
+
+/* ============================================
+   ERROR CONTENT
+   ============================================ */
+
+.error-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.error-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+    text-align: right;
+}
+
+.error-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+    text-align: right;
+}
+
+/* ============================================
+   ERROR DETAILS
+   ============================================ */
+
+.error-details {
+    margin-bottom: 2rem;
+}
+
+.detail-box {
+    background: rgba(0, 246, 255, 0.05);
+    border-left: 4px solid var(--cyan-neon);
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    border-left: none;
+    border-right: 4px solid var(--cyan-neon);
+}
+
+.detail-box i {
+    color: var(--warning);
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.detail-text {
+    text-align: right;
+    flex: 1;
+}
+
+.detail-text h4 {
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.detail-text p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ============================================
+   HELPFUL SECTION
+   ============================================ */
+
+.helpful-section {
+    margin-bottom: 2rem;
+}
+
+.helpful-section h3 {
+    font-size: 1.2rem;
+    color: var(--text-white);
+    margin-bottom: 1rem;
+    text-align: right;
+}
+
+.suggestions {
+    display: grid;
+    gap: 1rem;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(58, 134, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    transition: var(--transition);
+    flex-direction: row-reverse;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background: rgba(58, 134, 255, 0.15);
+    border-color: var(--cyan-neon);
+    box-shadow: var(--glow-blue);
+}
+
+.suggestion-item i {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    min-width: 1.5rem;
+}
+
+.suggestion-item h5 {
+    color: var(--text-white);
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+.suggestion-item p {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    text-align: right;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-direction: row-reverse;
+}
+
+.btn-primary,
+.btn-secondary {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--cyan-neon));
+    color: var(--bg-dark);
+    box-shadow: var(--glow-blue);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 246, 255, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--cyan-neon);
+    border: 2px solid var(--cyan-neon);
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 246, 255, 0.1);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   SUPPORT SECTION
+   ============================================ */
+
+.support-section {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.support-section p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.support-section i {
+    color: var(--info);
+}
+
+.support-section a {
+    color: var(--cyan-neon);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.support-section a:hover {
+    text-decoration: underline;
+    color: var(--primary-blue);
+}
+
+/* ============================================
+   DECORATIVE ELEMENTS
+   ============================================ */
+
+.decoration-top,
+.decoration-bottom {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 2px solid var(--card-border);
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.decoration-top {
+    top: -100px;
+    right: -100px;
+}
+
+.decoration-bottom {
+    bottom: -100px;
+    left: -100px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .error-card {
+        padding: 2rem;
+    }
+
+    .error-number {
+        font-size: 3.5rem;
+        gap: 0.5rem;
+    }
+
+    .zero-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .rotating-icon {
+        font-size: 2.5rem;
+    }
+
+    .error-title {
+        font-size: 2rem;
+    }
+
+    .error-subtitle {
+        font-size: 1rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+
+    .suggestions {
+        grid-template-columns: 1fr;
+    }
+
+    .gradient-orb {
+        filter: blur(60px);
+    }
+
+    .orb-1 {
+        width: 300px;
+        height: 300px;
+    }
+
+    .orb-2 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .orb-3 {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-container {
+        padding: 1rem;
+    }
+
+    .error-card {
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .error-number {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .zero-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .rotating-icon {
+        font-size: 2rem;
+    }
+
+    .error-title {
+        font-size: 1.5rem;
+    }
+
+    .error-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .detail-box {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .detail-text {
+        text-align: center;
+    }
+
+    .detail-text h4 {
+        font-size: 0.95rem;
+    }
+
+    .suggestion-item {
+        padding: 0.75rem;
+    }
+
+    .suggestion-item h5 {
+        font-size: 0.85rem;
+    }
+
+    .support-section {
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================
+   DARK MODE (DEFAULT)
+   ============================================ */
+
+body.x-link-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+}
+
+body.x-link-theme .error-card {
+    background: rgba(58, 134, 255, 0.05);
+    border-color: var(--card-border);
+}
