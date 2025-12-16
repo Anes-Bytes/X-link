@@ -5,8 +5,8 @@ from django.core.cache import cache
 
 import json
 
-from .models import UserCard, Skill, Template, Customers, Plan
-from .forms import UserCardForm, SkillInlineFormSet
+from .models import UserCard, Skill, Service, Portfolio, Template, Customers, Plan
+from .forms import UserCardForm, SkillInlineFormSet, ServiceInlineFormSet, PortfolioInlineFormSet
 
 
 from django.shortcuts import render, redirect
@@ -110,7 +110,8 @@ def verify_otp(request):
 def landing_view(request):
     templates = cache.get("landing_templates")
     customers = cache.get("landing_customers")
-    plans = cache.get("landing_plans")
+    plans_monthly = cache.get("landing_plans_monthly")
+    plans_annual = cache.get("landing_plans_annual")
 
     if templates is None:
         templates = list(Template.objects.filter(is_active=True))
@@ -120,9 +121,17 @@ def landing_view(request):
         customers = list(Customers.objects.all())
         cache.set("landing_customers", customers, 60 * 60)
 
-    if plans is None:
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").all())
-        cache.set("landing_plans", plans, 60 * 60)
+    if plans_monthly is None:
+        plans_monthly = list(Plan.objects.filter(period="monthly").select_related("discount").prefetch_related("Features").all())
+        cache.set("landing_plans_monthly", plans_monthly, 60 * 60)
+
+    if plans_annual is None:
+        plans_annual = list(Plan.objects.filter(period="annual").select_related("discount").prefetch_related("Features").all())
+        cache.set("landing_plans_annual", plans_annual, 60 * 60)
+
+    # Determine which period to display based on GET parameter
+    period = request.GET.get("period", "monthly")
+    active_plans = plans_annual if period == "annual" else plans_monthly
 
     return render(
         request,
@@ -130,7 +139,10 @@ def landing_view(request):
         {
             "templates": templates,
             "customers": customers,
-            "plans": plans,
+            "plans_monthly": plans_monthly,
+            "plans_annual": plans_annual,
+            "active_plans": active_plans,
+            "current_period": period,
         }
     )
 
@@ -177,9 +189,12 @@ def card_builder_view(request):
 
     if request.method == 'POST':
         form = UserCardForm(request.POST, request.FILES, instance=user_card)
-        formset = SkillInlineFormSet(request.POST, instance=user_card)
+        skill_formset = SkillInlineFormSet(request.POST, instance=user_card, prefix='skill')
+        service_formset = ServiceInlineFormSet(request.POST, instance=user_card, prefix='service')
+        portfolio_formset = PortfolioInlineFormSet(request.POST, request.FILES, instance=user_card, prefix='portfolio')
 
-        if form.is_valid() and formset.is_valid():
+        if (form.is_valid() and skill_formset.is_valid() and 
+            service_formset.is_valid() and portfolio_formset.is_valid()):
             card = form.save(commit=False)
             card.user = request.user
 
@@ -190,13 +205,33 @@ def card_builder_view(request):
                 card.blue_tick = bool(request.POST.get("blue_tick"))
 
             card.save()
-            formset.instance = card
-            formset.save()
+            skill_formset.instance = card
+            skill_formset.save()
+            service_formset.instance = card
+            service_formset.save()
+            portfolio_formset.instance = card
+            portfolio_formset.save()
 
             return redirect('card_success', card_id=card.id)
+        else:
+            # DEBUG: Print validation errors
+            print("=== VALIDATION ERRORS ===")
+            if not form.is_valid():
+                print("UserCardForm errors:", form.errors)
+            if not skill_formset.is_valid():
+                print("Skill formset errors:", skill_formset.errors)
+                print("Skill formset non-form errors:", skill_formset.non_form_errors())
+            if not service_formset.is_valid():
+                print("Service formset errors:", service_formset.errors)
+                print("Service formset non-form errors:", service_formset.non_form_errors())
+            if not portfolio_formset.is_valid():
+                print("Portfolio formset errors:", portfolio_formset.errors)
+                print("Portfolio formset non-form errors:", portfolio_formset.non_form_errors())
     else:
         form = UserCardForm(instance=user_card)
-        formset = SkillInlineFormSet(instance=user_card) if not is_new else SkillInlineFormSet()
+        skill_formset = SkillInlineFormSet(instance=user_card, prefix='skill') if not is_new else SkillInlineFormSet(prefix='skill')
+        service_formset = ServiceInlineFormSet(instance=user_card, prefix='service') if not is_new else ServiceInlineFormSet(prefix='service')
+        portfolio_formset = PortfolioInlineFormSet(instance=user_card, prefix='portfolio') if not is_new else PortfolioInlineFormSet(prefix='portfolio')
 
     templates = Template.objects.filter(is_active=True).prefetch_related('allowed_plans')
     user_plans = request.user.plan.all()
@@ -210,12 +245,13 @@ def card_builder_view(request):
 
     context = {
         'form': form,
-        'formset': formset,
+        'skill_formset': skill_formset,
+        'service_formset': service_formset,
+        'portfolio_formset': portfolio_formset,
         'templates': templates,
         'template_access': template_access,
         'is_new': is_new,
         'has_pro_plan': 'Pro' in user_plans,
-
     }
 
     return render(request, 'core/card_builder.html', context)
@@ -223,7 +259,11 @@ def card_builder_view(request):
 @login_required
 def card_success_view(request, card_id):
     """Success page after card creation"""
-    user_card = get_object_or_404(UserCard.objects.prefetch_related("skills"), id=card_id, user=request.user)
+    user_card = get_object_or_404(
+        UserCard.objects.prefetch_related("skills", "services", "portfolio_items"),
+        id=card_id,
+        user=request.user
+    )
     card_url = user_card.get_card_url()
 
     context = {
@@ -235,7 +275,11 @@ def card_success_view(request, card_id):
 
 def view_card(request, username):
     """Public view to display user's digital card"""
-    user_card = get_object_or_404(UserCard.objects.prefetch_related("skills"), username=username, is_published=True)
+    user_card = get_object_or_404(
+        UserCard.objects.prefetch_related("skills", "services", "portfolio_items"),
+        username=username,
+        is_published=True
+    )
     user_card.views += 1
     user_card.save()
 
@@ -278,6 +322,66 @@ def delete_skill_ajax(request, skill_id):
     try:
         skill = get_object_or_404(Skill, id=skill_id, user_card__user=request.user)
         skill.delete()
+        
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@require_http_methods(["POST"])
+@login_required
+def add_service_ajax(request):
+    """AJAX endpoint to add a new service dynamically"""
+    try:
+        data = json.loads(request.body)
+        title = data.get('title', '').strip()
+        
+        if not title:
+            return JsonResponse({'error': 'Service title is required'}, status=400)
+        
+        user_card = UserCard.objects.get(user=request.user)
+        service = Service.objects.create(
+            user_card=user_card,
+            title=title,
+            description=data.get('description', ''),
+            icon=data.get('icon', '')
+        )
+        
+        return JsonResponse({
+            'success': True,
+            'service': {
+                'id': service.id,
+                'title': service.title,
+                'description': service.description,
+                'icon': service.icon,
+            }
+        })
+    except UserCard.DoesNotExist:
+        return JsonResponse({'error': 'User card not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@require_http_methods(["DELETE"])
+@login_required
+def delete_service_ajax(request, service_id):
+    """AJAX endpoint to delete a service"""
+    try:
+        service = get_object_or_404(Service, id=service_id, user_card__user=request.user)
+        service.delete()
+        
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@require_http_methods(["DELETE"])
+@login_required
+def delete_portfolio_ajax(request, portfolio_id):
+    """AJAX endpoint to delete a portfolio item"""
+    try:
+        portfolio = get_object_or_404(Portfolio, id=portfolio_id, user_card__user=request.user)
+        portfolio.delete()
         
         return JsonResponse({'success': True})
     except Exception as e:

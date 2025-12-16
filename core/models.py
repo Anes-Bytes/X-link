@@ -121,11 +121,16 @@ class Plan(models.Model):
         Basic = "Basic", "Basic"
         Pro = "Pro", "Pro"
 
+    class PeriodChoices(models.TextChoices):
+        MONTHLY = "monthly", "ماهانه"
+        ANNUAL = "annual", "سالانه"
+
     type = models.CharField(max_length=20, choices=TypeChoices.choices)
     name = models.CharField(max_length=200)
     price = models.IntegerField()
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE, related_name='+')
     is_special = models.BooleanField()
+    period = models.CharField(max_length=20, choices=PeriodChoices.choices, default="monthly")
 
     def get_final_price(self):
         if not self.discount:
@@ -230,6 +235,35 @@ class Skill(models.Model):
 
     def __str__(self):
         return f"{self.user_card.name} - {self.name}"
+
+
+class Service(models.Model):
+    user_card = models.ForeignKey(UserCard, on_delete=models.CASCADE, related_name='services')
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=500, blank=True)
+    icon = models.CharField(max_length=100, blank=True, help_text="Font Awesome icon class (e.g., fas fa-code)")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f"{self.user_card.name} - {self.title}"
+
+
+class Portfolio(models.Model):
+    user_card = models.ForeignKey(UserCard, on_delete=models.CASCADE, related_name='portfolio_items')
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=500, blank=True)
+    image = models.ImageField(upload_to='portfolio')
+    url = models.URLField(blank=True, help_text="Project URL or external link")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Portfolio Items"
+
+    def __str__(self):
+        return f"{self.user_card.name} - {self.title}"
 
 
 class Banners(models.Model):

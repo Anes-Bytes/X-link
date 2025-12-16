@@ -29,6 +29,7 @@
 {% else %}
 <link rel="stylesheet" href="{% static 'card-template.css' %}">
 {% endif %}
+    <link rel="stylesheet" href="{% static 'services-portfolio.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,22 +150,23 @@
             <div class="card-section services-section">
                 <h3 class="section-title">Services</h3>
                 <div class="services-container" id="servicesContainer">
-                    <div class="service-item">
-                        <i class="fas fa-code"></i>
-                        <span>Web Development</span>
+                    {% for service in user_card.services.all %}
+                    <div class="service-item" data-service-id="{{ service.id }}">
+                        {% if service.icon %}
+                        <i class="{{ service.icon }}"></i>
+                        {% else %}
+                        <i class="fas fa-star"></i>
+                        {% endif %}
+                        <div class="service-content">
+                            <h4 class="service-title">{{ service.title }}</h4>
+                            {% if service.description %}
+                            <p class="service-description">{{ service.description }}</p>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="service-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Mobile Apps</span>
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-paint-brush"></i>
-                        <span>UI/UX Design</span>
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Consulting</span>
-                    </div>
+                    {% empty %}
+                    <p class="empty-state">No services added yet</p>
+                    {% endfor %}
                 </div>
             </div>
 
@@ -172,39 +174,28 @@
             <div class="card-section portfolio-section">
                 <h3 class="section-title">Portfolio</h3>
                 <div class="portfolio-grid" id="portfolioGrid">
-                    <div class="portfolio-item">
+                    {% for portfolio in user_card.portfolio_items.all %}
+                    <div class="portfolio-item" data-portfolio-id="{{ portfolio.id }}">
                         <div class="portfolio-thumbnail">
-                            <img src="https://via.placeholder.com/300x200/3A86FF/FFFFFF?text=Project+1" alt="Project 1">
+                            <img src="{{ portfolio.image.url }}" alt="{{ portfolio.title }}">
                             <div class="portfolio-overlay">
-                                <a href="#" class="portfolio-link">
+                                {% if portfolio.url %}
+                                <a href="{{ portfolio.url }}" class="portfolio-link" target="_blank" rel="noopener noreferrer">
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
+                                {% endif %}
                             </div>
                         </div>
-                        <p class="portfolio-title">E-Commerce Platform</p>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-thumbnail">
-                            <img src="https://via.placeholder.com/300x200/00F6FF/0A0F1F?text=Project+2" alt="Project 2">
-                            <div class="portfolio-overlay">
-                                <a href="#" class="portfolio-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
+                        <div class="portfolio-content">
+                            <h4 class="portfolio-title">{{ portfolio.title }}</h4>
+                            {% if portfolio.description %}
+                            <p class="portfolio-description">{{ portfolio.description }}</p>
+                            {% endif %}
                         </div>
-                        <p class="portfolio-title">Mobile Banking App</p>
                     </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-thumbnail">
-                            <img src="https://via.placeholder.com/300x200/3A86FF/FFFFFF?text=Project+3" alt="Project 3">
-                            <div class="portfolio-overlay">
-                                <a href="#" class="portfolio-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <p class="portfolio-title">SaaS Dashboard</p>
-                    </div>
+                    {% empty %}
+                    <p class="empty-state">No portfolio items added yet</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>

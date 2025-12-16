@@ -1,5 +1,5 @@
 from django import forms
-from core.models import UserCard, Skill
+from core.models import UserCard, Skill, Service, Portfolio
 
 
 class UserCardForm(forms.ModelForm):
@@ -117,6 +117,88 @@ SkillInlineFormSet = forms.inlineformset_factory(
     Skill,
     form=SkillForm,
     formset=SkillFormSet,
+    extra=1,
+    can_delete=True,
+)
+
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['title', 'description', 'icon']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'عنوان خدمت',
+                'dir': 'rtl',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'توضیح خدمت',
+                'rows': 3,
+                'dir': 'rtl',
+            }),
+            'icon': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'آیکون Font Awesome (مثلا: fas fa-code)',
+                'dir': 'ltr',
+            }),
+        }
+
+
+class ServiceFormSet(forms.BaseInlineFormSet):
+    """FormSet for managing multiple services"""
+    pass
+
+
+ServiceInlineFormSet = forms.inlineformset_factory(
+    UserCard,
+    Service,
+    form=ServiceForm,
+    formset=ServiceFormSet,
+    extra=1,
+    can_delete=True,
+)
+
+
+class PortfolioForm(forms.ModelForm):
+    class Meta:
+        model = Portfolio
+        fields = ['title', 'description', 'image', 'url']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'عنوان پروژه',
+                'dir': 'rtl',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'توضیح پروژه',
+                'rows': 3,
+                'dir': 'rtl',
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*',
+            }),
+            'url': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'https://example.com',
+                'dir': 'ltr',
+            }),
+        }
+
+
+class PortfolioFormSet(forms.BaseInlineFormSet):
+    """FormSet for managing multiple portfolio items"""
+    pass
+
+
+PortfolioInlineFormSet = forms.inlineformset_factory(
+    UserCard,
+    Portfolio,
+    form=PortfolioForm,
+    formset=PortfolioFormSet,
     extra=1,
     can_delete=True,
 )

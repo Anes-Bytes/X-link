@@ -311,23 +311,23 @@
 
     <!-- hidden formset management -->
     <div style="display: none;">
-        {{ formset.management_form }}
+        {{ skill_formset.management_form }}
     </div>
 </div>
 
 <script>
 const addSkillBtn = document.getElementById('addSkillBtn');
 const skillsContainer = document.getElementById('skillsContainer');
-const totalForms = document.querySelector('#id_form-TOTAL_FORMS');
+const totalForms = document.querySelector('[name="skill-TOTAL_FORMS"]');
 
 addSkillBtn.addEventListener('click', () => {
     const formIdx = parseInt(totalForms.value);
     const newFormHtml = `
         <div class="skill-form-group" data-form-index="${formIdx}">
             <div class="skill-input-wrapper">
-                <input type="text" name="form-${formIdx}-name" id="id_form-${formIdx}-name">
-                <input type="checkbox" name="form-${formIdx}-DELETE" id="id_form-${formIdx}-DELETE">
-                <label for="id_form-${formIdx}-DELETE">حذف</label>
+                <input type="text" name="skill-${formIdx}-name" id="id_skill-${formIdx}-name">
+                <input type="checkbox" name="skill-${formIdx}-DELETE" id="id_skill-${formIdx}-DELETE">
+                <label for="id_skill-${formIdx}-DELETE">حذف</label>
             </div>
         </div>
     `;
@@ -335,6 +335,115 @@ addSkillBtn.addEventListener('click', () => {
     totalForms.value = formIdx + 1; // آپدیت TOTAL_FORMS
 });
 </script>
+
+            <!-- Services Section -->
+            <div class="form-section">
+                <h2>مرحله 6: خدمات</h2>
+
+                <div id="servicesContainer" class="services-container">
+                    {% for service_form in service_formset %}
+                    <div class="service-form-group" data-form-index="{{ forloop.counter0 }}">
+                        {{ service_form.id }}
+
+                        <div class="service-input-wrapper">
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label>عنوان</label>
+                                    {{ service_form.title }}
+                                </div>
+                                <div class="form-col">
+                                    <label>آیکون</label>
+                                    {{ service_form.icon }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col full-width">
+                                    <label>توضیحات</label>
+                                    {{ service_form.description }}
+                                </div>
+                            </div>
+
+                            {% if service_form.DELETE %}
+                            <div class="service-checkbox">
+                                {{ service_form.DELETE }}
+                                <label for="{{ service_form.DELETE.id_for_label }}">حذف</label>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if service_form.errors %}
+                        <div class="error-message">{{ service_form.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="button" class="add-service-btn" id="addServiceBtn">
+                    <i class="fas fa-plus"></i> افزودن خدمت
+                </button>
+
+                <div style="display: none;">
+                    {{ service_formset.management_form }}
+                </div>
+            </div>
+
+            <!-- Portfolio Section -->
+            <div class="form-section">
+                <h2>مرحله 7: نمونه کارها</h2>
+
+                <div id="portfolioContainer" class="portfolio-container">
+                    {% for portfolio_form in portfolio_formset %}
+                    <div class="portfolio-form-group" data-form-index="{{ forloop.counter0 }}">
+                        {{ portfolio_form.id }}
+
+                        <div class="portfolio-input-wrapper">
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label>عنوان</label>
+                                    {{ portfolio_form.title }}
+                                </div>
+                                <div class="form-col">
+                                    <label>تصویر</label>
+                                    {{ portfolio_form.image }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label>لینک</label>
+                                    {{ portfolio_form.url }}
+                                </div>
+                                <div class="form-col"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col full-width">
+                                    <label>توضیحات</label>
+                                    {{ portfolio_form.description }}
+                                </div>
+                            </div>
+
+                            {% if portfolio_form.DELETE %}
+                            <div class="portfolio-checkbox">
+                                {{ portfolio_form.DELETE }}
+                                <label for="{{ portfolio_form.DELETE.id_for_label }}">حذف</label>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if portfolio_form.errors %}
+                        <div class="error-message">{{ portfolio_form.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="button" class="add-portfolio-btn" id="addPortfolioBtn">
+                    <i class="fas fa-plus"></i> افزودن نمونه کار
+                </button>
+
+                <div style="display: none;">
+                    {{ portfolio_formset.management_form }}
+                </div>
+            </div>
 
             <!-- Form Actions -->
             <div class="form-actions">
@@ -755,6 +864,76 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update total forms count
             if (totalFormsInput) {
                 totalFormsInput.value = formCount + 1;
+            }
+        });
+    }
+
+    // Service formset management
+    const addServiceBtn = document.getElementById('addServiceBtn');
+    const servicesContainer = document.getElementById('servicesContainer');
+    const servicesTotalFormsInput = document.querySelector('[name="service-TOTAL_FORMS"]');
+
+    if (addServiceBtn) {
+        addServiceBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const formCount = document.querySelectorAll('.service-form-group').length;
+            const firstForm = document.querySelector('.service-form-group');
+            
+            if (firstForm) {
+                const newForm = firstForm.cloneNode(true);
+                newForm.setAttribute('data-form-index', formCount);
+                
+                // Update all form field names
+                newForm.querySelectorAll('input, textarea, select').forEach(field => {
+                    const name = field.getAttribute('name');
+                    if (name) {
+                        field.setAttribute('name', name.replace(/service-\d+/, `service-${formCount}`));
+                        field.setAttribute('id', `id_${name.replace(/service-\d+/, `service-${formCount}`)}`);
+                        field.value = '';
+                    }
+                });
+
+                servicesContainer.appendChild(newForm);
+
+                if (servicesTotalFormsInput) {
+                    servicesTotalFormsInput.value = formCount + 1;
+                }
+            }
+        });
+    }
+
+    // Portfolio formset management
+    const addPortfolioBtn = document.getElementById('addPortfolioBtn');
+    const portfolioContainer = document.getElementById('portfolioContainer');
+    const portfolioTotalFormsInput = document.querySelector('[name="portfolio-TOTAL_FORMS"]');
+
+    if (addPortfolioBtn) {
+        addPortfolioBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const formCount = document.querySelectorAll('.portfolio-form-group').length;
+            const firstForm = document.querySelector('.portfolio-form-group');
+            
+            if (firstForm) {
+                const newForm = firstForm.cloneNode(true);
+                newForm.setAttribute('data-form-index', formCount);
+                
+                // Update all form field names
+                newForm.querySelectorAll('input, textarea, select').forEach(field => {
+                    const name = field.getAttribute('name');
+                    if (name) {
+                        field.setAttribute('name', name.replace(/portfolio-\d+/, `portfolio-${formCount}`));
+                        field.setAttribute('id', `id_${name.replace(/portfolio-\d+/, `portfolio-${formCount}`)}`);
+                        field.value = '';
+                    }
+                });
+
+                portfolioContainer.appendChild(newForm);
+
+                if (portfolioTotalFormsInput) {
+                    portfolioTotalFormsInput.value = formCount + 1;
+                }
             }
         });
     }

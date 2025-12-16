@@ -55,71 +55,296 @@
     </section>
 
     <!-- Brand Slider Section -->
-    <section class="brand-slider-section">
-        <div class="brand-slider-container">
-            <div class="brand-slider-track" id="brandSlider">
-                {% for customer in customers %}
-                <div class="brand-item">
-                    {% if customer.company_logo %}
-                    <div class="brand-logo">
-                        <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+    <section class="customers-section" id="customers">
+        <div class="container">
+            <h2 class="section-title">X-Link Customers</h2>
+            <div class="brand-slider-container">
+                <div class="brand-slider-track" id="brandSlider">
+                    {% for customer in customers %}
+                    <div class="brand-item">
+                        {% if customer.company_logo %}
+                        <div class="brand-logo">
+                            <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                        </div>
+                        {% else %}
+                        <div class="brand-logo brand-logo-text">{{ customer.company_name }}</div>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <div class="brand-logo">{{ customer.company_name }}</div>
-                    {% endif %}
-                </div>
-                {% endfor %}
-                <!-- Duplicate for continuous scroll -->
-                {% for customer in customers %}
-                <div class="brand-item">
-                    {% if customer.company_logo %}
-                    <div class="brand-logo">
-                        <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                    {% endfor %}
+                    <!-- Duplicate for continuous scroll -->
+                    {% for customer in customers %}
+                    <div class="brand-item">
+                        {% if customer.company_logo %}
+                        <div class="brand-logo">
+                            <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                        </div>
+                        {% else %}
+                        <div class="brand-logo brand-logo-text">{{ customer.company_name }}</div>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <div class="brand-logo">{{ customer.company_name }}</div>
-                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </section>
 
     <!-- Templates Preview Section -->
-<section class="templates-section" id="templates">
-    <div class="container">
-        <h2 class="section-title">قالب های تک و جذاب ایکس لینک</h2>
+    <section class="templates-section" id="templates">
+        <div class="container">
+            <h2 class="section-title">قالب های جذاب X-Link</h2>
 
-        <div class="templates-grid">
-            {% for template in templates %}
-            <div class="template-card">
-                <div class="template-image-wrapper">
-                    <img src="{{ template.image.url }}"
-                         alt="{{ template.name }}"
-                         class="template-image">
+            <div class="templates-grid">
+                {% for template in templates %}
+                <div class="template-card">
+                    <div class="template-image-wrapper">
+                        <img src="{{ template.image.url }}" alt="{{ template.name }}" class="template-image">
+                    </div>
+                    <div class="template-info">
+                        <h3 class="template-name">{{ template.name }}</h3>
+                        <h5>این تملپیت هتلیترذسینتد کینمتدرکیمدرسکیم نسیریسبر سیرسی</h5>
+                        <a href="{% url 'card_builder' %}" class="template-select-btn">
+                            ساخت کارت ویزیت
+                        </a>
+                    </div>
                 </div>
+                {% empty %}
+                <p class="no-templates">هیچ قالبی موجود نیست</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
-                <div class="template-info">
-                    <h4 class="template-title">{{ template.name }}</h4>
-
-<a href="{% url 'card_builder' %}">
-    <button class="template-select-btn">
-        ساخت کارت ویزیت
-    </button>
-</a>
-
+    <!-- Pricing Section -->
+    <section class="pricing-section-landing" id="pricing-landing">
+        <div class="container">
+            <!-- Header Section -->
+            <div class="pricing-header-landing">
+                <h2 class="section-title">پلن مناسب خود را انتخاب کنید</h2>
+                <p class="pricing-subtitle">با پلن‌های اشتراک انعطاف‌پذیر ما حضور آنلاین خود را گسترش دهید. رایگان شروع کنید و هر زمان ارتقا دهید.</p>
+                
+                <!-- Period Toggle -->
+                <div class="period-toggle">
+                    <a href="?period=monthly" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">
+                        <span>ماهانه</span>
+                    </a>
+                    <a href="?period=annual" class="toggle-period-btn {% if current_period == 'annual' %}active{% endif %}">
+                        <span>سالانه</span>
+                        <span class="discount-label">۲۵٪ تخفیف</span>
+                    </a>
                 </div>
             </div>
-            {% empty %}
-            <p style="text-align: center">هیچ قالبی موجود نیست</p>
-            {% endfor %}
+
+            <!-- Monthly Pricing Section -->
+            {% if current_period != 'annual' %}
+            <div class="pricing-cards-landing" id="monthly-pricing">
+                {% for plan in plans_monthly %}
+                <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}" data-plan="{{ plan.type }}">
+                    {% if plan.type == "Pro" %}
+                    <div class="featured-badge">پرمیوم</div>
+                    <span class="plan-badge">توصیه شده</span>
+                    {% elif plan.type == "Basic" %}
+                    <div class="featured-badge">پرمخاطب</div>
+                    {% else %}
+                    <div class="featured-badge">رایگان</div>
+                    {% endif %}
+
+                    <div class="card-header-landing">
+                        <h3 class="plan-name-landing">
+                            {% if plan.type == "Pro" %}
+                                حرفه‌ای
+                            {% elif plan.type == "Basic" %}
+                                پایه
+                            {% else %}
+                                رایگان
+                            {% endif %}
+                        </h3>
+                        <p class="plan-description-landing">
+                            {% if plan.type == "Pro" %}
+                                برای حرفه‌ای‌های در حال رشد
+                            {% elif plan.type == "Basic" %}
+                                برای کسب‌وکارهای کوچک
+                            {% else %}
+                                برای شروع کنندگان
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="price-section-landing">
+                        <div class="price-wrapper-landing">
+                            <span class="price-value">{{ plan.get_final_price|floatformat|intcomma }}</span>
+                            <span class="price-currency">تومان</span>
+                            <span class="price-period">/ماه</span>
+                        </div>
+                        {% if plan.discount %}
+                        <div class="price-info-landing">
+                            <span class="original-price">قیمت اصلی: {{ plan.price }} تومان</span>
+                            <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <ul class="features-list-landing">
+                        {% for feature in plan.Features.all %}
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>{{ feature.name }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="card-actions-landing">
+                        {% if plan.type == "Pro" or plan.type == "Basic" %}
+                        <a href="" class="cta-button-landing cta-primary-landing">
+                            <span>انتخاب</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'card_builder' %}" class="cta-button-landing cta-secondary-landing">
+                            <span>شروع رایگان</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Annual Pricing Section -->
+            {% if current_period == 'annual' %}
+            <div class="pricing-cards-landing" id="annual-pricing">
+                {% for plan in plans_annual %}
+                <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}" data-plan="{{ plan.type }}">
+                    {% if plan.type == "Pro" %}
+                    <div class="featured-badge">پرمیوم</div>
+                    <span class="plan-badge">توصیه شده</span>
+                    {% elif plan.type == "Basic" %}
+                    <div class="featured-badge">پرمخاطب</div>
+                    {% else %}
+                    <div class="featured-badge">رایگان</div>
+                    {% endif %}
+
+                    <div class="card-header-landing">
+                        <h3 class="plan-name-landing">
+                            {% if plan.type == "Pro" %}
+                                حرفه‌ای
+                            {% elif plan.type == "Basic" %}
+                                پایه
+                            {% else %}
+                                رایگان
+                            {% endif %}
+                        </h3>
+                        <p class="plan-description-landing">
+                            {% if plan.type == "Pro" %}
+                                برای حرفه‌ای‌های در حال رشد
+                            {% elif plan.type == "Basic" %}
+                                برای کسب‌وکارهای کوچک
+                            {% else %}
+                                برای شروع کنندگان
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="price-section-landing">
+                        <div class="price-wrapper-landing">
+                            <span class="price-value">{{ plan.get_final_price|floatformat|intcomma }}</span>
+                            <span class="price-currency">تومان</span>
+                            <span class="price-period">/سال</span>
+                        </div>
+                        {% if plan.discount %}
+                        <div class="price-info-landing">
+                            <span class="original-price">قیمت اصلی: {{ plan.price }} تومان</span>
+                            <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <ul class="features-list-landing">
+                        {% for feature in plan.Features.all %}
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>{{ feature.name }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="card-actions-landing">
+                        {% if plan.type == "Pro" or plan.type == "Basic" %}
+                        <a href="{% url 'payment' %}" class="cta-button-landing cta-primary-landing">
+                            <span>انتخاب</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'card_builder' %}" class="cta-button-landing cta-secondary-landing">
+                            <span>شروع رایگان</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Comparison Table -->
+            <div class="comparison-section-landing">
+                <h3>مقایسه تفصیلی ویژگی‌ها</h3>
+                <div class="comparison-table-landing">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ویژگی</th>
+                                <th>رایگان</th>
+                                <th>پایه</th>
+                                <th>پرمیوم</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>قالب ها</td>
+                                <td><span class="badge-check">پیشفرض ایکس لینک</span></td>
+                                <td><span class="badge-check">همه قالب ها</span></td>
+                                <td><span class="badge-check">همه قالب ها+مشکی</span></td>
+                            </tr>
+                            <tr>
+                                <td>بخش فروشگاه</td>
+                                <td><span class="badge-cross">ندارد</span></td>
+                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-check">دارد</span></td>
+                            </tr>
+                            <tr>
+                                <td>آپتایم</td>
+                                <td><span class="badge-check">%99.9</span></td>
+                                <td><span class="badge-check">%99.9</span></td>
+                                <td><span class="badge-check">%99.9</span></td>
+                            </tr>
+                            <tr>
+                                <td>تیک آبی</td>
+                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-check">دارد</span></td>
+                            </tr>
+                            <tr>
+                                <td>بک گراند ستاره ای</td>
+                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-check">دارد</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="pricing-cta-landing">
+                <h3>آماده شروع هستید؟</h3>
+                <p>به هزاران حرفه‌ای استفاده کننده X-Link بپیوندید</p>
+                <a href="#pricing-landing" class="cta-button-landing cta-large-landing">
+                    <span>انتخاب یک پلان</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</section>
-
-
-
-
-
+    </section>
 
 {% endblock %}

@@ -1,0 +1,418 @@
+/* ============================================
+   SERVICES & PORTFOLIO SECTIONS STYLING
+   ============================================ */
+
+:root {
+    --primary-blue: #3A86FF;
+    --cyan-neon: #00F6FF;
+    --text-white: #F5F8FF;
+    --text-gray: #A5B4D0;
+    --bg-dark: #0A0F1F;
+    --surface-darker: #0E1427;
+    --border-light: rgba(58, 134, 255, 0.2);
+    --border-hover: rgba(58, 134, 255, 0.4);
+}
+
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+
+.services-section {
+    animation: fadeInUp 0.6s ease;
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.service-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(58, 134, 255, 0.08), rgba(0, 246, 255, 0.05));
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--cyan-neon), var(--primary-blue));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.service-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(58, 134, 255, 0.2);
+}
+
+.service-item i {
+    font-size: 28px;
+    color: var(--cyan-neon);
+    min-width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover i {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+.service-content {
+    flex: 1;
+}
+
+.service-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.service-description {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-gray);
+    padding: 40px 20px;
+    grid-column: 1 / -1;
+}
+
+/* ============================================
+   PORTFOLIO SECTION
+   ============================================ */
+
+.portfolio-section {
+    animation: fadeInUp 0.7s ease;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.portfolio-item {
+    background: var(--surface-darker);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(58, 134, 255, 0.25);
+}
+
+.portfolio-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), rgba(0, 246, 255, 0.05));
+}
+
+.portfolio-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover .portfolio-thumbnail img {
+    transform: scale(1.08);
+}
+
+.portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 15, 31, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+.portfolio-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--cyan-neon));
+    border-radius: 50%;
+    color: var(--bg-dark);
+    font-size: 20px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.portfolio-link:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(0, 246, 255, 0.6);
+}
+
+.portfolio-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.portfolio-description {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+}
+
+/* ============================================
+   BUILDER FORM STYLING
+   ============================================ */
+
+.services-container,
+.portfolio-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.service-form-group,
+.portfolio-form-group {
+    padding: 16px;
+    background: rgba(58, 134, 255, 0.05);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.service-form-group:hover,
+.portfolio-form-group:hover {
+    border-color: var(--border-hover);
+    background: rgba(58, 134, 255, 0.08);
+}
+
+.service-input-wrapper,
+.portfolio-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.form-col input,
+.form-col textarea,
+.form-col select {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 6px;
+    color: var(--text-white);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-col input::placeholder,
+.form-col textarea::placeholder {
+    color: rgba(165, 180, 208, 0.6);
+}
+
+.form-col input:focus,
+.form-col textarea:focus,
+.form-col select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--cyan-neon);
+    box-shadow: 0 0 12px rgba(0, 246, 255, 0.25);
+}
+
+.service-checkbox,
+.portfolio-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
+
+.service-checkbox input[type="checkbox"],
+.portfolio-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--cyan-neon);
+}
+
+.service-checkbox label,
+.portfolio-checkbox label {
+    color: var(--text-gray);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.add-service-btn,
+.add-portfolio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, rgba(58, 134, 255, 0.2), rgba(0, 246, 255, 0.1));
+    border: 2px dashed var(--border-light);
+    border-radius: 8px;
+    color: var(--cyan-neon);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.add-service-btn:hover,
+.add-portfolio-btn:hover {
+    background: linear-gradient(135deg, rgba(58, 134, 255, 0.3), rgba(0, 246, 255, 0.2));
+    border-color: var(--cyan-neon);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 16px;
+    }
+
+    .service-item {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .service-item i {
+        font-size: 24px;
+    }
+
+    .service-title {
+        font-size: 1rem;
+    }
+
+    .service-description,
+    .portfolio-description {
+        font-size: 0.85rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-item {
+        padding: 12px;
+    }
+
+    .portfolio-content {
+        padding: 16px;
+    }
+
+    .add-service-btn,
+    .add-portfolio-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .service-form-group,
+    .portfolio-form-group {
+        padding: 12px;
+    }
+}
+
+/* ============================================
+   DARK MODE ADJUSTMENTS
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    .service-item,
+    .portfolio-item {
+        background: linear-gradient(135deg, rgba(58, 134, 255, 0.05), rgba(0, 246, 255, 0.02));
+    }
+}
