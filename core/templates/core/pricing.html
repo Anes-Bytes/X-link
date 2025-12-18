@@ -49,11 +49,16 @@
             <p class="header-subtitle">با پلن‌های اشتراک انعطاف‌پذیر ما حضور آنلاین خود را گسترش دهید. رایگان شروع کنید و هر زمان ارتقا دهید.</p>
             
             <!-- Billing Toggle -->
-            <div class="billing-toggle">
-                <button class="toggle-btn active" data-period="monthly">ماهانه</button>
-                <span class="toggle-label">۲۵٪ تخفیف برای سالانه</span>
-                <button class="toggle-btn" data-period="annual">سالانه</button>
-            </div>
+                <div class="period-toggle">
+                    <a href="?period=monthly#pricing-landing" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">
+                        <span>ماهانه</span>
+                    </a>
+                    <a href="?period=annual#pricing-landing" class="toggle-period-btn {% if current_period == 'annual' %}active{% endif %}">
+                        <span>سالانه</span>
+                        <span class="discount-label">۲۵٪ تخفیف</span>
+                    </a>
+                </div>
+
         </section>
 
         <!-- Pricing Cards -->
@@ -80,7 +85,11 @@
                     <div class="price-wrapper">
                         <span class="currency">تومان</span>
                         <span class="price-monthly" data-price="29">{{ plan.get_final_price|floatformat|intcomma }}</span>
+                        {% if plan.period == "monthly" %}
                         <span class="period">/ماه</span>
+                        {% else %}
+                        <span class="period">/سال</span>
+                        {% endif %}
                     </div>
                     {% if plan.discount %}
                     <div class="price-info">
@@ -140,7 +149,7 @@
                         <tr>
                             <td>بخش فروشگاه</td>
                             <td><span class="badge-cross">ندارد</span></td>
-                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-cross">ندارد</span></td>
                             <td><span class="badge-check">دارد</span></td>
                         </tr>
                         <tr>
@@ -151,14 +160,14 @@
                         </tr>
                         <tr>
                             <td>تیک آبی</td>
-                            <td><span class="badge-check">ندارد</span></td>
-                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-cross">ندارد</span></td>
+                            <td><span class="badge-cross">ندارد</span></td>
                             <td><span class="badge-check">دارد</span></td>
                         </tr>
                         <tr>
                             <td>بک گراند ستاره ای</td>
-                            <td><span class="badge-check">ندارد</span></td>
-                            <td><span class="badge-check">ندارد</span></td>
+                            <td><span class="badge-cross">ندارد</span></td>
+                            <td><span class="badge-cross">ندارد</span></td>
                             <td><span class="badge-check">دارد</span></td>
                         </tr>
                     </tbody>
@@ -172,11 +181,11 @@
             <div class="faq-grid">
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>آیا می‌توانم پلان خود را بعداً تغییر دهم؟</span>
+                        <span>آیا می‌توانم پلن خود را بعداً تغییر دهم؟</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer hidden">
-                        <p>بله! می‌توانید هر زمان پلان خود را ارتقا دهید.</p>
+                        <p>بله! می‌توانید هر زمان پلن خود را ارتقا دهید.</p>
                     </div>
                 </div>
 
@@ -226,7 +235,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer hidden">
-                        <p>بله! پلان‌های سالانه شامل تخفیف ۲۵٪ در مقایسه با صورت‌حساب ماهانه‌ای هستند.</p>
+                        <p>بله! پلن ‌های سالانه شامل تخفیف ۲۵٪ در مقایسه با صورت‌حساب ماهانه‌ای هستند.</p>
                     </div>
                 </div>
             </div>
@@ -237,7 +246,7 @@
             <h2>آماده شروع هستید؟</h2>
             <p>به هزاران حرفه‌ای‌ای بپیوندید که از X-Link برای گسترش حضور آنلاین خود استفاده می‌کنند</p>
             <button class="cta-button cta-large" onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">
-                <span>انتخاب یک پلان</span>
+                <span>انتخاب یک پلن</span>
                 <i class="fas fa-arrow-down"></i>
             </button>
         </section>

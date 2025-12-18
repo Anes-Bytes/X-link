@@ -110,8 +110,14 @@ def verify_otp(request):
 def landing_view(request):
     templates = cache.get("landing_templates")
     customers = cache.get("landing_customers")
-    plans_monthly = cache.get("landing_plans_monthly")
-    plans_annual = cache.get("landing_plans_annual")
+
+    period = request.GET.get("period")
+    if period == "monthly":
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
+    elif period == "annual":
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.ANNUAL))
+    else:
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
 
     if templates is None:
         templates = list(Template.objects.filter(is_active=True))
@@ -121,17 +127,6 @@ def landing_view(request):
         customers = list(Customers.objects.all())
         cache.set("landing_customers", customers, 60 * 60)
 
-    if plans_monthly is None:
-        plans_monthly = list(Plan.objects.filter(period="monthly").select_related("discount").prefetch_related("Features").all())
-        cache.set("landing_plans_monthly", plans_monthly, 60 * 60)
-
-    if plans_annual is None:
-        plans_annual = list(Plan.objects.filter(period="annual").select_related("discount").prefetch_related("Features").all())
-        cache.set("landing_plans_annual", plans_annual, 60 * 60)
-
-    # Determine which period to display based on GET parameter
-    period = request.GET.get("period", "monthly")
-    active_plans = plans_annual if period == "annual" else plans_monthly
 
     return render(
         request,
@@ -139,9 +134,7 @@ def landing_view(request):
         {
             "templates": templates,
             "customers": customers,
-            "plans_monthly": plans_monthly,
-            "plans_annual": plans_annual,
-            "active_plans": active_plans,
+            "plans":plans,
             "current_period": period,
         }
     )
@@ -388,8 +381,17 @@ def delete_portfolio_ajax(request, portfolio_id):
         return JsonResponse({'error': str(e)}, status=500)
 
 def pricing_view(request):
-    plans = list(Plan.objects.select_related("discount").prefetch_related("Features").all())
-    return render(request, 'core/pricing.html', context={'plans': plans})
+    period = request.GET.get("period")
+    if period == "monthly":
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
+    elif period == "annual":
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.ANNUAL))
+    else:
+        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
+
+
+
+    return render(request, 'core/pricing.html', context={'plans': plans, "current_period": period,})
 
 def payment_success_view(request):
     return render(request, 'core/payment-success.html')

@@ -26,10 +26,21 @@
                 <p class="hero-description">
                     {{ site_context.hero_section_text_description }}
                 </p>
-                <a href="{% url 'card_builder' %}" class="cta-button">
-                    <span>رایگان شروع کنید</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+<div class="hero-input-box">
+    <div class="hero-input-fake">
+        <span class="hero-domain">x-link.ir/</span>
+        <input
+            type="text"
+            class="hero-input"
+            autocomplete="off"
+        >
+    </div>
+
+    <a href="{% url 'card_builder' %}" class="hero-input-btn">
+        ادامه
+    </a>
+</div>
+
             </div>
         </div>
 
@@ -101,7 +112,7 @@
                     </div>
                     <div class="template-info">
                         <h3 class="template-name">{{ template.name }}</h3>
-                        <h5>این تملپیت هتلیترذسینتد کینمتدرکیمدرسکیم نسیریسبر سیرسی</h5>
+                        <h5>{{ template.description }}</h5>
                         <a href="{% url 'card_builder' %}" class="template-select-btn">
                             ساخت کارت ویزیت
                         </a>
@@ -124,10 +135,10 @@
                 
                 <!-- Period Toggle -->
                 <div class="period-toggle">
-                    <a href="?period=monthly" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">
+                    <a href="?period=monthly#pricing-landing" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">
                         <span>ماهانه</span>
                     </a>
-                    <a href="?period=annual" class="toggle-period-btn {% if current_period == 'annual' %}active{% endif %}">
+                    <a href="?period=annual#pricing-landing" class="toggle-period-btn {% if current_period == 'annual' %}active{% endif %}">
                         <span>سالانه</span>
                         <span class="discount-label">۲۵٪ تخفیف</span>
                     </a>
@@ -135,9 +146,8 @@
             </div>
 
             <!-- Monthly Pricing Section -->
-            {% if current_period != 'annual' %}
             <div class="pricing-cards-landing" id="monthly-pricing">
-                {% for plan in plans_monthly %}
+                {% for plan in plans %}
                 <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}" data-plan="{{ plan.type }}">
                     {% if plan.type == "Pro" %}
                     <div class="featured-badge">پرمیوم</div>
@@ -173,8 +183,11 @@
                         <div class="price-wrapper-landing">
                             <span class="price-value">{{ plan.get_final_price|floatformat|intcomma }}</span>
                             <span class="price-currency">تومان</span>
-                            <span class="price-period">/ماه</span>
-                        </div>
+                        {% if plan.period == "monthly" %}
+                        <span class="period">/ماه</span>
+                        {% else %}
+                        <span class="period">/سال</span>
+                        {% endif %}                        </div>
                         {% if plan.discount %}
                         <div class="price-info-landing">
                             <span class="original-price">قیمت اصلی: {{ plan.price }} تومان</span>
@@ -194,7 +207,7 @@
 
                     <div class="card-actions-landing">
                         {% if plan.type == "Pro" or plan.type == "Basic" %}
-                        <a href="" class="cta-button-landing cta-primary-landing">
+                        <a href="{% url 'pricing' %}" class="cta-button-landing cta-primary-landing">
                             <span>انتخاب</span>
                             <i class="fas fa-arrow-left"></i>
                         </a>
@@ -208,83 +221,6 @@
                 </div>
                 {% endfor %}
             </div>
-            {% endif %}
-
-            <!-- Annual Pricing Section -->
-            {% if current_period == 'annual' %}
-            <div class="pricing-cards-landing" id="annual-pricing">
-                {% for plan in plans_annual %}
-                <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}" data-plan="{{ plan.type }}">
-                    {% if plan.type == "Pro" %}
-                    <div class="featured-badge">پرمیوم</div>
-                    <span class="plan-badge">توصیه شده</span>
-                    {% elif plan.type == "Basic" %}
-                    <div class="featured-badge">پرمخاطب</div>
-                    {% else %}
-                    <div class="featured-badge">رایگان</div>
-                    {% endif %}
-
-                    <div class="card-header-landing">
-                        <h3 class="plan-name-landing">
-                            {% if plan.type == "Pro" %}
-                                حرفه‌ای
-                            {% elif plan.type == "Basic" %}
-                                پایه
-                            {% else %}
-                                رایگان
-                            {% endif %}
-                        </h3>
-                        <p class="plan-description-landing">
-                            {% if plan.type == "Pro" %}
-                                برای حرفه‌ای‌های در حال رشد
-                            {% elif plan.type == "Basic" %}
-                                برای کسب‌وکارهای کوچک
-                            {% else %}
-                                برای شروع کنندگان
-                            {% endif %}
-                        </p>
-                    </div>
-
-                    <div class="price-section-landing">
-                        <div class="price-wrapper-landing">
-                            <span class="price-value">{{ plan.get_final_price|floatformat|intcomma }}</span>
-                            <span class="price-currency">تومان</span>
-                            <span class="price-period">/سال</span>
-                        </div>
-                        {% if plan.discount %}
-                        <div class="price-info-landing">
-                            <span class="original-price">قیمت اصلی: {{ plan.price }} تومان</span>
-                            <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <ul class="features-list-landing">
-                        {% for feature in plan.Features.all %}
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>{{ feature.name }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-
-                    <div class="card-actions-landing">
-                        {% if plan.type == "Pro" or plan.type == "Basic" %}
-                        <a href="{% url 'payment' %}" class="cta-button-landing cta-primary-landing">
-                            <span>انتخاب</span>
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'card_builder' %}" class="cta-button-landing cta-secondary-landing">
-                            <span>شروع رایگان</span>
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
 
             <!-- Comparison Table -->
             <div class="comparison-section-landing">
@@ -309,7 +245,7 @@
                             <tr>
                                 <td>بخش فروشگاه</td>
                                 <td><span class="badge-cross">ندارد</span></td>
-                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-cross">ندارد</span></td>
                                 <td><span class="badge-check">دارد</span></td>
                             </tr>
                             <tr>
@@ -321,13 +257,13 @@
                             <tr>
                                 <td>تیک آبی</td>
                                 <td><span class="badge-check">ندارد</span></td>
-                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-cross">ندارد</span></td>
                                 <td><span class="badge-check">دارد</span></td>
                             </tr>
                             <tr>
                                 <td>بک گراند ستاره ای</td>
-                                <td><span class="badge-check">ندارد</span></td>
-                                <td><span class="badge-check">ندارد</span></td>
+                                <td><span class="badge-cross">ندارد</span></td>
+                                <td><span class="badge-cross">ندارد</span></td>
                                 <td><span class="badge-check">دارد</span></td>
                             </tr>
                         </tbody>
@@ -346,5 +282,103 @@
             </div>
         </div>
     </section>
+<style>
+.hero-input-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.hero-input {
+    width: 260px;
+    height: 48px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+}
+
+.hero-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-input:focus {
+    border-color: #2fd3ff;
+}
+
+.hero-input-btn {
+    height: 48px;
+    padding: 0 22px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2fd3ff, #1aa7ff);
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-input-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(47, 211, 255, 0.35);
+}
+.hero-input-fake {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+}
+
+.hero-domain {
+    padding: 0 12px;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.hero-input {
+    flex: 1;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: #fff;
+    padding-right: 12px;
+    font-size: 14px;
+    outline: none;
+}
+.hero-input-box {
+    margin-top: 32px;
+}
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.hero-content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;      /* وسط عمودی */
+    justify-content: center;  /* وسط افقی */
+}
+
+</style>
+<script>
+    const input = document.querySelector('.hero-input');
+    const domain = document.querySelector('.hero-domain');
+
+    input.addEventListener('input', () => {
+        domain.style.opacity = input.value ? '1' : '0.5';
+    });
+</script>
 
 {% endblock %}
