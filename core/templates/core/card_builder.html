@@ -15,13 +15,86 @@
         <form method="post" class="card-form" id="cardForm" enctype="multipart/form-data">
             {% csrf_token %}
 <div id="empty-skill-form" style="display:none;">
-    {{ skill_formset.empty_form.as_p }}
+    <div class="skill-form-group" data-form-index="__prefix__">
+        <input type="hidden" name="skill-__prefix__-id" id="id_skill-__prefix__-id">
+        <input type="hidden" name="skill-__prefix__-user_card" id="id_skill-__prefix__-user_card">
+
+        <div class="skill-input-wrapper">
+            <input type="text" name="skill-__prefix__-name" class="skill-input" placeholder="نام مهارت" maxlength="255" id="id_skill-__prefix__-name">
+
+            <div class="skill-checkbox">
+                <input type="checkbox" name="skill-__prefix__-DELETE" id="id_skill-__prefix__-DELETE">
+                <label for="id_skill-__prefix__-DELETE">حذف</label>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="empty-service-form" style="display:none;">
-    {{ service_formset.empty_form.as_p }}
+    <div class="service-form-group" data-form-index="__prefix__">
+        <input type="hidden" name="service-__prefix__-id" id="id_service-__prefix__-id">
+        <input type="hidden" name="service-__prefix__-user_card" id="id_service-__prefix__-user_card">
+
+        <div class="service-input-wrapper">
+            <div class="form-row">
+                <div class="form-col">
+                    <label>عنوان</label>
+                    <input type="text" name="service-__prefix__-title" class="form-control" placeholder="عنوان خدمت" maxlength="255" id="id_service-__prefix__-title">
+                </div>
+                <div class="form-col">
+                    <label>آیکون</label>
+                    <input type="text" name="service-__prefix__-icon" class="form-control" placeholder="fas fa-code" id="id_service-__prefix__-icon">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-col full-width">
+                    <label>توضیحات</label>
+                    <textarea name="service-__prefix__-description" class="form-control" placeholder="توضیح خدمت" rows="3" maxlength="500" id="id_service-__prefix__-description"></textarea>
+                </div>
+            </div>
+
+            <div class="service-checkbox">
+                <input type="checkbox" name="service-__prefix__-DELETE" id="id_service-__prefix__-DELETE">
+                <label for="id_service-__prefix__-DELETE">حذف</label>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="empty-portfolio-form" style="display:none;">
-    {{ portfolio_formset.empty_form.as_p }}
+    <div class="portfolio-form-group" data-form-index="__prefix__">
+        <input type="hidden" name="portfolio-__prefix__-id" id="id_portfolio-__prefix__-id">
+        <input type="hidden" name="portfolio-__prefix__-user_card" id="id_portfolio-__prefix__-user_card">
+
+        <div class="portfolio-input-wrapper">
+            <div class="form-row">
+                <div class="form-col">
+                    <label>عنوان</label>
+                    <input type="text" name="portfolio-__prefix__-title" class="form-control" placeholder="عنوان پروژه" maxlength="255" id="id_portfolio-__prefix__-title">
+                </div>
+                <div class="form-col">
+                    <label>تصویر</label>
+                    <input type="file" name="portfolio-__prefix__-image" class="form-control" accept="image/*" id="id_portfolio-__prefix__-image">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <label>لینک</label>
+                    <input type="url" name="portfolio-__prefix__-url" class="form-control" placeholder="https://example.com" id="id_portfolio-__prefix__-url">
+                </div>
+                <div class="form-col"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-col full-width">
+                    <label>توضیحات</label>
+                    <textarea name="portfolio-__prefix__-description" class="form-control" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-__prefix__-description"></textarea>
+                </div>
+            </div>
+
+            <div class="portfolio-checkbox">
+                <input type="checkbox" name="portfolio-__prefix__-DELETE" id="id_portfolio-__prefix__-DELETE">
+                <label for="id_portfolio-__prefix__-DELETE">حذف</label>
+            </div>
+        </div>
+    </div>
 </div>
 
             <!-- Template Selection Section -->
@@ -324,92 +397,6 @@
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const addSkillBtn = document.getElementById('addSkillBtn');
-    const skillsContainer = document.getElementById('skillsContainer');
-    const totalFormsInput = document.querySelector('[name="skill-TOTAL_FORMS"]');
-    const template = document.getElementById('empty-skill-form');
-
-    if (!addSkillBtn || !skillsContainer || !totalFormsInput || !template) return;
-
-    addSkillBtn.addEventListener('click', () => {
-        const formIndex = parseInt(totalFormsInput.value, 10);
-
-        let html = template.innerHTML.replace(/__prefix__/g, formIndex);
-        skillsContainer.insertAdjacentHTML('beforeend', html);
-
-        totalFormsInput.value = formIndex + 1;
-    });
-});
-function addForm(containerId, emptyFormId, totalFormsName) {
-    const container = document.getElementById(containerId);
-    const template = document.getElementById(emptyFormId).innerHTML;
-    const totalFormsInput = document.querySelector(`[name="${totalFormsName}"]`);
-    const formIndex = parseInt(totalFormsInput.value, 10);
-
-    const newFormHtml = template.replace(/__prefix__/g, formIndex);
-    container.insertAdjacentHTML('beforeend', newFormHtml);
-
-    totalFormsInput.value = formIndex + 1;
-}
-
-// Event listeners
-document.getElementById('addSkillBtn').addEventListener('click', () => addForm('skillsContainer', 'empty-skill-form', 'skill-TOTAL_FORMS'));
-document.getElementById('addServiceBtn').addEventListener('click', () => addForm('servicesContainer', 'empty-service-form', 'service-TOTAL_FORMS'));
-document.getElementById('addPortfolioBtn').addEventListener('click', () => addForm('portfolioContainer', 'empty-portfolio-form', 'portfolio-TOTAL_FORMS'));
-document.addEventListener('click', async (e) => {
-    // حذف مهارت
-    if(e.target.classList.contains('delete-skill-btn')){
-        const id = e.target.dataset.skillId;
-        const row = e.target.closest('.skill-form-group');
-        const res = await fetch(`/ajax/skills/${id}/delete/`, {method:'DELETE', headers:{'X-Requested-With':'XMLHttpRequest'}});
-        const data = await res.json();
-        if(data.success) row.remove();
-        else alert(data.error);
-    }
-
-    // حذف سرویس
-    if(e.target.classList.contains('delete-service-btn')){
-        const id = e.target.dataset.serviceId;
-        const row = e.target.closest('.service-form-group');
-        const res = await fetch(`/ajax/services/${id}/delete/`, {method:'DELETE', headers:{'X-Requested-With':'XMLHttpRequest'}});
-        const data = await res.json();
-        if(data.success) row.remove();
-        else alert(data.error);
-    }
-
-    // حذف پورتفولیو
-    if(e.target.classList.contains('delete-portfolio-btn')){
-        const id = e.target.dataset.portfolioId;
-        const row = e.target.closest('.portfolio-form-group');
-        const res = await fetch(`/ajax/portfolio/${id}/delete/`, {method:'DELETE', headers:{'X-Requested-With':'XMLHttpRequest'}});
-        const data = await res.json();
-        if(data.success) row.remove();
-        else alert(data.error);
-    }
-});
-document.getElementById('cardForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const res = await fetch(e.target.action, {method:'POST', body:formData, headers:{'X-Requested-With':'XMLHttpRequest'}});
-    const data = await res.json();
-    if(data.success) alert('ذخیره شد!');
-    else console.log(data.errors);
-});
-document.getElementById('addServiceBtn').addEventListener('click', () => {
-    const container = document.getElementById('servicesContainer');
-    const template = document.getElementById('empty-service-form').innerHTML;
-    const totalFormsInput = document.querySelector('[name="service-TOTAL_FORMS"]');
-    const formIndex = parseInt(totalFormsInput.value, 10);
-
-    const newFormHtml = template.replace(/__prefix__/g, formIndex);
-    container.insertAdjacentHTML('beforeend', newFormHtml);
-
-    totalFormsInput.value = formIndex + 1;
-});
-
-</script>
 
             <!-- Services Section -->
             <div class="form-section">
@@ -479,6 +466,12 @@ document.getElementById('addServiceBtn').addEventListener('click', () => {
                                 </div>
                                 <div class="form-col">
                                     <label>تصویر</label>
+                                    {% if portfolio_form.instance.image %}
+                                    <div class="current-image-preview">
+                                        <img src="{{ portfolio_form.instance.image.url }}" alt="تصویر فعلی" style="max-width: 100px; max-height: 100px; border-radius: 8px; margin-bottom: 8px;">
+                                        <small style="color: #666; display: block;">تصویر فعلی</small>
+                                    </div>
+                                    {% endif %}
                                     {{ portfolio_form.image }}
                                 </div>
                             </div>
@@ -531,20 +524,92 @@ document.getElementById('addServiceBtn').addEventListener('click', () => {
             </div>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const addPortfolioBtn = document.getElementById('addPortfolioBtn');
-    const portfolioContainer = document.getElementById('portfolioContainer');
-    const totalFormsInput = document.querySelector('[name="portfolio-TOTAL_FORMS"]');
-    const template = document.getElementById('empty-portfolio-form');
+    // Function to add a new form to any formset
+    function addForm(containerId, emptyFormId, totalFormsName) {
+        const container = document.getElementById(containerId);
+        const template = document.getElementById(emptyFormId);
+        const totalFormsInput = document.querySelector(`[name="${totalFormsName}"]`);
 
-    if (!addPortfolioBtn || !portfolioContainer || !totalFormsInput || !template) return;
+        if (!container || !template || !totalFormsInput) {
+            console.error(`Missing elements for ${containerId}: container=${!!container}, template=${!!template}, input=${!!totalFormsInput}`);
+            return;
+        }
 
-    addPortfolioBtn.addEventListener('click', () => {
         const formIndex = parseInt(totalFormsInput.value, 10);
-
-        const html = template.innerHTML.replace(/__prefix__/g, formIndex);
-        portfolioContainer.insertAdjacentHTML('beforeend', html);
-
+        const newFormHtml = template.innerHTML.replace(/__prefix__/g, formIndex);
+        container.insertAdjacentHTML('beforeend', newFormHtml);
         totalFormsInput.value = formIndex + 1;
+    }
+
+    // Add event listeners for formset add buttons
+    const addSkillBtn = document.getElementById('addSkillBtn');
+    const addServiceBtn = document.getElementById('addServiceBtn');
+    const addPortfolioBtn = document.getElementById('addPortfolioBtn');
+
+    if (addSkillBtn) {
+        addSkillBtn.addEventListener('click', () => addForm('skillsContainer', 'empty-skill-form', 'skill-TOTAL_FORMS'));
+    }
+
+    if (addServiceBtn) {
+        addServiceBtn.addEventListener('click', () => addForm('servicesContainer', 'empty-service-form', 'service-TOTAL_FORMS'));
+    }
+
+    if (addPortfolioBtn) {
+        addPortfolioBtn.addEventListener('click', () => addForm('portfolioContainer', 'empty-portfolio-form', 'portfolio-TOTAL_FORMS'));
+    }
+
+    // Handle delete buttons for all formsets
+    document.addEventListener('click', async (e) => {
+        // Delete skill
+        if (e.target.classList.contains('delete-skill-btn')) {
+            const id = e.target.dataset.skillId;
+            const row = e.target.closest('.skill-form-group');
+            try {
+                const res = await fetch(`/ajax/skills/${id}/delete/`, {
+                    method: 'DELETE',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                });
+                const data = await res.json();
+                if (data.success) row.remove();
+                else alert(data.error || 'خطا در حذف مهارت');
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            }
+        }
+
+        // Delete service
+        if (e.target.classList.contains('delete-service-btn')) {
+            const id = e.target.dataset.serviceId;
+            const row = e.target.closest('.service-form-group');
+            try {
+                const res = await fetch(`/ajax/services/${id}/delete/`, {
+                    method: 'DELETE',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                });
+                const data = await res.json();
+                if (data.success) row.remove();
+                else alert(data.error || 'خطا در حذف خدمت');
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            }
+        }
+
+        // Delete portfolio
+        if (e.target.classList.contains('delete-portfolio-btn')) {
+            const id = e.target.dataset.portfolioId;
+            const row = e.target.closest('.portfolio-form-group');
+            try {
+                const res = await fetch(`/ajax/portfolio/${id}/delete/`, {
+                    method: 'DELETE',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                });
+                const data = await res.json();
+                if (data.success) row.remove();
+                else alert(data.error || 'خطا در حذف نمونه کار');
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            }
+        }
     });
 });
 </script>
@@ -797,6 +862,21 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .skill-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.service-checkbox,
+.portfolio-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+.service-checkbox input[type="checkbox"],
+.portfolio-checkbox input[type="checkbox"] {
     width: auto;
     margin: 0;
 }
