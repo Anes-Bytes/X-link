@@ -5,6 +5,11 @@
 {% block page_title %}کارت دیجیتالی - X-Link{% endblock %}
 
 {% block page_content %}
+
+<br>
+<br>
+<br>
+
 <div class="card-builder-container">
     <div class="container">
         <div class="builder-header">
@@ -36,13 +41,9 @@
 
         <div class="service-input-wrapper">
             <div class="form-row">
-                <div class="form-col">
+                <div class="form-col full-width">
                     <label>عنوان</label>
                     <input type="text" name="service-__prefix__-title" class="form-control" placeholder="عنوان خدمت" maxlength="255" id="id_service-__prefix__-title">
-                </div>
-                <div class="form-col">
-                    <label>آیکون</label>
-                    <input type="text" name="service-__prefix__-icon" class="form-control" placeholder="fas fa-code" id="id_service-__prefix__-icon">
                 </div>
             </div>
             <div class="form-row">
@@ -250,7 +251,13 @@
     </div>
 <!-- آپلود عکس پروفایل -->
 <div class="form-group">
-    <label for="{{ form.profile_image.id_for_label }}">آپلود عکس پروفایل *</label>
+    <label for="{{ form.profile_picture.id_for_label }}">آپلود عکس پروفایل *</label>
+    {% if form.instance.profile_picture %}
+    <div class="current-image-preview">
+        <img src="{{ form.instance.profile_picture.url }}" alt="عکس پروفایل فعلی" style="max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--cyan-neon);">
+        <small style="color: #666; display: block;">عکس پروفایل فعلی</small>
+    </div>
+    {% endif %}
     {{ form.profile_picture }}
     {% if form.profile_picture.errors %}
     <div class="error-message">{{ form.profile_picture.errors }}</div>
@@ -409,13 +416,9 @@
 
                         <div class="service-input-wrapper">
                             <div class="form-row">
-                                <div class="form-col">
+                                <div class="form-col full-width">
                                     <label>عنوان</label>
                                     {{ service_form.title }}
-                                </div>
-                                <div class="form-col">
-                                    <label>آیکون</label>
-                                    {{ service_form.icon }}
                                 </div>
                             </div>
                             <div class="form-row">

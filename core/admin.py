@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .models import CustomUser, Customers, Template, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners, \
-    UserPlan
+    UserPlan, UserMessages
 
 
 # ========== Inline ADMINS ==========
@@ -13,6 +13,11 @@ class FeaturesInline(admin.TabularInline):
 
 class SkillInline(admin.TabularInline):
     model = Skill
+    extra = 1
+
+
+class UserMessagesInline(admin.TabularInline):
+    model = UserMessages
     extra = 1
 
 
@@ -82,14 +87,11 @@ class UserCardAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
-    # نمایش ستون‌ها در لیست کاربران
     list_display = ('phone', 'full_name', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_active')
 
-    # فیلد مرتب‌سازی
     ordering = ('phone',)
 
-    # فیلدهایی که در صفحه جزئیات نمایش داده می‌شوند
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
         ('Personal info', {'fields': ('full_name', "plan", "plan_expires_at")}),
@@ -97,7 +99,6 @@ class CustomUserAdmin(UserAdmin):
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
-    # فیلدهایی که هنگام ایجاد کاربر نمایش داده می‌شوند
     add_fieldsets = (
         (None, {'fields': ('phone', 'password')}),
         ('Personal info', {'fields': ('full_name', "phone", "plan", "plan_expires_at")}),
@@ -106,6 +107,9 @@ class CustomUserAdmin(UserAdmin):
     )
 
     search_fields = ('phone', 'full_name')
+    inlines = [
+        UserMessagesInline,
+    ]
 
 
 

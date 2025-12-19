@@ -225,6 +225,7 @@ def dashboard_view(request):
         'has_basic_plan': 'Basic' in user_plans,
         'has_pro_plan': 'Pro' in user_plans,
         'has_free_plan': 'Free' in user_plans,
+        'messages':request.user.messages.all(),
     }
 
     return render(request, "core/dashboard.html", context)
@@ -379,8 +380,7 @@ def add_service_ajax(request):
         service = Service.objects.create(
             user_card=user_card,
             title=title,
-            description=data.get('description', ''),
-            icon=data.get('icon', '')
+            description=data.get('description', '')
         )
 
         return JsonResponse({

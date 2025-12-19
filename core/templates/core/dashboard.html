@@ -89,7 +89,7 @@
                         <span class="notification-badge">2</span>
                     </button>
                     <div class="header-profile">
-                        <img id="headerProfileImg" src="{{ user_card.profile_picture }}" alt="پروفایل" class="profile-img-small">
+                        <img id="headerProfileImg" src="{{ user_card.profile_picture.url }}" alt="پروفایل" class="profile-img-small">
                         <div class="profile-menu-trigger">
                             <span id="headerUsername">{{ user.username }}</span>
                             <i class="fas fa-chevron-down"></i>
@@ -105,22 +105,17 @@
                     <button class="close-btn">×</button>
                 </div>
                 <div class="notification-list">
-                    {% if not user.phone %}
-                    <div class="notification-item unread">
-                        <i class="fas fa-info-circle"></i>
-                        <div class="notification-content">
-                            <p class="notification-title">پروفایل خود را تکمیل کنید</p>
-                            <p class="notification-time">۲ ساعت پیش</p>
-                        </div>
-                    </div>
-                    {% endif %}
+                    {% if messages %}
+                    {% for message in messages %}
                     <div class="notification-item unread">
                         <i class="fas fa-exclamation-circle"></i>
                         <div class="notification-content">
-                            <p class="notification-title">طرح شما در ۷ روز منقضی می‌شود</p>
-                            <p class="notification-time">۱ روز پیش</p>
+                            <p class="notification-title">{{ message.text }}</p>
+                            <p class="notification-time">{{ message.created_at }}</p>
                         </div>
                     </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 
@@ -207,14 +202,23 @@
                                 <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
-                                <div class="stat-content">
-                                    <p class="stat-label">زمان باقی مانده اشتراک</p>
-                                                                    {% if user.plan_expires %}
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
-                                {% else %}
-                                <p class="expiry-date" id="expiryDate">♾️</p>
-                                {% endif %}
-                                </div>
+                        <div class="stat-content">
+                            <p class="stat-label">زمان باقی‌مانده اشتراک</p>
+
+                            {% if user.plan_expires is None %}
+                                <p class="expiry-date unlimited">♾️ اشتراک نامحدود</p>
+
+                            {% elif user.plan_expires == 0 %}
+                                <p class="expiry-date expired">⛔ اشتراک شما به پایان رسیده</p>
+
+                            {% else %}
+                                <p class="expiry-date active">
+                                    {{ user.plan_expires }} روز باقی مانده
+                                </p>
+                            {% endif %}
+                        </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -357,14 +361,21 @@
                                 </ul>
                             </div>
 
-                            <div class="plan-expiry">
-                                <p class="expiry-label">انقضا در:</p>
-                                {% if user.plan_expires %}
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
-                                {% else %}
-                                <p class="expiry-date" id="expiryDate">♾️♾️♾️♾️♾️</p>
-                                {% endif %}
-                            </div>
+<div class="stat-content">
+    <p class="stat-label">زمان باقی‌مانده اشتراک</p>
+
+    {% if user.plan_expires is None %}
+        <p class="expiry-date unlimited">♾️ اشتراک نامحدود</p>
+
+    {% elif user.plan_expires == 0 %}
+        <p class="expiry-date expired">⛔ اشتراک شما به پایان رسیده</p>
+
+    {% else %}
+        <p class="expiry-date active">
+            {{ user.plan_expires }} روز باقی مانده
+        </p>
+    {% endif %}
+</div>
 
                         </div>
                         {% elif has_pro_plan %}
@@ -389,14 +400,21 @@
                                 </ul>
                             </div>
 
-                            <div class="plan-expiry">
-                                <p class="expiry-label">انقضا در:</p>
-                                {% if user.plan_expires %}
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
-                                {% else %}
-                                <p class="expiry-date" id="expiryDate">♾️♾️♾️♾️♾️</p>
-                                {% endif %}
-                            </div>
+<div class="stat-content">
+    <p class="stat-label">زمان باقی‌مانده اشتراک</p>
+
+    {% if user.plan_expires is None %}
+        <p class="expiry-date unlimited">♾️ اشتراک نامحدود</p>
+
+    {% elif user.plan_expires == 0 %}
+        <p class="expiry-date expired">⛔ اشتراک شما به پایان رسیده</p>
+
+    {% else %}
+        <p class="expiry-date active">
+            {{ user.plan_expires }} روز باقی مانده
+        </p>
+    {% endif %}
+</div>
 
                         </div>
                         {% else %}
@@ -417,14 +435,22 @@
                                 </ul>
                             </div>
 
-                            <div class="plan-expiry">
-                                <p class="expiry-label">انقضا در:</p>
-                                {% if user.plan_expires %}
-                                <p class="expiry-date" id="expiryDate">{{ user.plan_expires }} روز</p>
-                                {% else %}
-                                <p class="expiry-date" id="expiryDate">♾️</p>
-                                {% endif %}
-                            </div>
+<div class="stat-content">
+    <p class="stat-label">زمان باقی‌مانده اشتراک</p>
+
+    {% if user.plan_expires is None %}
+        <p class="expiry-date unlimited">♾️ اشتراک نامحدود</p>
+
+    {% elif user.plan_expires == 0 %}
+        <p class="expiry-date expired">⛔ اشتراک شما به پایان رسیده</p>
+
+    {% else %}
+        <p class="expiry-date active">
+            {{ user.plan_expires }} روز باقی مانده
+        </p>
+    {% endif %}
+</div>
+
 
                         </div>
                         {% endif %}
@@ -517,6 +543,7 @@
                     </div>
 
                     <!-- Upgrade Button -->
+                    {% if not has_pro_plan %}
                     <div class="upgrade-section">
                         <h3>آیا می‌خواهید ارتقاء دهید؟</h3>
                         <p>با طرح‌های پریمیوم ما ویژگی‌های بیشتری و امکانات نامحدود دریافت کنید</p>
@@ -524,6 +551,7 @@
                             <i class="fas fa-crown"></i> ارتقاء به VIP
                         </button>
                     </div>
+                    {% endif %}
                 </section>
 
 
@@ -628,7 +656,24 @@ function shareViaEmail(url) {
     window.location.href = `mailto:?subject=کارت دیجیتالی من&body=${encodeURIComponent(url)}`;
 }
 </script>
+<style>
+    .expiry-date {
+    font-weight: 600;
+}
 
+.expiry-date.active {
+    color: #22c55e; /* سبز */
+}
+
+.expiry-date.expired {
+    color: #ef4444; /* قرمز */
+}
+
+.expiry-date.unlimited {
+    color: #6366f1; /* بنفش */
+}
+
+</style>
     <!-- Script -->
     <script src="{% static 'dashboard.js' %}"></script>
 </body>

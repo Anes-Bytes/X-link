@@ -108,7 +108,7 @@ class SkillFormSet(forms.BaseInlineFormSet):
     """FormSet for managing multiple skills"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.extra = 1  # Allow adding one new skill
+        self.extra = 0  # No extra forms by default - add via JavaScript
 
 
 # Create formset factory
@@ -117,7 +117,7 @@ SkillInlineFormSet = forms.inlineformset_factory(
     Skill,
     form=SkillForm,
     formset=SkillFormSet,
-    extra=1,
+    extra=0,
     can_delete=True,
 )
 
@@ -125,7 +125,7 @@ SkillInlineFormSet = forms.inlineformset_factory(
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['title', 'description', 'icon']
+        fields = ['title', 'description']  # Removed 'icon' field
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -137,11 +137,6 @@ class ServiceForm(forms.ModelForm):
                 'placeholder': 'توضیح خدمت',
                 'rows': 3,
                 'dir': 'rtl',
-            }),
-            'icon': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'آیکون Font Awesome (مثلا: fas fa-code)',
-                'dir': 'ltr',
             }),
         }
 
@@ -156,7 +151,7 @@ ServiceInlineFormSet = forms.inlineformset_factory(
     Service,
     form=ServiceForm,
     formset=ServiceFormSet,
-    extra=1,
+    extra=0,
     can_delete=True,
 )
 
@@ -199,6 +194,6 @@ PortfolioInlineFormSet = forms.inlineformset_factory(
     Portfolio,
     form=PortfolioForm,
     formset=PortfolioFormSet,
-    extra=1,
+    extra=0,
     can_delete=True,
 )

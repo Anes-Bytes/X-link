@@ -152,11 +152,7 @@
                 <div class="services-container" id="servicesContainer">
                     {% for service in user_card.services.all %}
                     <div class="service-item" data-service-id="{{ service.id }}">
-                        {% if service.icon %}
-                        <i class="{{ service.icon }}"></i>
-                        {% else %}
-                        <i class="fas fa-star"></i>
-                        {% endif %}
+                        <i class="fas fa-code"></i>
                         <div class="service-content">
                             <h4 class="service-title">{{ service.title }}</h4>
                             {% if service.description %}

@@ -93,7 +93,7 @@
                     </div>
                     {% if plan.discount %}
                     <div class="price-info">
-                        <span class="original-price" data-original="39">قیمت اصلی: تومان{{ plan.price }}</span>
+                        <span class="original-price" data-original="39">قیمت اصلی: تومان{{ plan.price|floatformat|intcomma }}</span>
                         <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
                     </div>
                     {% endif %}

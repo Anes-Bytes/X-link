@@ -1,9 +1,9 @@
-from datetime import timedelta
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
+from datetime import datetime, timedelta
+
 
 class UserManager(BaseUserManager):
     def create_user(self, phone, full_name=None, password=None):
@@ -45,6 +45,12 @@ class UserPlan(models.Model):
         return self.name
 
 
+class UserMessages(models.Model):
+    user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="messages")
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     phone = models.CharField(max_length=11, unique=True)
@@ -69,9 +75,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def plan_expires(self):
         if not self.plan_expires_at:
-            return 0
+            return None
         delta = self.plan_expires_at.date() - timezone.now().date()
         return max(delta.days, 0)
+
+
+    def is_expires_soon(self):
+        if not self.plan_expires_at:
+            return False
+
+        # زمان فعلی
+        now = datetime.now()
+
+        remaining = self.plan_expires_at - now
+
+        return remaining <= timedelta(days=8)
 
     def __str__(self):
         return self.phone
@@ -241,7 +259,6 @@ class Service(models.Model):
     user_card = models.ForeignKey(UserCard, on_delete=models.CASCADE, related_name='services')
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=500, blank=True)
-    icon = models.CharField(max_length=100, blank=True, help_text="Font Awesome icon class (e.g., fas fa-code)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
