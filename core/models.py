@@ -148,10 +148,10 @@ class SiteContext(models.Model):
     hero_section_text_description = models.CharField(max_length=200)
 
     footer_section_text_part1 = models.CharField(max_length=200)
-    footer_telegram_url = models.URLField()
-    footer_linkedin_url = models.URLField()
-    footer_github_url = models.URLField()
-    footer_instagram_url = models.URLField()
+    footer_telegram_url = models.URLField(null=True, blank=True)
+    footer_linkedin_url = models.URLField(null=True, blank=True)
+    footer_github_url = models.URLField(null=True, blank=True)
+    footer_instagram_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.site_name

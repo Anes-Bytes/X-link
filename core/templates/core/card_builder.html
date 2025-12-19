@@ -14,6 +14,15 @@
 
         <form method="post" class="card-form" id="cardForm" enctype="multipart/form-data">
             {% csrf_token %}
+<div id="empty-skill-form" style="display:none;">
+    {{ skill_formset.empty_form.as_p }}
+</div>
+<div id="empty-service-form" style="display:none;">
+    {{ service_formset.empty_form.as_p }}
+</div>
+<div id="empty-portfolio-form" style="display:none;">
+    {{ portfolio_formset.empty_form.as_p }}
+</div>
 
             <!-- Template Selection Section -->
 <div class="form-section">
@@ -283,7 +292,7 @@
 
     <!-- container مهارت‌ها -->
     <div id="skillsContainer" class="skills-container">
-        {% for skill_form in formset %}
+{% for skill_form in skill_formset %}
         <div class="skill-form-group" data-form-index="{{ forloop.counter0 }}">
             {{ skill_form.id }}  <!-- hidden field PK فرم‌های موجود -->
 
@@ -316,24 +325,90 @@
 </div>
 
 <script>
-const addSkillBtn = document.getElementById('addSkillBtn');
-const skillsContainer = document.getElementById('skillsContainer');
-const totalForms = document.querySelector('[name="skill-TOTAL_FORMS"]');
+document.addEventListener('DOMContentLoaded', () => {
+    const addSkillBtn = document.getElementById('addSkillBtn');
+    const skillsContainer = document.getElementById('skillsContainer');
+    const totalFormsInput = document.querySelector('[name="skill-TOTAL_FORMS"]');
+    const template = document.getElementById('empty-skill-form');
 
-addSkillBtn.addEventListener('click', () => {
-    const formIdx = parseInt(totalForms.value);
-    const newFormHtml = `
-        <div class="skill-form-group" data-form-index="${formIdx}">
-            <div class="skill-input-wrapper">
-                <input type="text" name="skill-${formIdx}-name" id="id_skill-${formIdx}-name">
-                <input type="checkbox" name="skill-${formIdx}-DELETE" id="id_skill-${formIdx}-DELETE">
-                <label for="id_skill-${formIdx}-DELETE">حذف</label>
-            </div>
-        </div>
-    `;
-    skillsContainer.insertAdjacentHTML('beforeend', newFormHtml);
-    totalForms.value = formIdx + 1; // آپدیت TOTAL_FORMS
+    if (!addSkillBtn || !skillsContainer || !totalFormsInput || !template) return;
+
+    addSkillBtn.addEventListener('click', () => {
+        const formIndex = parseInt(totalFormsInput.value, 10);
+
+        let html = template.innerHTML.replace(/__prefix__/g, formIndex);
+        skillsContainer.insertAdjacentHTML('beforeend', html);
+
+        totalFormsInput.value = formIndex + 1;
+    });
 });
+function addForm(containerId, emptyFormId, totalFormsName) {
+    const container = document.getElementById(containerId);
+    const template = document.getElementById(emptyFormId).innerHTML;
+    const totalFormsInput = document.querySelector(`[name="${totalFormsName}"]`);
+    const formIndex = parseInt(totalFormsInput.value, 10);
+
+    const newFormHtml = template.replace(/__prefix__/g, formIndex);
+    container.insertAdjacentHTML('beforeend', newFormHtml);
+
+    totalFormsInput.value = formIndex + 1;
+}
+
+// Event listeners
+document.getElementById('addSkillBtn').addEventListener('click', () => addForm('skillsContainer', 'empty-skill-form', 'skill-TOTAL_FORMS'));
+document.getElementById('addServiceBtn').addEventListener('click', () => addForm('servicesContainer', 'empty-service-form', 'service-TOTAL_FORMS'));
+document.getElementById('addPortfolioBtn').addEventListener('click', () => addForm('portfolioContainer', 'empty-portfolio-form', 'portfolio-TOTAL_FORMS'));
+document.addEventListener('click', async (e) => {
+    // حذف مهارت
+    if(e.target.classList.contains('delete-skill-btn')){
+        const id = e.target.dataset.skillId;
+        const row = e.target.closest('.skill-form-group');
+        const res = await fetch(`/ajax/skills/${id}/delete/`, {method:'DELETE', headers:{'X-Requested-With':'XMLHttpRequest'}});
+        const data = await res.json();
+        if(data.success) row.remove();
+        else alert(data.error);
+    }
+
+    // حذف سرویس
+    if(e.target.classList.contains('delete-service-btn')){
+        const id = e.target.dataset.serviceId;
+        const row = e.target.closest('.service-form-group');
+        const res = await fetch(`/ajax/services/${id}/delete/`, {method:'DELETE', headers:{'X-Requested-With':'XMLHttpRequest'}});
+        const data = await res.json();
+        if(data.success) row.remove();
+        else alert(data.error);
+    }
+
+    // حذف پورتفولیو
+    if(e.target.classList.contains('delete-portfolio-btn')){
+        const id = e.target.dataset.portfolioId;
+        const row = e.target.closest('.portfolio-form-group');
+        const res = await fetch(`/ajax/portfolio/${id}/delete/`, {method:'DELETE', headers:{'X-Requested-With':'XMLHttpRequest'}});
+        const data = await res.json();
+        if(data.success) row.remove();
+        else alert(data.error);
+    }
+});
+document.getElementById('cardForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const res = await fetch(e.target.action, {method:'POST', body:formData, headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const data = await res.json();
+    if(data.success) alert('ذخیره شد!');
+    else console.log(data.errors);
+});
+document.getElementById('addServiceBtn').addEventListener('click', () => {
+    const container = document.getElementById('servicesContainer');
+    const template = document.getElementById('empty-service-form').innerHTML;
+    const totalFormsInput = document.querySelector('[name="service-TOTAL_FORMS"]');
+    const formIndex = parseInt(totalFormsInput.value, 10);
+
+    const newFormHtml = template.replace(/__prefix__/g, formIndex);
+    container.insertAdjacentHTML('beforeend', newFormHtml);
+
+    totalFormsInput.value = formIndex + 1;
+});
+
 </script>
 
             <!-- Services Section -->
@@ -454,6 +529,27 @@ addSkillBtn.addEventListener('click', () => {
                     <i class="fas fa-times"></i> لغو
                 </a>
             </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const addPortfolioBtn = document.getElementById('addPortfolioBtn');
+    const portfolioContainer = document.getElementById('portfolioContainer');
+    const totalFormsInput = document.querySelector('[name="portfolio-TOTAL_FORMS"]');
+    const template = document.getElementById('empty-portfolio-form');
+
+    if (!addPortfolioBtn || !portfolioContainer || !totalFormsInput || !template) return;
+
+    addPortfolioBtn.addEventListener('click', () => {
+        const formIndex = parseInt(totalFormsInput.value, 10);
+
+        const html = template.innerHTML.replace(/__prefix__/g, formIndex);
+        portfolioContainer.insertAdjacentHTML('beforeend', html);
+
+        totalFormsInput.value = formIndex + 1;
+    });
+});
+</script>
+
+
         </form>
     </div>
 </div>
@@ -842,101 +938,4 @@ addSkillBtn.addEventListener('click', () => {
 
 </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const addSkillBtn = document.getElementById('addSkillBtn');
-    const skillsContainer = document.getElementById('skillsContainer');
-    const totalFormsInput = document.querySelector('[name="skills-TOTAL_FORMS"]');
-
-    if (addSkillBtn) {
-        addSkillBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const formCount = document.querySelectorAll('.skill-form-group').length;
-            const newForm = document.querySelector('[data-form-index="0"]').cloneNode(true);
-
-            // Update form indices
-            newForm.setAttribute('data-form-index', formCount);
-            newForm.innerHTML = newForm.innerHTML.replace(/skills-0/g, `skills-${formCount}`);
-
-            skillsContainer.appendChild(newForm);
-
-            // Update total forms count
-            if (totalFormsInput) {
-                totalFormsInput.value = formCount + 1;
-            }
-        });
-    }
-
-    // Service formset management
-    const addServiceBtn = document.getElementById('addServiceBtn');
-    const servicesContainer = document.getElementById('servicesContainer');
-    const servicesTotalFormsInput = document.querySelector('[name="service-TOTAL_FORMS"]');
-
-    if (addServiceBtn) {
-        addServiceBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const formCount = document.querySelectorAll('.service-form-group').length;
-            const firstForm = document.querySelector('.service-form-group');
-            
-            if (firstForm) {
-                const newForm = firstForm.cloneNode(true);
-                newForm.setAttribute('data-form-index', formCount);
-                
-                // Update all form field names
-                newForm.querySelectorAll('input, textarea, select').forEach(field => {
-                    const name = field.getAttribute('name');
-                    if (name) {
-                        field.setAttribute('name', name.replace(/service-\d+/, `service-${formCount}`));
-                        field.setAttribute('id', `id_${name.replace(/service-\d+/, `service-${formCount}`)}`);
-                        field.value = '';
-                    }
-                });
-
-                servicesContainer.appendChild(newForm);
-
-                if (servicesTotalFormsInput) {
-                    servicesTotalFormsInput.value = formCount + 1;
-                }
-            }
-        });
-    }
-
-    // Portfolio formset management
-    const addPortfolioBtn = document.getElementById('addPortfolioBtn');
-    const portfolioContainer = document.getElementById('portfolioContainer');
-    const portfolioTotalFormsInput = document.querySelector('[name="portfolio-TOTAL_FORMS"]');
-
-    if (addPortfolioBtn) {
-        addPortfolioBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const formCount = document.querySelectorAll('.portfolio-form-group').length;
-            const firstForm = document.querySelector('.portfolio-form-group');
-            
-            if (firstForm) {
-                const newForm = firstForm.cloneNode(true);
-                newForm.setAttribute('data-form-index', formCount);
-                
-                // Update all form field names
-                newForm.querySelectorAll('input, textarea, select').forEach(field => {
-                    const name = field.getAttribute('name');
-                    if (name) {
-                        field.setAttribute('name', name.replace(/portfolio-\d+/, `portfolio-${formCount}`));
-                        field.setAttribute('id', `id_${name.replace(/portfolio-\d+/, `portfolio-${formCount}`)}`);
-                        field.value = '';
-                    }
-                });
-
-                portfolioContainer.appendChild(newForm);
-
-                if (portfolioTotalFormsInput) {
-                    portfolioTotalFormsInput.value = formCount + 1;
-                }
-            }
-        });
-    }
-});
-</script>
 {% endblock %}

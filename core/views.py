@@ -1,132 +1,172 @@
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from django.core.cache import cache
-
 import json
+import datetime
+import logging
 
+# Django imports
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods, require_POST
+from django.core.cache import cache
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from django.utils.crypto import get_random_string
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.db.models import F
+
+# Third-party imports
+from melipayamak import Api
+from environs import Env
+
+# Local app imports
 from .models import UserCard, Skill, Service, Portfolio, Template, Customers, Plan
 from .forms import UserCardForm, SkillInlineFormSet, ServiceInlineFormSet, PortfolioInlineFormSet
-
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from core.models import CustomUser, OTP
-from django.utils import timezone
-import datetime
-import random
-from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 
-from melipayamak import Api
+# Logger setup
+logger = logging.getLogger(__name__)
 
-from environs import Env
+# Env setup
 env = Env()
 env.read_env()
 
-def send_sms(phone, code):
-    # username = env("MELIPAYAMAK_USERNAME")
-    # password = env("MELIPAYAMAK_APIKEY")
-    # api = Api(username, password)
-    # sms = api.sms()
-    # to = phone
-    # _from = env("MELIPAYAMAK_NUMBER")
-    # text = f'''کد تایید پرشین گیمز
-    #
-    # کد شما: {code}
-    #
-    # توجه: این کد محرمانه است. آن را به هیچ‌کس حتی در صورت ادعای پشتیبانی ندهید.
-    #
-    # پرشین گیمز
-    # لغو 11'''
-    #
-    # response = sms.send(to, _from, text)
-    print(f"{phone}, {code}")
 
-def request_otp(request):
-    if request.method == "POST":
-        phone = request.POST.get("phone")
-        full_name = request.POST.get("full_name")
-        next_page = request.POST.get("next")
-        print(phone)
-        if next_page:
-            request.session["next"] = next_page
-        if not phone:
-            messages.error(request, "شماره تلفن وارد نشده")
-            return redirect("request_otp")
+def send_sms(phone: str, code: str) -> bool:
+    """
+    Send OTP SMS via Melipayamak
+    """
+    try:
+        username = env("MELIPAYAMAK_USERNAME")
+        password = env("MELIPAYAMAK_APIKEY")
+        sender = env("MELIPAYAMAK_NUMBER")
 
-        user, created = CustomUser.objects.get_or_create(phone=phone, defaults={"full_name": full_name})
+        api = Api(username, password)
+        sms = api.sms()
 
-        code = str(random.randint(100000, 999999))
-        OTP.objects.create(
-            user=user,
-            code=code,
-            expires_at=timezone.now() + datetime.timedelta(minutes=2)
+        text = (
+            "کد تایید ایکس لینک\n\n"
+            f"کد شما: {code}\n\n"
+            "توجه: این کد محرمانه است. آن را در اختیار دیگران قرار ندهید.\n\n"
+            "لغو 11"
         )
-        request.session["phone"] = phone
-        request.session.modified = True
-        send_sms(phone, code)
-        messages.success(request, "کد تایید ارسال شد")
+
+        sms.send(phone, sender, text)
+        return True
+
+    except Exception as e:
+        logger.error("SMS send failed for %s: %s", phone, e)
+        return False
+
+@require_POST
+def request_otp(request):
+    phone = request.POST.get("phone", "").strip()
+    full_name = request.POST.get("full_name", "").strip()
+    next_page = request.POST.get("next")
+
+    if not phone:
+        messages.error(request, "شماره تلفن معتبر نیست")
+        return redirect("request_otp")
+
+    cache_key = f"otp_request_{phone}"
+    if cache.get(cache_key):
+        messages.error(request, "لطفاً کمی بعد دوباره تلاش کنید")
+        return redirect("request_otp")
+
+    cache.set(cache_key, True, timeout=60)
+
+    user, _ = CustomUser.objects.get_or_create(
+        phone=phone,
+        defaults={"full_name": full_name}
+    )
+
+    user.otps.filter(expires_at__gt=timezone.now()).update(expires_at=timezone.now())
+
+    code = get_random_string(6, allowed_chars="0123456789")
+
+    OTP.objects.create(
+        user=user,
+        code=code,
+        expires_at=timezone.now() + datetime.timedelta(minutes=2)
+    )
+
+    request.session["otp_phone"] = phone
+    if next_page:
+        request.session["next"] = next_page
+
+    send_sms(phone, code)
+    messages.success(request, "کد تایید ارسال شد")
+    return redirect("verify_otp")
+
+@require_POST
+def verify_otp(request):
+    phone = request.session.get("otp_phone")
+    code = request.POST.get("code", "").strip()
+    next_page = request.session.get("next")
+
+    if not phone or not code:
+        messages.error(request, "اطلاعات نامعتبر است")
+        return redirect("request_otp")
+
+    user = get_object_or_404(CustomUser, phone=phone)
+
+    otp = user.otps.filter(
+        code=code,
+        expires_at__gt=timezone.now()
+    ).last()
+
+    if not otp:
+        messages.error(request, "کد اشتباه یا منقضی شده")
         return redirect("verify_otp")
 
-    return redirect("login")
+    otp.delete()
 
-def verify_otp(request):
-    if request.method == "POST":
-        phone = request.session.get("phone")
-        code = request.POST.get("code")
-        next_page = request.session.get("next")  # از session می‌خوانیم
+    login(request, user)
+    messages.success(request, "با موفقیت وارد شدید")
 
-        try:
-            user = CustomUser.objects.get(phone=phone)
-            otp = user.otps.filter(code=code).last()
+    if next_page and url_has_allowed_host_and_scheme(
+        next_page,
+        allowed_hosts={request.get_host()}
+    ):
+        del request.session["next"]
+        return redirect(next_page)
 
-            if not otp:
-                messages.error(request, "کد اشتباه است")
-                return redirect("verify_otp")
-
-            if otp.is_expired():
-                messages.error(request, "کد منقضی شده")
-                return redirect("request_otp")
-
-            login(request, user)
-            messages.success(request, "وارد شدید!")
-
-            # اگر next تنظیم شده بود → همانجا برو
-            if next_page:
-                del request.session["next"]  # فقط یک بار مصرف
-                return redirect(next_page)
-
-            # اگر نبود → صفحه اصلی
-            return redirect("home")
-
-        except CustomUser.DoesNotExist:
-            messages.error(request, "کاربر وجود ندارد")
-            return redirect("request_otp")
-
-    return render(request, "core/verify.html")
+    return redirect("dashboard")
 
 def landing_view(request):
-    templates = cache.get("landing_templates")
-    customers = cache.get("landing_customers")
+    period = request.GET.get("period", Plan.PeriodChoices.MONTHLY)
 
-    period = request.GET.get("period")
-    if period == "monthly":
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
-    elif period == "annual":
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.ANNUAL))
-    else:
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
+    if period not in (
+        Plan.PeriodChoices.MONTHLY,
+        Plan.PeriodChoices.ANNUAL,
+    ):
+        period = Plan.PeriodChoices.MONTHLY
+
+    plans_cache_key = f"landing_plans_{period}"
+    plans = cache.get(plans_cache_key)
+
+    if plans is None:
+        plans = list(
+            Plan.objects
+            .select_related("discount")
+            .prefetch_related("Features")
+            .filter(period=period)
+        )
+        cache.set(plans_cache_key, plans, 60 * 15)
+
+    templates = cache.get("landing_templates")
 
     if templates is None:
-        templates = list(Template.objects.filter(is_active=True))
+        templates = list(
+            Template.objects.filter(is_active=True)
+        )
         cache.set("landing_templates", templates, 60 * 60)
+
+    customers = cache.get("landing_customers")
 
     if customers is None:
         customers = list(Customers.objects.all())
         cache.set("landing_customers", customers, 60 * 60)
-
 
     return render(
         request,
@@ -134,7 +174,7 @@ def landing_view(request):
         {
             "templates": templates,
             "customers": customers,
-            "plans":plans,
+            "plans": plans,
             "current_period": period,
         }
     )
@@ -142,12 +182,30 @@ def landing_view(request):
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("home")
-    next_page = request.GET.get("next", "")
-    return render(request, "core/login.html", {"next": next_page})
 
-@login_required()
+    next_page = request.GET.get("next")
+
+    if next_page and not url_has_allowed_host_and_scheme(
+        next_page,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        next_page = None
+
+    return render(
+        request,
+        "core/login.html",
+        {
+            "next": next_page,
+        }
+    )
+
+@login_required
 def logout_view(request):
+    username = request.user.username
     logout(request)
+    messages.success(request, "شما با موفقیت خارج شدید.")
+    logger.info("User logged out: %s", username)
     return redirect('login')
 
 @login_required
@@ -155,30 +213,25 @@ def dashboard_view(request):
     user_card = UserCard.objects.filter(user=request.user).first()
 
     card_url = None
-    if user_card:
-        card_url = f"https://x-link.ir/{user_card.username}"
-    user_plans = request.user.plan.values_list('name', flat=True)
+    if user_card and user_card.username:
+        scheme = "https" if request.is_secure() else "http"
+        card_url = f"{scheme}://{request.get_host()}/{user_card.username}"
 
-    return render(
-        request,
-        "core/dashboard.html",
-        {
-            "user_card": user_card,
-            "card_url": card_url,
-            'has_basic_plan': 'Basic' in user_plans,
-            'has_pro_plan': 'Pro' in user_plans,
-            'has_free_plan': 'Free' in user_plans,
-        }
-    )
+    user_plans = set(request.user.plan.values_list('name', flat=True))
 
-@login_required()
+    context = {
+        "user_card": user_card,
+        "card_url": card_url,
+        'has_basic_plan': 'Basic' in user_plans,
+        'has_pro_plan': 'Pro' in user_plans,
+        'has_free_plan': 'Free' in user_plans,
+    }
+
+    return render(request, "core/dashboard.html", context)
+
+@login_required
 def card_builder_view(request):
-    try:
-        user_card = UserCard.objects.get(user=request.user)
-        is_new = False
-    except UserCard.DoesNotExist:
-        user_card = UserCard(user=request.user)
-        is_new = True
+    user_card, is_new = UserCard.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
         form = UserCardForm(request.POST, request.FILES, instance=user_card)
@@ -186,12 +239,10 @@ def card_builder_view(request):
         service_formset = ServiceInlineFormSet(request.POST, instance=user_card, prefix='service')
         portfolio_formset = PortfolioInlineFormSet(request.POST, request.FILES, instance=user_card, prefix='portfolio')
 
-        if (form.is_valid() and skill_formset.is_valid() and 
-            service_formset.is_valid() and portfolio_formset.is_valid()):
+        if form.is_valid() and skill_formset.is_valid() and service_formset.is_valid() and portfolio_formset.is_valid():
             card = form.save(commit=False)
             card.user = request.user
 
-            # فقط پرمیوم
             if request.user.plan.filter(name="Pro").exists():
                 card.black_background = bool(request.POST.get("black_bg"))
                 card.stars_background = bool(request.POST.get("stars_bg"))
@@ -205,36 +256,28 @@ def card_builder_view(request):
             portfolio_formset.instance = card
             portfolio_formset.save()
 
+            logger.info("Card saved for user %s, card_id=%s", request.user.username, card.id)
             return redirect('card_success', card_id=card.id)
         else:
-            # DEBUG: Print validation errors
-            print("=== VALIDATION ERRORS ===")
-            if not form.is_valid():
-                print("UserCardForm errors:", form.errors)
-            if not skill_formset.is_valid():
-                print("Skill formset errors:", skill_formset.errors)
-                print("Skill formset non-form errors:", skill_formset.non_form_errors())
-            if not service_formset.is_valid():
-                print("Service formset errors:", service_formset.errors)
-                print("Service formset non-form errors:", service_formset.non_form_errors())
-            if not portfolio_formset.is_valid():
-                print("Portfolio formset errors:", portfolio_formset.errors)
-                print("Portfolio formset non-form errors:", portfolio_formset.non_form_errors())
+            logger.warning("Card form validation failed for user %s", request.user.username)
+            logger.debug("Form errors: %s", form.errors)
+            logger.debug("Skill errors: %s", skill_formset.errors)
+            logger.debug("Service errors: %s", service_formset.errors)
+            logger.debug("Portfolio errors: %s", portfolio_formset.errors)
+
     else:
         form = UserCardForm(instance=user_card)
-        skill_formset = SkillInlineFormSet(instance=user_card, prefix='skill') if not is_new else SkillInlineFormSet(prefix='skill')
-        service_formset = ServiceInlineFormSet(instance=user_card, prefix='service') if not is_new else ServiceInlineFormSet(prefix='service')
-        portfolio_formset = PortfolioInlineFormSet(instance=user_card, prefix='portfolio') if not is_new else PortfolioInlineFormSet(prefix='portfolio')
+        skill_formset = SkillInlineFormSet(instance=user_card, prefix='skill')
+        service_formset = ServiceInlineFormSet(instance=user_card, prefix='service')
+        portfolio_formset = PortfolioInlineFormSet(instance=user_card, prefix='portfolio')
 
     templates = Template.objects.filter(is_active=True).prefetch_related('allowed_plans')
-    user_plans = request.user.plan.all()
+    user_plans_set = set(request.user.plan.values_list('name', flat=True))
 
-    # 🔥 دسترسی هر تمپلیت
     template_access = {
-        template.id: template.allowed_plans.filter(id__in=user_plans).exists()
+        template.id: template.allowed_plans.filter(id__in=request.user.plan.all()).exists()
         for template in templates
     }
-    user_plans = request.user.plan.values_list('name', flat=True)
 
     context = {
         'form': form,
@@ -244,14 +287,13 @@ def card_builder_view(request):
         'templates': templates,
         'template_access': template_access,
         'is_new': is_new,
-        'has_pro_plan': 'Pro' in user_plans,
+        'has_pro_plan': 'Pro' in user_plans_set,
     }
 
     return render(request, 'core/card_builder.html', context)
 
 @login_required
 def card_success_view(request, card_id):
-    """Success page after card creation"""
     user_card = get_object_or_404(
         UserCard.objects.prefetch_related("skills", "services", "portfolio_items"),
         id=card_id,
@@ -259,28 +301,28 @@ def card_success_view(request, card_id):
     )
     card_url = user_card.get_card_url()
 
-    context = {
+    logger.info("Card success page viewed by user %s for card_id=%s", request.user.username, card_id)
+
+    return render(request, 'core/card_success.html', {
         'user_card': user_card,
         'card_url': card_url,
-    }
-    
-    return render(request, 'core/card_success.html', context)
+    })
 
 def view_card(request, username):
-    """Public view to display user's digital card"""
     user_card = get_object_or_404(
         UserCard.objects.prefetch_related("skills", "services", "portfolio_items"),
         username=username,
         is_published=True
     )
-    user_card.views += 1
-    user_card.save()
+
+    UserCard.objects.filter(id=user_card.id).update(views=F('views') + 1)
 
     context = {
         'user_card': user_card,
     }
 
     return render(request, 'core/card_view.html', context)
+
 
 @require_http_methods(["POST"])
 @login_required
@@ -289,13 +331,13 @@ def add_skill_ajax(request):
     try:
         data = json.loads(request.body)
         skill_name = data.get('name', '').strip()
-        
+
         if not skill_name:
             return JsonResponse({'error': 'Skill name is required'}, status=400)
-        
+
         user_card = UserCard.objects.get(user=request.user)
         skill = Skill.objects.create(user_card=user_card, name=skill_name)
-        
+
         return JsonResponse({
             'success': True,
             'skill': {
@@ -308,6 +350,7 @@ def add_skill_ajax(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+
 @require_http_methods(["DELETE"])
 @login_required
 def delete_skill_ajax(request, skill_id):
@@ -315,7 +358,7 @@ def delete_skill_ajax(request, skill_id):
     try:
         skill = get_object_or_404(Skill, id=skill_id, user_card__user=request.user)
         skill.delete()
-        
+
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
@@ -328,10 +371,10 @@ def add_service_ajax(request):
     try:
         data = json.loads(request.body)
         title = data.get('title', '').strip()
-        
+
         if not title:
             return JsonResponse({'error': 'Service title is required'}, status=400)
-        
+
         user_card = UserCard.objects.get(user=request.user)
         service = Service.objects.create(
             user_card=user_card,
@@ -339,7 +382,7 @@ def add_service_ajax(request):
             description=data.get('description', ''),
             icon=data.get('icon', '')
         )
-        
+
         return JsonResponse({
             'success': True,
             'service': {
@@ -362,12 +405,10 @@ def delete_service_ajax(request, service_id):
     try:
         service = get_object_or_404(Service, id=service_id, user_card__user=request.user)
         service.delete()
-        
+
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-
-
 @require_http_methods(["DELETE"])
 @login_required
 def delete_portfolio_ajax(request, portfolio_id):
@@ -375,7 +416,7 @@ def delete_portfolio_ajax(request, portfolio_id):
     try:
         portfolio = get_object_or_404(Portfolio, id=portfolio_id, user_card__user=request.user)
         portfolio.delete()
-        
+
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
@@ -393,8 +434,10 @@ def pricing_view(request):
 
     return render(request, 'core/pricing.html', context={'plans': plans, "current_period": period,})
 
+@login_required
 def payment_success_view(request):
     return render(request, 'core/payment-success.html')
 
+@login_required
 def payment_failed_view(request):
     return render(request, 'core/payment-failed.html')
