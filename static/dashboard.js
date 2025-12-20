@@ -4,7 +4,32 @@
 
 // DOM Elements
 const sidebar = document.querySelector('.sidebar');
+const mobileOverlay = document.getElementById('mobileOverlay');
 const menuToggle = document.getElementById('menuToggle');
+
+console.log('Dashboard JS loaded');
+console.log('menuToggle element:', menuToggle);
+console.log('sidebar element:', sidebar);
+console.log('mobileOverlay element:', mobileOverlay);
+
+// Check if elements exist and add event listeners safely
+if (menuToggle) {
+    console.log('Adding click listener to menuToggle');
+    menuToggle.addEventListener('click', () => {
+        console.log('Menu toggle clicked');
+        if (sidebar) {
+            sidebar.classList.toggle('active');
+            console.log('Sidebar classes after toggle:', sidebar.classList);
+        }
+        if (mobileOverlay) {
+            mobileOverlay.classList.toggle('active');
+            console.log('Overlay classes after toggle:', mobileOverlay.classList);
+        }
+        document.body.classList.toggle('no-scroll');
+    });
+} else {
+    console.error('menuToggle element not found!');
+}
 const modeToggle = document.getElementById('modeToggle');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
@@ -21,11 +46,22 @@ const cancelProfileBtn = document.getElementById('cancelProfileBtn');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded fired');
     initializeDashboard();
     initializeCharts();
     updateDateTime();
     setInterval(updateDateTime, 60000); // Update every minute
 });
+
+// Alternative initialization in case DOMContentLoaded doesn't fire
+if (document.readyState === 'loading') {
+    console.log('Document still loading, waiting...');
+} else {
+    console.log('Document already loaded');
+    initializeDashboard();
+    initializeCharts();
+    updateDateTime();
+}
 
 /* ============================================
    DARK MODE TOGGLE
@@ -61,8 +97,21 @@ initializeDarkMode();
    ============================================ */
 
 menuToggle.addEventListener('click', () => {
+    console.log('Menu toggle clicked');
     sidebar.classList.toggle('active');
+    mobileOverlay.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+    console.log('Sidebar classes:', sidebar.classList);
 });
+
+// Close sidebar when overlay is clicked
+if (mobileOverlay) {
+    mobileOverlay.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    });
+}
 
 // Close sidebar when link is clicked
 navLinks.forEach(link => {
@@ -82,6 +131,8 @@ navLinks.forEach(link => {
         // Close sidebar on mobile
         if (window.innerWidth <= 768) {
             sidebar.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
         }
     });
 });

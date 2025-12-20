@@ -206,7 +206,7 @@ def logout_view(request):
     logout(request)
     messages.success(request, "شما با موفقیت خارج شدید.")
     logger.info("User logged out: %s", username)
-    return redirect('login')
+    return redirect('home')
 
 @login_required
 def dashboard_view(request):

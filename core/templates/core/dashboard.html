@@ -25,10 +25,14 @@
         [dir="rtl"] .detail-row { flex-direction: row-reverse; }
         [dir="rtl"] .activity-item { flex-direction: row-reverse; }
         [dir="rtl"] .profile-menu-trigger { flex-direction: row-reverse; }
+
     </style>
 </head>
 <body class="x-link-theme">
     <div class="dashboard-container">
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -46,7 +50,7 @@
                     <li class="nav-item active">
                         <a href="#overview" class="nav-link" data-section="overview">
                             <i class="fas fa-user"></i>
-                            <span>بررسی اجمالی</span>
+                            <span>پروفایل</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -94,11 +98,44 @@
                         <img id="headerProfileImg" src="{{ user_card.profile_picture.url }}" alt="پروفایل" class="profile-img-small">
                         <div class="profile-menu-trigger">
                             <span id="headerUsername">{{ user.username }}</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-bars mobile-menu-icon"></i>
+                            <i class="fas fa-chevron-down desktop-menu-icon"></i>
                         </div>
                     </div>
                 </div>
             </header>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profileDropdown" style="display: none;">
+                <div class="profile-dropdown-header">
+                    <div class="profile-dropdown-user">
+                        <img src="{{ user_card.profile_picture.url }}" alt="پروفایل" class="profile-dropdown-img">
+                        <div class="profile-dropdown-info">
+                            <div class="profile-dropdown-name">{{ user.full_name }}</div>
+                            <div class="profile-dropdown-email">{{ user.email }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-dropdown-menu">
+                    <a href="#profile" class="profile-dropdown-item" data-section="overview">
+                        <i class="fas fa-user"></i>
+                        <span>پروفایل</span>
+                    </a>
+                    <a href="#visit-card" class="profile-dropdown-item" data-section="visit-card">
+                        <i class="fas fa-id-card"></i>
+                        <span>کارت ویزیت</span>
+                    </a>
+                    <a href="#plan" class="profile-dropdown-item" data-section="plan">
+                        <i class="fas fa-crown"></i>
+                        <span>طرح و اشتراک</span>
+                    </a>
+                    <div class="profile-dropdown-divider"></div>
+                    <a href="{% url 'logout' %}" class="profile-dropdown-item logout-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>خروج</span>
+                    </a>
+                </div>
+            </div>
 
             <!-- Notifications Dropdown -->
             <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
@@ -119,6 +156,14 @@
             </div>
         </div>
         {% endfor %}
+    {% else %}
+        <div class="notification-item no-messages">
+            <i class="fas fa-bell-slash"></i>
+            <div class="notification-content">
+                <p class="notification-title">هیچ پیامی وجود ندارد</p>
+                <p class="notification-time">📭 صندوق شما خالی است!</p>
+            </div>
+        </div>
     {% endif %}
 </div>
             </div>
@@ -234,12 +279,12 @@
                 <!-- 2. VISIT CARD SECTION -->
                 <section id="visit-card-section" class="section" style="display: none;">
                 {% if user_card %}
-                    <div class="section-header">
-                        <h2>کارت‌های ویزیت شما</h2>
-                        <button class="btn btn-primary" id="createCardBtn">
-                            <i class="fas fa-plus"></i> کارت جدید
-                        </button>
-                    </div>
+<!--                    <div class="section-header">-->
+<!--                        <h2>کارت‌های ویزیت شما</h2>-->
+<!--                        <button class="btn btn-primary" id="createCardBtn">-->
+<!--                            <i class="fas fa-plus"></i> کارت جدید-->
+<!--                        </button>-->
+<!--                    </div>-->
 
                     <div class="cards-grid">
                         <!-- Primary Card -->
@@ -652,9 +697,189 @@ function shareViaEmail(url) {
 .notification-link:hover {
     text-decoration: underline; /* یا افکت hover دلخواهت */
 }
+.notification-item.no-messages {
+    text-align: center;
+    padding: 22px;
+    background: #1D4ED8; /* آبی پررنگ‌تر */
+    border-radius: 14px;
+    color: #ffffff;
+    font-weight: 600;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.notification-item.no-messages:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(29, 78, 216, 0.45);
+}
+
+.notification-item.no-messages i {
+    font-size: 42px;
+    color: #ffffff;
+    margin-bottom: 14px;
+    animation: shake 1s infinite; /* لرزش راست-چپ */
+    transform-origin: center;
+}
+
+/* انیمیشن لرزش راست-چپ با کیفیت */
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(15deg); }
+    20% { transform: rotate(-15deg); }
+    30% { transform: rotate(10deg); }
+    40% { transform: rotate(-10deg); }
+    50% { transform: rotate(5deg); }
+    60% { transform: rotate(-5deg); }
+    70% { transform: rotate(2deg); }
+    80% { transform: rotate(-2deg); }
+    90% { transform: rotate(1deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.notification-item.no-messages p.notification-title {
+    font-size: 21px;
+    margin: 0;
+}
+
+.notification-item.no-messages p.notification-time {
+    font-size: 15px;
+    color: #cfe0ff; /* سفید کمی روشن‌تر */
+    margin-top: 5px;
+}
+
+
 
 </style>
-    <!-- Script -->
-    <script src="{% static 'dashboard.js' %}"></script>
+    <!-- Dashboard functionality -->
+    <script>
+        function initDashboard() {
+            // Elements
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.querySelector('.sidebar');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+
+            // Navigation functionality
+            function showSection(sectionId) {
+                // Hide all sections
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                    section.classList.remove('active');
+                });
+
+                // Show target section
+                const targetSection = document.getElementById(sectionId + '-section');
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    targetSection.classList.add('active');
+                }
+
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.parentElement.classList.remove('active');
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.parentElement.classList.add('active');
+                    }
+                });
+            }
+
+            // Mobile menu
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sidebar.classList.toggle('active');
+                    if (mobileOverlay) mobileOverlay.classList.toggle('active');
+                    document.body.classList.toggle('no-scroll');
+                });
+
+                if (mobileOverlay) {
+                    mobileOverlay.addEventListener('click', function() {
+                        sidebar.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        document.body.classList.remove('no-scroll');
+                    });
+                }
+            }
+
+            // Navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.parentElement.classList.remove('active'));
+
+                    // Add active class to clicked link
+                    link.parentElement.classList.add('active');
+
+                    // Get the section to show
+                    const sectionId = link.getAttribute('data-section');
+                    showSection(sectionId);
+
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                        if (mobileOverlay) mobileOverlay.classList.remove('active');
+                        document.body.classList.remove('no-scroll');
+                    }
+                });
+            });
+
+            // Profile dropdown
+            const profileTrigger = document.querySelector('.profile-menu-trigger');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (profileTrigger && profileDropdown) {
+                profileTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+                    // Close notification dropdown if open
+                    const notificationDropdown = document.getElementById('notificationDropdown');
+                    if (notificationDropdown) notificationDropdown.style.display = 'none';
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!profileTrigger.contains(e.target) && !profileDropdown.contains(e.target)) {
+                        profileDropdown.style.display = 'none';
+                    }
+                });
+            }
+
+            // Close notification dropdown when clicking outside
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+
+            if (notificationBtn && notificationDropdown) {
+                notificationBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notificationDropdown.style.display = notificationDropdown.style.display === 'block' ? 'none' : 'block';
+                    // Close profile dropdown if open
+                    if (profileDropdown) profileDropdown.style.display = 'none';
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                        notificationDropdown.style.display = 'none';
+                    }
+                });
+            }
+
+            // Show default section (overview)
+            showSection('overview');
+        }
+
+        // Initialize
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDashboard);
+        } else {
+            initDashboard();
+        }
+    </script>
 </body>
 </html>

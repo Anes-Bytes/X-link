@@ -296,6 +296,7 @@ class Banners(models.Model):
 class Template(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='templates')
+    description = models.TextField(blank=True)
     delay = models.IntegerField()
     allowed_plans = models.ManyToManyField(UserPlan, blank=True)
     is_active = models.BooleanField(default=True)
