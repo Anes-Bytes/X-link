@@ -48,6 +48,7 @@ class UserPlan(models.Model):
 class UserMessages(models.Model):
     user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="messages")
     text = models.TextField()
+    url = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

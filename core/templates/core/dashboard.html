@@ -86,7 +86,9 @@
                 <div class="header-right">
                     <button class="notification-btn" id="notificationBtn">
                         <i class="fas fa-bell"></i>
-                        <span class="notification-badge">2</span>
+                        {% if messages %}
+                        <span class="notification-badge">{{ messages.count }}</span>
+                        {% endif %}
                     </button>
                     <div class="header-profile">
                         <img id="headerProfileImg" src="{{ user_card.profile_picture.url }}" alt="پروفایل" class="profile-img-small">
@@ -104,19 +106,21 @@
                     <h3>اطلاعیه‌ها</h3>
                     <button class="close-btn">×</button>
                 </div>
-                <div class="notification-list">
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="notification-item unread">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div class="notification-content">
-                            <p class="notification-title">{{ message.text }}</p>
-                            <p class="notification-time">{{ message.created_at }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
-                </div>
+<div class="notification-list">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="notification-item unread">
+            <i class="fas fa-exclamation-circle"></i>
+            <div class="notification-content">
+                <a href="{{ message.url }}" class="notification-link">
+                    <p class="notification-title">{{ message.text }}</p>
+                    <p class="notification-time">{{ message.created_at }}</p>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
             </div>
 
             <!-- Content Sections -->
@@ -455,38 +459,6 @@
                         </div>
                         {% endif %}
                         <!-- Usage Stats -->
-                        <div class="card">
-                            <h3>استفاده و محدودیت‌ها</h3>
-                            <div class="usage-item">
-                                <div class="usage-header">
-                                    <span class="label">کارت‌های ویزیت ایجاد‌شده</span>
-                                    <span class="value"><span id="cardsUsed">{{ user_cards.count|default:"3" }}</span> / <span id="cardsMax">{{ user_plan.max_cards|default:"5" }}</span></span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 60%"></div>
-                                </div>
-                            </div>
-
-                            <div class="usage-item">
-                                <div class="usage-header">
-                                    <span class="label">اعضای تیم</span>
-                                    <span class="value"><span id="teamUsed">1</span> / <span id="teamMax">3</span></span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 33.33%"></div>
-                                </div>
-                            </div>
-
-                            <div class="usage-item">
-                                <div class="usage-header">
-                                    <span class="label">فضای استفاده‌شده</span>
-                                    <span class="value"><span id="storageUsed">245</span>MB / <span id="storageMax">1000</span>MB</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 24.5%"></div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Plan Comparison -->
@@ -671,6 +643,14 @@ function shareViaEmail(url) {
 
 .expiry-date.unlimited {
     color: #6366f1; /* بنفش */
+}
+.notification-link {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+.notification-link:hover {
+    text-decoration: underline; /* یا افکت hover دلخواهت */
 }
 
 </style>

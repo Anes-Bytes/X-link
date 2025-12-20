@@ -232,7 +232,20 @@ def dashboard_view(request):
 
 @login_required
 def card_builder_view(request):
-    user_card, is_new = UserCard.objects.get_or_create(user=request.user)
+    user_card, is_new = UserCard.objects.select_related(
+        'user'
+    ).prefetch_related(
+        'skills',
+        'services',
+        'portfolio_items'
+    ).get_or_create(user=request.user)
+
+    user_plan_ids = set(
+        request.user.plan.values_list('id', flat=True)
+    )
+    user_plan_names = set(
+        request.user.plan.values_list('name', flat=True)
+    )
 
     if request.method == 'POST':
         form = UserCardForm(request.POST, request.FILES, instance=user_card)
@@ -240,27 +253,42 @@ def card_builder_view(request):
         service_formset = ServiceInlineFormSet(request.POST, instance=user_card, prefix='service')
         portfolio_formset = PortfolioInlineFormSet(request.POST, request.FILES, instance=user_card, prefix='portfolio')
 
-        if form.is_valid() and skill_formset.is_valid() and service_formset.is_valid() and portfolio_formset.is_valid():
+        if (
+            form.is_valid()
+            and skill_formset.is_valid()
+            and service_formset.is_valid()
+            and portfolio_formset.is_valid()
+        ):
             card = form.save(commit=False)
             card.user = request.user
 
-            if request.user.plan.filter(name="Pro").exists():
+            if 'Pro' in user_plan_names:
                 card.black_background = bool(request.POST.get("black_bg"))
                 card.stars_background = bool(request.POST.get("stars_bg"))
                 card.blue_tick = bool(request.POST.get("blue_tick"))
 
             card.save()
+
             skill_formset.instance = card
             skill_formset.save()
+
             service_formset.instance = card
             service_formset.save()
+
             portfolio_formset.instance = card
             portfolio_formset.save()
 
-            logger.info("Card saved for user %s, card_id=%s", request.user.username, card.id)
+            logger.info(
+                "Card saved for user %s, card_id=%s",
+                request.user.username,
+                card.id
+            )
             return redirect('card_success', card_id=card.id)
         else:
-            logger.warning("Card form validation failed for user %s", request.user.username)
+            logger.warning(
+                "Card form validation failed for user %s",
+                request.user.username
+            )
             logger.debug("Form errors: %s", form.errors)
             logger.debug("Skill errors: %s", skill_formset.errors)
             logger.debug("Service errors: %s", service_formset.errors)
@@ -272,11 +300,17 @@ def card_builder_view(request):
         service_formset = ServiceInlineFormSet(instance=user_card, prefix='service')
         portfolio_formset = PortfolioInlineFormSet(instance=user_card, prefix='portfolio')
 
-    templates = Template.objects.filter(is_active=True).prefetch_related('allowed_plans')
-    user_plans_set = set(request.user.plan.values_list('name', flat=True))
+    # ⬅️ templates با prefetch واقعی
+    templates = Template.objects.filter(
+        is_active=True
+    ).prefetch_related('allowed_plans')
 
+    # ⬅️ بدون حتی یک کوئری اضافه
     template_access = {
-        template.id: template.allowed_plans.filter(id__in=request.user.plan.all()).exists()
+        template.id: any(
+            plan.id in user_plan_ids
+            for plan in template.allowed_plans.all()
+        )
         for template in templates
     }
 
@@ -288,7 +322,7 @@ def card_builder_view(request):
         'templates': templates,
         'template_access': template_access,
         'is_new': is_new,
-        'has_pro_plan': 'Pro' in user_plans_set,
+        'has_pro_plan': 'Pro' in user_plan_names,
     }
 
     return render(request, 'core/card_builder.html', context)
@@ -324,7 +358,6 @@ def view_card(request, username):
 
     return render(request, 'core/card_view.html', context)
 
-
 @require_http_methods(["POST"])
 @login_required
 def add_skill_ajax(request):
@@ -351,7 +384,6 @@ def add_skill_ajax(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
 @require_http_methods(["DELETE"])
 @login_required
 def delete_skill_ajax(request, skill_id):
@@ -363,7 +395,6 @@ def delete_skill_ajax(request, skill_id):
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-
 
 @require_http_methods(["POST"])
 @login_required
@@ -397,7 +428,6 @@ def add_service_ajax(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
 @require_http_methods(["DELETE"])
 @login_required
 def delete_service_ajax(request, service_id):
@@ -409,6 +439,7 @@ def delete_service_ajax(request, service_id):
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
 @require_http_methods(["DELETE"])
 @login_required
 def delete_portfolio_ajax(request, portfolio_id):
