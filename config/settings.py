@@ -79,11 +79,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env.get('DB_NAME'),
+            'USER': env.get('DB_USER'),
+            'PASSWORD': env.get('DB_PASSWORD'),
+            'HOST': env.get('DB_HOST', 'localhost'),
+            'PORT': env.get('DB_PORT', '3306'),
+
+        }
     }
-}
 
 
 # Password validation
