@@ -15,12 +15,14 @@ from django.utils.crypto import get_random_string
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.db.models import F
 
+from datetime import datetime, timedelta
+
 # Third-party imports
 from melipayamak import Api
 from environs import Env
 
 # Local app imports
-from .models import UserCard, Skill, Service, Portfolio, Template, Customers, Plan
+from .models import UserCard, Skill, Service, Portfolio, Template, Customers, Plan, UserPlan
 from .forms import UserCardForm, SkillInlineFormSet, ServiceInlineFormSet, PortfolioInlineFormSet
 from core.models import CustomUser, OTP
 
@@ -129,7 +131,7 @@ def request_otp(request):
     OTP.objects.create(
         user=user,
         code=code,
-        expires_at=timezone.now() + datetime.timedelta(minutes=2)
+        expires_at=timezone.now() + timedelta(minutes=2)
     )
 
     request.session["otp_phone"] = phone
@@ -514,9 +516,95 @@ def pricing_view(request):
     else:
         plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
 
-
-
     return render(request, 'core/pricing.html', context={'plans': plans, "current_period": period,})
+
+@login_required
+def purchase_view(request, plan_id):
+    try:
+        plan = Plan.objects.select_related("discount").get(id=plan_id)
+    except Plan.DoesNotExist:
+        messages.error(request, "پلن انتخاب شده یافت نشد")
+        return redirect('pricing')
+
+    context = {
+        'plan': plan,
+    }
+
+    return render(request, 'core/purchase.html', context)
+
+@login_required
+def process_payment(request, plan_id):
+    if request.method != 'POST':
+        return redirect('pricing')
+
+    try:
+        plan = Plan.objects.get(id=plan_id)
+    except Plan.DoesNotExist:
+        messages.error(request, "پلن انتخاب شده یافت نشد")
+        return redirect('pricing')
+
+    # Here you would integrate with payment gateway (Zarinpal as mentioned)
+    # For now, we'll simulate a successful payment
+    isvalid = True  # Hardcoded for now - replace with actual Zarinpal verification
+
+    if isvalid:
+        # Clear all existing user plans
+        user = request.user
+        user.plan.clear()  # Remove all existing plans
+
+        # Add the new plan based on purchased plan type
+        if plan.type == 'Basic':
+            user_plan, created = UserPlan.objects.get_or_create(name='Basic')
+            user.plan.add(user_plan)
+        elif plan.type == 'Pro':
+            user_plan, created = UserPlan.objects.get_or_create(name='Pro')
+            user.plan.add(user_plan)
+        # Free plan is default and doesn't need to be added explicitly
+
+        # Set expiration time based on purchased plan period
+        if plan.period == 'monthly':
+            user.plan_expires_at = timezone.now() + timedelta(days=30)
+        else:  # annual
+            user.plan_expires_at = timezone.now() + timedelta(days=365)
+
+        user.save()
+
+        # Store plan info in session for the processing page
+        request.session['purchased_plan'] = {
+            'id': plan.id,
+            'name': plan.name,
+            'type': plan.get_type_display(),
+            'period': plan.get_period_display(),
+            'expires_at': user.plan_expires_at.isoformat() if user.plan_expires_at else None
+        }
+
+        return redirect('payment_processing', plan_id=plan.id)
+    else:
+        messages.error(request, "پرداخت ناموفق بود. لطفاً دوباره تلاش کنید.")
+        return redirect('purchase', plan_id=plan_id)
+
+def payment_info_view(request):
+    """Payment information page - redirects to Telegram"""
+    return render(request, 'core/payment-info.html')
+
+@login_required
+def payment_processing(request, plan_id):
+    """Show payment processing result before success page"""
+    plan_info = request.session.get('purchased_plan')
+
+    if not plan_info:
+        return redirect('pricing')
+
+    # Clear the session data
+    if 'purchased_plan' in request.session:
+        del request.session['purchased_plan']
+
+    context = {
+        'plan_info': plan_info,
+        'user': request.user,
+    }
+
+    return render(request, 'core/payment-processing.html', context)
 
 @login_required
 def payment_success_view(request):

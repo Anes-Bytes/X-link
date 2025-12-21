@@ -104,21 +104,16 @@
                     <li><i class="fas fa-check"></i><span>{{ feature.name }}</span></li>
                     {% endfor %}
                 </ul>
-                {% if plan.type == "Pro" %}
-                <button class="cta-button cta-primary" onclick="selectPlan('enterprise', 99)">
-                    <span>انتخاب</span>
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                {% elif plan.type == "Basic" %}
-                <button class="cta-button cta-primary" onclick="selectPlan('enterprise', 99)">
-                    <span>انتخاب</span>
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                {% else %}
-                <button class="cta-button cta-secondary" onclick="selectPlan('professional', 29)">
+                {% if plan.type == "Free" %}
+                <a href="{% url 'card_builder' %}" class="cta-button cta-secondary">
                     <span>شروع رایگان</span>
                     <i class="fas fa-arrow-left"></i>
-                </button>
+                </a>
+                {% else %}
+                <a href="{% url 'purchase' plan.id %}" class="cta-button cta-primary">
+                    <span>انتخاب پلن</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
                 {% endif %}
 
             </div>

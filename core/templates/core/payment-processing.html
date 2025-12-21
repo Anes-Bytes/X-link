@@ -1,0 +1,233 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block page_title %}پردازش پرداخت - X-Link{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.processing-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.processing-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+    animation: successPulse 2s ease-in-out infinite;
+}
+
+.success-icon i {
+    color: white;
+    font-size: 2.5rem;
+}
+
+.processing-title {
+    color: var(--text-white);
+    font-size: 2rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--text-white), var(--cyan-neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.processing-subtitle {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.plan-details {
+    background: rgba(58, 134, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.plan-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 8px 0;
+}
+
+.plan-detail-row:last-child {
+    margin-bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+}
+
+.detail-label {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+.detail-value {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.detail-value.highlight {
+    color: var(--cyan-neon);
+    font-size: 1.1rem;
+}
+
+.continue-button {
+    background: linear-gradient(135deg, var(--primary-blue), var(--cyan-neon));
+    color: var(--bg-dark);
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.continue-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 246, 255, 0.3);
+}
+
+.continue-button:active {
+    transform: translateY(0);
+}
+
+.redirect-notice {
+    margin-top: 20px;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.redirect-notice p {
+    margin: 0;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(40, 167, 69, 0.4);
+    }
+}
+
+@media (max-width: 768px) {
+    .processing-container {
+        padding: 20px 15px;
+    }
+
+    .processing-card {
+        padding: 30px 20px;
+    }
+
+    .processing-title {
+        font-size: 1.8rem;
+    }
+
+    .plan-detail-row {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="processing-container">
+    <div class="processing-card">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h1 class="processing-title">پرداخت موفق!</h1>
+        <p class="processing-subtitle">پلن شما با موفقیت فعال شد و آماده استفاده است.</p>
+
+        <div class="plan-details">
+            <div class="plan-detail-row">
+                <span class="detail-label">پلن فعال شده:</span>
+                <span class="detail-value highlight">{{ plan_info.type }}</span>
+            </div>
+
+            <div class="plan-detail-row">
+                <span class="detail-label">دوره اشتراک:</span>
+                <span class="detail-value">{{ plan_info.period }}</span>
+            </div>
+
+            {% if plan_info.expires_at %}
+            <div class="plan-detail-row">
+                <span class="detail-label">تاریخ انقضا:</span>
+                <span class="detail-value">{{ plan_info.expires_at|date:"Y/m/d H:i" }}</span>
+            </div>
+            {% endif %}
+
+            <div class="plan-detail-row">
+                <span class="detail-label">کاربر:</span>
+                <span class="detail-value">{{ user.get_full_name|default:user.phone }}</span>
+            </div>
+        </div>
+
+        <div class="redirect-notice">
+            <p>در حال انتقال به داشبورد...</p>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="continue-button">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>رفتن به داشبورد</span>
+        </a>
+    </div>
+</div>
+
+<script>
+// Auto redirect to dashboard after 3 seconds
+setTimeout(function() {
+    window.location.href = "{% url 'dashboard' %}";
+}, 3000);
+
+// Update countdown
+let countdown = 3;
+const countdownElement = document.querySelector('.redirect-notice p');
+
+setInterval(function() {
+    countdown--;
+    if (countdown > 0) {
+        countdownElement.textContent = `در حال انتقال به داشبورد... (${countdown})`;
+    }
+}, 1000);
+</script>
+{% endblock %}

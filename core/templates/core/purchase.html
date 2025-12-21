@@ -1,0 +1,421 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}خرید پلن {{ plan.name }} - X-Link{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.purchase-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.purchase-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.purchase-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.purchase-header h1 {
+    font-size: 2.5rem;
+    color: var(--text-white);
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--text-white), var(--cyan-neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.purchase-header p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+}
+
+.plan-summary {
+    background: rgba(58, 134, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.plan-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.plan-info h3 {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.plan-info p {
+    color: var(--text-gray);
+    margin: 0;
+}
+
+.plan-price {
+    text-align: right;
+}
+
+.plan-price .price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cyan-neon);
+    margin-bottom: 5px;
+}
+
+.plan-price .period {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.pricing-breakdown {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.price-row:last-child {
+    margin-bottom: 0;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-row .label {
+    color: var(--text-gray);
+}
+
+.price-row .amount {
+    font-weight: 600;
+}
+
+.price-row.final .amount {
+    color: var(--cyan-neon);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.discount-row .amount {
+    color: #ff6b6b;
+}
+
+.payment-section {
+    text-align: center;
+}
+
+.payment-button {
+    background: linear-gradient(135deg, var(--primary-blue), var(--cyan-neon));
+    color: var(--bg-dark);
+    border: none;
+    padding: 18px 40px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.payment-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 246, 255, 0.3);
+}
+
+.payment-button:active {
+    transform: translateY(0);
+}
+
+.security-info {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.security-info .security-icon {
+    color: #28a745;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Payment Method Styles */
+.payment-method-section {
+    margin-bottom: 40px;
+}
+
+.payment-method-section .section-title {
+    color: var(--text-white);
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.payment-methods {
+    display: flex;
+    justify-content: center;
+}
+
+.payment-method-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 350px;
+}
+
+.payment-method-card:hover {
+    border-color: rgba(0, 246, 255, 0.3);
+    background: rgba(0, 246, 255, 0.02);
+}
+
+.payment-method-card.selected {
+    border-color: var(--cyan-neon);
+    background: rgba(0, 246, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 246, 255, 0.2);
+}
+
+.payment-method-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.method-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.method-logo {
+    flex-shrink: 0;
+}
+
+.method-logo img {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.method-info {
+    flex: 1;
+}
+
+.method-name {
+    color: var(--text-white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.method-description {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.method-check {
+    color: var(--cyan-neon);
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.payment-method-card.selected .method-check {
+    opacity: 1;
+}
+
+.security-info p {
+    color: var(--text-gray);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--cyan-neon);
+}
+
+@media (max-width: 768px) {
+    .purchase-container {
+        padding: 20px 15px;
+    }
+
+    .purchase-card {
+        padding: 30px 20px;
+    }
+
+    .purchase-header h1 {
+        font-size: 2rem;
+    }
+
+    .plan-details {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .plan-price {
+        text-align: center;
+    }
+}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<br>
+<br>
+<br>
+<br>
+<div class="purchase-container">
+    <div class="purchase-card">
+        <div class="purchase-header">
+            <h1>تکمیل خرید</h1>
+            <p>پلن انتخاب شده خود را بررسی و پرداخت کنید</p>
+        </div>
+
+        <div class="plan-summary">
+            <div class="plan-details">
+                <div class="plan-info">
+                    <h3>{{ plan.name }}</h3>
+                    <p>{{ plan.get_period_display }} - پلن {{ plan.get_type_display }}</p>
+                </div>
+                <div class="plan-price">
+                    <div class="price">{{ final_price|floatformat|intcomma }} تومان</div>
+                    <div class="period">/{{ plan.get_period_display }}</div>
+                </div>
+            </div>
+
+            <div class="pricing-breakdown">
+                <div class="price-row">
+                    <span class="label">قیمت اصلی</span>
+                    <span class="amount">{{ original_price|floatformat|intcomma }} تومان</span>
+                </div>
+
+                {% if has_discount %}
+                <div class="price-row discount-row">
+                    <span class="label">تخفیف {{ plan.discount.value }}%</span>
+                    <span class="amount">-{{ discount_amount|floatformat|intcomma }} تومان</span>
+                </div>
+                {% endif %}
+
+                <div class="price-row final">
+                    <span class="label">مجموع قابل پرداخت</span>
+                    <span class="amount">{{ final_price|floatformat|intcomma }} تومان</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="payment-method-section">
+            <h3 class="section-title">روش پرداخت</h3>
+            <div class="payment-methods">
+                <label class="payment-method-card selected" for="zarinpal">
+                    <input type="radio" id="zarinpal" name="payment_method" value="zarinpal" checked>
+                    <div class="method-content">
+                        <div class="method-logo">
+                            <img src="https://cdn.zarinpal.com/badges/trustLogo/1.svg" alt="زرین‌پال" width="80" height="80">
+                        </div>
+                        <div class="method-info">
+                            <div class="method-name">زرین‌پال</div>
+                            <div class="method-description">درگاه پرداخت امن ایرانی</div>
+                        </div>
+                        <div class="method-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="payment-section">
+            <a href="{% url 'payment_info' %}" class="payment-button">
+                <i class="fab fa-telegram"></i>
+                <span>تماس برای خرید</span>
+            </a>
+        </div>
+
+        <div class="security-info">
+            <div class="security-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <p>پرداخت شما از طریق درگاه امن زرین‌پال انجام می‌شود و اطلاعات شما کاملاً محافظت می‌گردد.</p>
+        </div>
+
+        <a href="{% url 'pricing' %}" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            بازگشت به صفحه انتحاب پلن
+        </a>
+    </div>
+</div>
+
+<script>
+// Payment method selection handling
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentCards = document.querySelectorAll('.payment-method-card');
+
+    paymentCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Remove selected class from all cards
+            paymentCards.forEach(c => c.classList.remove('selected'));
+
+            // Add selected class to clicked card
+            this.classList.add('selected');
+
+            // Update the hidden input value
+            const radio = this.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+                // Update the hidden input in the form
+                const hiddenInput = document.querySelector('input[name="payment_method"]');
+                if (hiddenInput) {
+                    hiddenInput.value = radio.value;
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
