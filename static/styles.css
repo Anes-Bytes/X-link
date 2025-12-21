@@ -474,6 +474,177 @@ body {
     overflow: hidden;
 }
 
+/* Starfield Background */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+.star:nth-child(odd) {
+    animation-delay: -1s;
+    animation-duration: 2s;
+}
+
+.star:nth-child(3n) {
+    animation-delay: -2s;
+    animation-duration: 4s;
+}
+
+.star:nth-child(5n) {
+    animation-delay: -0.5s;
+    animation-duration: 1.5s;
+}
+
+/* Shooting Stars */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(45deg, #ffffff, transparent);
+    border-radius: 50%;
+    animation: shoot 10s linear infinite;
+    will-change: transform;
+}
+
+.shooting-star.diagonal {
+    animation: shoot-diagonal 12s linear infinite;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    transform: translateX(-50px);
+    animation: trail 10s linear infinite;
+    will-change: transform;
+}
+
+.shooting-star.diagonal::before {
+    transform: rotate(45deg) translateX(-60px);
+    animation: trail-diagonal 8s linear infinite;
+}
+
+.shooting-star:nth-child(1) {
+    top: 15%;
+    left: -10px;
+    animation-delay: 1s;
+}
+
+.shooting-star:nth-child(2) {
+    top: 30%;
+    left: -10px;
+    animation-delay: 3s;
+}
+
+.shooting-star:nth-child(3) {
+    top: 45%;
+    left: -10px;
+    animation-delay: 5s;
+}
+
+.shooting-star:nth-child(4) {
+    top: 60%;
+    left: -10px;
+    animation-delay: 7s;
+}
+
+.shooting-star:nth-child(5) {
+    top: 75%;
+    left: -10px;
+    animation-delay: 9s;
+}
+
+.shooting-star:nth-child(6) {
+    top: 22%;
+    left: -10px;
+    animation-delay: 11s;
+}
+
+/* Comets */
+.comet {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: comet 15s linear infinite;
+    will-change: transform;
+}
+
+.comet.diagonal {
+    animation: comet-diagonal 18s linear infinite;
+}
+
+.comet::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), transparent);
+    transform: translate(-50%, -50%);
+    animation: comet-trail 15s linear infinite;
+    will-change: transform;
+}
+
+.comet.diagonal::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation: comet-trail-diagonal 12s linear infinite;
+}
+
+.comet:nth-child(1) {
+    top: 25%;
+    animation-delay: 2s;
+}
+
+.comet:nth-child(2) {
+    top: 50%;
+    animation-delay: 6s;
+}
+
+.comet:nth-child(3) {
+    top: 75%;
+    animation-delay: 10s;
+}
+
+/* Meteor Shower */
+.meteor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: meteor-fall 4s linear infinite;
+}
+
+.meteor::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    transform: translate(-50%, -50%) rotate(30deg);
+    animation: meteor-trail 4s linear infinite;
+}
+
 .gradient-orb {
     position: absolute;
     border-radius: 50%;
@@ -3261,6 +3432,198 @@ body {
     }
     50% {
         transform: translateY(-20px);
+    }
+}
+
+/* Optimized Starfield Animations */
+.star {
+    will-change: opacity, transform;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes shoot {
+    0% {
+        transform: translateX(-50px) translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 50px)) translateY(0);
+        opacity: 0;
+    }
+}
+
+@keyframes trail {
+    0% {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(120px);
+    }
+}
+
+@keyframes shoot-diagonal {
+    0% {
+        transform: translateX(-50px) translateY(-50px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 50px)) translateY(calc(100vh + 50px));
+        opacity: 0;
+    }
+}
+
+@keyframes trail-diagonal {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translateX(-120px);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translateX(120px);
+    }
+}
+
+@keyframes comet {
+    0% {
+        transform: translateX(-100px) translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) translateY(0);
+        opacity: 0;
+    }
+}
+
+@keyframes comet-trail {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scaleX(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scaleX(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scaleX(0);
+    }
+}
+
+@keyframes comet-diagonal {
+    0% {
+        transform: translateX(-100px) translateY(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px));
+        opacity: 0;
+    }
+}
+
+@keyframes comet-trail-diagonal {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(45deg) scaleX(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(45deg) scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
+    }
+}
+
+@keyframes meteor-fall {
+    0% {
+        transform: translateX(-50px) translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 50px)) translateY(0);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-trail {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scaleX(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scaleX(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scaleX(0);
     }
 }
 

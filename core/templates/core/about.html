@@ -9,33 +9,22 @@
 
 {% block page_content %}
 <!-- Hero Section -->
-<section class="about-hero">
-    <div class="container">
-        <div class="hero-content">
+<section class="hero" id="about-hero">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+        </div>
 
-            <div class="hero-badge">
-                <span class="badge-icon">✨</span>
-                <span class="badge-text">درباره ایکس لینک</span>
-            </div>
-
+    <!-- Hero Content -->
+    <div class="hero-content">
+        <div class="hero-text">
             <h1 class="hero-title">
-                <span class="title-main">ایکس لینک</span>
-                <span class="title-subtitle">
-                    پلتفرم دیجیتال هوشمند برای رشد برند شما
-                </span>
+                <span class="title-line">ایکس لینک</span>
+                <span class="title-line">پلتفرم هوشمند ویزیت کارت</span>
             </h1>
-
-            <div class="hero-description">
-                <p>
-                    ایکس لینک پلتفرمی مدرن برای حضور آنلاین حرفه‌ای است.
-                    به کسب‌وکارها و برندهای شخصی کمک می‌کند تا هویت دیجیتال خود را قدرتمند نمایش دهند.
-                </p>
-
-                <p>
-                    با تمرکز بر <strong>طراحی حرفه‌ای</strong> و <strong>تجربه کاربری روان</strong>،
-                    ابزارهایی ساده برای رشد برند و ارتباط بهتر با مشتریان فراهم می‌کنیم.
-                </p>
-            </div>
+            <p class="hero-description">
+                پلتفرمی مدرن و جامع برای ایجاد کارت‌های ویزیت دیجیتال حرفه‌ای که برند شما را به سطح بالاتری می‌برد
+            </p>
 
             <div class="hero-stats">
                 <div class="stat-item">
@@ -51,45 +40,44 @@
                     <div class="stat-label">پشتیبانی</div>
                 </div>
             </div>
-
         </div>
+    </div>
 
-        <div class="hero-visual">
-            <div class="floating-elements">
-                <div class="floating-card card-1">
-                    <div class="card-icon">📱</div>
-                    <div class="card-title">کاملا ریسپانسیو</div>
-                    <div class="card-description">
-                        تجربه بی‌نقص در موبایل، تبلت و دسکتاپ
-                    </div>
+    <!-- Hero Visual -->
+    <div class="hero-visual">
+        <div class="floating-elements">
+            <div class="floating-card card-1">
+                <div class="card-icon">📱</div>
+                <div class="card-title">کاملا ریسپانسیو</div>
+                <div class="card-description">
+                    تجربه بی‌نقص در موبایل، تبلت و دسکتاپ
                 </div>
+            </div>
 
-                <div class="floating-card card-2">
-                    <div class="card-icon">🎨</div>
-                    <div class="card-title">قالب های متنوع</div>
-                    <div class="card-description">
-                        قالب‌های منحصربه‌فرد با قابلیت شخصی‌سازی کامل
-                    </div>
+            <div class="floating-card card-2">
+                <div class="card-icon">🎨</div>
+                <div class="card-title">قالب های متنوع</div>
+                <div class="card-description">
+                    قالب‌های منحصربه‌فرد با قابلیت شخصی‌سازی کامل
                 </div>
+            </div>
 
-                <div class="floating-card card-3">
-                    <div class="card-icon">⚡</div>
-                    <div class="card-title">سرعت بالا</div>
-                    <div class="card-description">
-                        بارگذاری سریع و عملکرد بهینه
-                    </div>
+            <div class="floating-card card-3">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">سرعت بالا</div>
+                <div class="card-description">
+                    بارگذاری سریع و عملکرد بهینه
                 </div>
+            </div>
 
-                <div class="floating-card card-4">
-                    <div class="card-icon">🔒</div>
-                    <div class="card-title">امنیت پیشرفته</div>
-                    <div class="card-description">
-                        محافظت کامل از داده‌ها و اطلاعات کاربران
-                    </div>
+            <div class="floating-card card-4">
+                <div class="card-icon">🔒</div>
+                <div class="card-title">امنیت پیشرفته</div>
+                <div class="card-description">
+                    محافظت کامل از داده‌ها و اطلاعات کاربران
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
@@ -134,7 +122,7 @@
             <div class="mission-visual">
                 <div class="visual-circle">
                     <div class="circle-content">
-                        <div class="circle-icon">🌟</div>
+                        <div class="circle-icon">🚀</div>
                         <div class="circle-text">رشد برند</div>
                     </div>
                 </div>
@@ -296,7 +284,7 @@
         <div class="cta-content">
             <h2>آماده شروع هستید؟</h2>
             <p>با ایکس لینک برند خود را به سطح بعدی ببرید</p>
-            <a href="{% url 'pricing' %}" class="cta-button">
+            <a href="{% url 'card_builder' %}" class="cta-button">
                 <span>شروع کنید</span>
                 <i class="fas fa-arrow-left"></i>
             </a>
