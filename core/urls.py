@@ -14,6 +14,7 @@ urlpatterns = [
     path('register', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path("dashboard", views.dashboard_view, name='dashboard'),
+    path('x/', views.about_view, name='about'),
     path('<str:username>', views.view_card, name='view_card'),
     path("request-otp/", views.request_otp, name="request_otp"),
     path("verify-otp/", views.verify_otp, name="verify_otp"),

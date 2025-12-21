@@ -21,6 +21,39 @@ if (hamburger && navMenu) {
 }
 
 // ============================================
+// MESSAGES SYSTEM
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-hide messages after 5 seconds
+    const messages = document.querySelectorAll('.message');
+    messages.forEach((message, index) => {
+        setTimeout(() => {
+            hideMessage(message);
+        }, 5000 + (index * 500)); // Stagger the hiding
+    });
+
+    // Close button functionality
+    const closeButtons = document.querySelectorAll('.message-close');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const message = this.closest('.message');
+            hideMessage(message);
+        });
+    });
+});
+
+function hideMessage(message) {
+    if (!message) return;
+
+    message.classList.add('fade-out');
+    setTimeout(() => {
+        if (message.parentNode) {
+            message.parentNode.removeChild(message);
+        }
+    }, 300);
+}
+
+// ============================================
 // HERO SLIDER
 // ============================================
 let currentSlide = 0;

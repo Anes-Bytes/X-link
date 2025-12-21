@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -140,6 +140,15 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_SIGNUP_FIELDS = ["phone", "password1", "password2"]
 
 LOGIN_URL = '/register'
+
+# Django Messages Configuration
+MESSAGE_TAGS = {
+    'DEBUG': 'debug',
+    'INFO': 'info',
+    'SUCCESS': 'success',
+    'WARNING': 'warning',
+    'ERROR': 'error',
+}
 
 INTERNAL_IPS = [
     # ...

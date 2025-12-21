@@ -5,11 +5,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Signup - X-Link</title>
+    <title>تایید کد - ایکس لینک</title>
+        <link rel="icon" type="image/x-icon" href="{{ site_context.logo.url }}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="messages-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message message-{{ message.tags }} {% if message.tags %}message-has-tags{% endif %}" data-message-id="{{ forloop.counter }}">
+                    <div class="message-content">
+                        <div class="message-icon">
+                            {% if message.tags == 'success' %}
+                                <i class="fas fa-check-circle"></i>
+                            {% elif message.tags == 'error' %}
+                                <i class="fas fa-exclamation-triangle"></i>
+                            {% elif message.tags == 'warning' %}
+                                <i class="fas fa-exclamation-circle"></i>
+                            {% elif message.tags == 'info' %}
+                                <i class="fas fa-info-circle"></i>
+                            {% elif message.tags == 'debug' %}
+                                <i class="fas fa-bug"></i>
+                            {% else %}
+                                <i class="fas fa-bell"></i>
+                            {% endif %}
+                        </div>
+                        <div class="message-text">
+                            {{ message }}
+                        </div>
+                        <button class="message-close" aria-label="بستن پیام">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <!-- Background Orbs -->
     <div class="hero-background">
         <div class="gradient-orb orb-1"></div>

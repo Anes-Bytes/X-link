@@ -19,6 +19,43 @@ authTabs.forEach(tab => {
 });
 
 // ============================================
+// FORM VALIDATION
+// ============================================
+function validatePhoneNumber(phone) {
+    // Iranian mobile number validation
+    const phoneRegex = /^09\d{9}$/;
+    return phoneRegex.test(phone);
+}
+
+function showError(form, message) {
+    // Remove existing error messages
+    const existingError = form.querySelector('.form-error');
+    if (existingError) {
+        existingError.remove();
+    }
+
+    // Create error message element
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'form-error';
+    errorDiv.innerHTML = `
+        <div class="error-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // Insert error message at the top of the form
+    form.insertBefore(errorDiv, form.firstChild);
+}
+
+function clearErrors(form) {
+    const error = form.querySelector('.form-error');
+    if (error) {
+        error.remove();
+    }
+}
+
+// ============================================
 // FORM SUBMISSION HANDLERS
 // ============================================
 const loginForm = document.getElementById('loginForm');
@@ -26,25 +63,63 @@ const signupForm = document.getElementById('signupForm');
 
 if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Handle login logic here
-        console.log('Login form submitted');
+        const phoneInput = loginForm.querySelector('input[name="phone"]');
+        const phone = phoneInput.value.trim();
+
+        clearErrors(loginForm);
+
+        if (!phone) {
+            e.preventDefault();
+            showError(loginForm, 'شماره تلفن الزامی است');
+            phoneInput.focus();
+            return;
+        }
+
+        if (!validatePhoneNumber(phone)) {
+            e.preventDefault();
+            showError(loginForm, 'شماره تلفن باید با ۰۹ شروع شود و ۱۱ رقم باشد');
+            phoneInput.focus();
+            return;
+        }
     });
 }
 
 if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const password = document.getElementById('signupPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        
-        if (password !== confirmPassword) {
-            alert('Passwords do not match!');
+        const phoneInput = signupForm.querySelector('input[name="phone"]');
+        const fullNameInput = signupForm.querySelector('input[name="full_name"]');
+        const phone = phoneInput.value.trim();
+        const fullName = fullNameInput.value.trim();
+
+        clearErrors(signupForm);
+
+        if (!fullName) {
+            e.preventDefault();
+            showError(signupForm, 'نام کامل الزامی است');
+            fullNameInput.focus();
             return;
         }
-        
-        // Handle signup logic here
-        console.log('Signup form submitted');
+
+        if (fullName.length < 2) {
+            e.preventDefault();
+            showError(signupForm, 'نام کامل باید حداقل ۲ حرف باشد');
+            fullNameInput.focus();
+            return;
+        }
+
+        if (!phone) {
+            e.preventDefault();
+            showError(signupForm, 'شماره تلفن الزامی است');
+            phoneInput.focus();
+            return;
+        }
+
+        if (!validatePhoneNumber(phone)) {
+            e.preventDefault();
+            showError(signupForm, 'شماره تلفن باید با ۰۹ شروع شود و ۱۱ رقم باشد');
+            phoneInput.focus();
+            return;
+        }
     });
 }
 

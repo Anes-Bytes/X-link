@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ user_card.name }}</title>
     {% if user_card.black_background %}
+    <link rel="icon" type="image/x-icon" href="{{ site_context.logo.url }}">
     <link rel="stylesheet" href="{% static 'card-template-black.css' %}">
 
     {% elif user_card.color == "blue" %}

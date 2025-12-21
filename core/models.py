@@ -56,8 +56,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     phone = models.CharField(max_length=11, unique=True)
     full_name = models.CharField(max_length=100, blank=True, null=True)
-    username = models.CharField(max_length=100, unique=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
+    username = models.CharField(
+        max_length=100,
+        unique=True,
+        null=True,
+        blank=True
+    )
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "phone"
@@ -162,6 +167,7 @@ class Plan(models.Model):
 
 class SiteContext(models.Model):
     site_name = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='logo')
     hero_section_text_part1 = models.CharField(max_length=200)
     hero_section_text_part2 = models.CharField(max_length=200)
     hero_section_text_description = models.CharField(max_length=200)

@@ -33,6 +33,7 @@ env.read_env()
 
 
 def send_sms(phone: str, code: str) -> bool:
+    print(code)
     """
     Send OTP SMS via Melipayamak
     """
@@ -64,24 +65,65 @@ def request_otp(request):
     full_name = request.POST.get("full_name", "").strip()
     next_page = request.POST.get("next")
 
+    # Validate phone number format
     if not phone:
-        messages.error(request, "شماره تلفن معتبر نیست")
+        messages.error(request, "شماره تلفن الزامی است")
         return redirect("request_otp")
 
+    # Basic phone number validation (Iranian mobile numbers)
+    import re
+    if not re.match(r'^09\d{9}$', phone):
+        messages.error(request, "شماره تلفن باید با 09 شروع شود و 11 رقم باشد")
+        return redirect("request_otp")
+
+    # Check if it's signup (has full_name) or login
+    is_signup = bool(full_name)
+
+    if is_signup:
+        # Signup validation
+        if len(full_name) < 2:
+            messages.error(request, "نام کامل باید حداقل ۲ حرف باشد")
+            return redirect("login")
+
+        # Check if user already exists
+        if CustomUser.objects.filter(phone=phone).exists():
+            messages.error(request, "این شماره تلفن قبلاً ثبت نام کرده است. از قسمت ورود استفاده کنید")
+            return redirect("login")
+    else:
+        # Login validation
+        if not CustomUser.objects.filter(phone=phone).exists():
+            messages.error(request, "این شماره تلفن ثبت نشده است. ابتدا ثبت نام کنید")
+            return redirect("login")
+
+    # Rate limiting check
     cache_key = f"otp_request_{phone}"
     if cache.get(cache_key):
-        messages.error(request, "لطفاً کمی بعد دوباره تلاش کنید")
-        return redirect("request_otp")
+        messages.error(request, "لطفاً ۶۰ ثانیه صبر کنید و دوباره تلاش کنید")
+        return redirect("login")
 
     cache.set(cache_key, True, timeout=60)
 
-    user, _ = CustomUser.objects.get_or_create(
-        phone=phone,
-        defaults={"full_name": full_name}
-    )
+    # Create or get user
+    try:
+        user = CustomUser.objects.get(phone=phone)
+        created = False
 
+        if is_signup and full_name and user.full_name != full_name:
+            user.full_name = full_name
+            user.save()
+
+    except CustomUser.DoesNotExist:
+        # Create new user
+        user = CustomUser.objects.create_user(
+            phone=phone,
+            full_name=full_name if is_signup else None
+        )
+        created = True
+
+    # Expire previous OTPs
     user.otps.filter(expires_at__gt=timezone.now()).update(expires_at=timezone.now())
 
+    # Generate new OTP
     code = get_random_string(6, allowed_chars="0123456789")
 
     OTP.objects.create(
@@ -91,18 +133,33 @@ def request_otp(request):
     )
 
     request.session["otp_phone"] = phone
+    request.session["is_signup"] = is_signup
     if next_page:
         request.session["next"] = next_page
 
-    send_sms(phone, code)
-    messages.success(request, "کد تایید ارسال شد")
+    try:
+        send_sms(phone, code)
+        if is_signup:
+            messages.success(request, f"کد تایید برای ثبت نام به شماره {phone} ارسال شد")
+        else:
+            messages.success(request, f"کد تایید برای ورود به شماره {phone} ارسال شد")
+    except Exception as e:
+        messages.error(request, "خطا در ارسال پیامک. لطفاً دوباره تلاش کنید")
+        return redirect("request_otp")
+
     return redirect("verify_otp")
 
-@require_POST
 def verify_otp(request):
     phone = request.session.get("otp_phone")
-    code = request.POST.get("code", "").strip()
     next_page = request.session.get("next")
+
+    if request.method == "GET":
+        if not phone:
+            return redirect("request_otp")
+        return render(request, "core/verify.html")
+
+    # -------- POST --------
+    code = request.POST.get("code", "").strip()
 
     if not phone or not code:
         messages.error(request, "اطلاعات نامعتبر است")
@@ -120,7 +177,6 @@ def verify_otp(request):
         return redirect("verify_otp")
 
     otp.delete()
-
     login(request, user)
     messages.success(request, "با موفقیت وارد شدید")
 
@@ -128,9 +184,9 @@ def verify_otp(request):
         next_page,
         allowed_hosts={request.get_host()}
     ):
-        del request.session["next"]
+        request.session.pop("next", None)
         return redirect(next_page)
-
+    messages.success(request, "خوش آمدید")
     return redirect("dashboard")
 
 def landing_view(request):
@@ -202,10 +258,8 @@ def login_view(request):
 
 @login_required
 def logout_view(request):
-    username = request.user.username
     logout(request)
     messages.success(request, "شما با موفقیت خارج شدید.")
-    logger.info("User logged out: %s", username)
     return redirect('home')
 
 @login_required
@@ -227,7 +281,6 @@ def dashboard_view(request):
         'has_free_plan': 'Free' in user_plans,
         'messages':request.user.messages.all(),
     }
-
     return render(request, "core/dashboard.html", context)
 
 @login_required
@@ -337,7 +390,7 @@ def card_success_view(request, card_id):
     card_url = user_card.get_card_url()
 
     logger.info("Card success page viewed by user %s for card_id=%s", request.user.username, card_id)
-
+    messages.success(request, "کارت ویزیت شما با موفقیت ساخته شد")
     return render(request, 'core/card_success.html', {
         'user_card': user_card,
         'card_url': card_url,
@@ -467,8 +520,16 @@ def pricing_view(request):
 
 @login_required
 def payment_success_view(request):
+    messages.success(request, "با تشکر از اعتماد شما")
     return render(request, 'core/payment-success.html')
 
 @login_required
 def payment_failed_view(request):
+    messages.error(request, "خطایی در هنگام پرداخت رخ داده است. مجددا تلاش کنید")
     return render(request, 'core/payment-failed.html')
+
+def about_view(request):
+    """
+    About Us page for X-link
+    """
+    return render(request, 'core/about.html')
