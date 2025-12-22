@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     "debug_toolbar",
 
+    # third party apps:
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -79,16 +80,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': env.get('DB_NAME'),
-            'USER': env.get('DB_USER'),
-            'PASSWORD': env.get('DB_PASSWORD'),
-            'HOST': env.get('DB_HOST', 'localhost'),
-            'PORT': env.get('DB_PORT', '3306'),
-
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
 
 
 # Password validation
@@ -129,8 +125,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.CustomUser'
-
-
 
 
 LOGIN_REDIRECT_URL = '/'
