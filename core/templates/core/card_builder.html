@@ -40,18 +40,8 @@
         <input type="hidden" name="service-__prefix__-user_card" id="id_service-__prefix__-user_card">
 
         <div class="service-input-wrapper">
-            <div class="form-row">
-                <div class="form-col full-width">
-                    <label>عنوان</label>
-                    <input type="text" name="service-__prefix__-title" class="form-control" placeholder="عنوان خدمت" maxlength="255" id="id_service-__prefix__-title">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-col full-width">
-                    <label>توضیحات</label>
-                    <textarea name="service-__prefix__-description" class="form-control" placeholder="توضیح خدمت" rows="3" maxlength="500" id="id_service-__prefix__-description"></textarea>
-                </div>
-            </div>
+            <input type="text" name="service-__prefix__-title" class="service-input" placeholder="عنوان خدمت" maxlength="255" id="id_service-__prefix__-title">
+            <textarea name="service-__prefix__-description" class="service-input" placeholder="توضیح خدمت" rows="3" maxlength="500" id="id_service-__prefix__-description"></textarea>
 
             <div class="service-checkbox">
                 <input type="checkbox" name="service-__prefix__-DELETE" id="id_service-__prefix__-DELETE">
@@ -66,29 +56,10 @@
         <input type="hidden" name="portfolio-__prefix__-user_card" id="id_portfolio-__prefix__-user_card">
 
         <div class="portfolio-input-wrapper">
-            <div class="form-row">
-                <div class="form-col">
-                    <label>عنوان</label>
-                    <input type="text" name="portfolio-__prefix__-title" class="form-control" placeholder="عنوان پروژه" maxlength="255" id="id_portfolio-__prefix__-title">
-                </div>
-                <div class="form-col">
-                    <label>تصویر</label>
-                    <input type="file" name="portfolio-__prefix__-image" class="form-control" accept="image/*" id="id_portfolio-__prefix__-image">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-col">
-                    <label>لینک</label>
-                    <input type="url" name="portfolio-__prefix__-url" class="form-control" placeholder="https://example.com" id="id_portfolio-__prefix__-url">
-                </div>
-                <div class="form-col"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-col full-width">
-                    <label>توضیحات</label>
-                    <textarea name="portfolio-__prefix__-description" class="form-control" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-__prefix__-description"></textarea>
-                </div>
-            </div>
+            <input type="text" name="portfolio-__prefix__-title" class="portfolio-input" placeholder="عنوان پروژه" maxlength="255" id="id_portfolio-__prefix__-title">
+            <input type="file" name="portfolio-__prefix__-image" class="portfolio-input" accept="image/*" id="id_portfolio-__prefix__-image">
+            <input type="url" name="portfolio-__prefix__-url" class="portfolio-input" placeholder="https://example.com" id="id_portfolio-__prefix__-url">
+            <textarea name="portfolio-__prefix__-description" class="portfolio-input" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-__prefix__-description"></textarea>
 
             <div class="portfolio-checkbox">
                 <input type="checkbox" name="portfolio-__prefix__-DELETE" id="id_portfolio-__prefix__-DELETE">
@@ -134,7 +105,11 @@
                         font-weight: bold;
                         cursor: not-allowed;">
                         <input type="radio" disabled>
+                        {% if template.only_for_premium %}
                         <span>فقط برای کاربران basic  premium 🔒</span>
+                        {% else %}
+                        <span>فقط برای کاربران premium 🔒</span>
+                        {% endif %}
                     </label>
                 </div>
             {% endif %}
@@ -406,115 +381,90 @@
 
 
             <!-- Services Section -->
-            <div class="form-section">
-                <h2>مرحله 6: خدمات</h2>
+<div class="form-section">
+    <h2>مرحله 6: خدمات</h2>
 
-                <div id="servicesContainer" class="services-container">
-                    {% for service_form in service_formset %}
-                    <div class="service-form-group" data-form-index="{{ forloop.counter0 }}">
-                        {{ service_form.id }}
+    <!-- container خدمات -->
+    <div id="servicesContainer" class="services-container">
+{% for service_form in service_formset %}
+        <div class="service-form-group" data-form-index="{{ forloop.counter0 }}">
+            {{ service_form.id }}  <!-- hidden field PK فرم‌های موجود -->
 
-                        <div class="service-input-wrapper">
-                            <div class="form-row">
-                                <div class="form-col full-width">
-                                    <label>عنوان</label>
-                                    {{ service_form.title }}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-col full-width">
-                                    <label>توضیحات</label>
-                                    {{ service_form.description }}
-                                </div>
-                            </div>
+            <div class="service-input-wrapper">
+                <input type="text" name="service-{{ forloop.counter0 }}-title" class="service-input" placeholder="عنوان خدمت" maxlength="255" value="{{ service_form.title.value }}" id="id_service-{{ forloop.counter0 }}-title">
+                <textarea name="service-{{ forloop.counter0 }}-description" class="service-input" placeholder="توضیح خدمت" rows="3" maxlength="500" id="id_service-{{ forloop.counter0 }}-description">{{ service_form.description.value }}</textarea>
 
-                            {% if service_form.DELETE %}
-                            <div class="service-checkbox">
-                                {{ service_form.DELETE }}
-                                <label for="{{ service_form.DELETE.id_for_label }}">حذف</label>
-                            </div>
-                            {% endif %}
-                        </div>
-
-                        {% if service_form.errors %}
-                        <div class="error-message">{{ service_form.errors }}</div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
+                {% if service_form.DELETE %}
+                <div class="service-checkbox">
+                    {{ service_form.DELETE }} <!-- checkbox حذف -->
+                    <label for="{{ service_form.DELETE.id_for_label }}">حذف</label>
                 </div>
-
-                <button type="button" class="add-service-btn" id="addServiceBtn">
-                    <i class="fas fa-plus"></i> افزودن خدمت
-                </button>
-
-                <div style="display: none;">
-                    {{ service_formset.management_form }}
-                </div>
+                {% endif %}
             </div>
+
+            {% if service_form.errors %}
+            <div class="error-message">{{ service_form.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="add-service-btn" id="addServiceBtn">
+        <i class="fas fa-plus"></i> افزودن خدمت
+    </button>
+
+    <!-- hidden formset management -->
+    <div style="display: none;">
+        {{ service_formset.management_form }}
+    </div>
+</div>
 
             <!-- Portfolio Section -->
             <div class="form-section">
                 <h2>مرحله 7: نمونه کارها</h2>
 
+                <!-- container نمونه کارها -->
                 <div id="portfolioContainer" class="portfolio-container">
-                    {% for portfolio_form in portfolio_formset %}
-                    <div class="portfolio-form-group" data-form-index="{{ forloop.counter0 }}">
-                        {{ portfolio_form.id }}
+{% for portfolio_form in portfolio_formset %}
+        <div class="portfolio-form-group" data-form-index="{{ forloop.counter0 }}">
+            {{ portfolio_form.id }}  <!-- hidden field PK فرم‌های موجود -->
 
-                        <div class="portfolio-input-wrapper">
-                            <div class="form-row">
-                                <div class="form-col">
-                                    <label>عنوان</label>
-                                    {{ portfolio_form.title }}
-                                </div>
-                                <div class="form-col">
-                                    <label>تصویر</label>
-                                    {% if portfolio_form.instance.image %}
-                                    <div class="current-image-preview">
-                                        <img src="{{ portfolio_form.instance.image.url }}" alt="تصویر فعلی" style="max-width: 100px; max-height: 100px; border-radius: 8px; margin-bottom: 8px;">
-                                        <small style="color: #666; display: block;">تصویر فعلی</small>
-                                    </div>
-                                    {% endif %}
-                                    {{ portfolio_form.image }}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-col">
-                                    <label>لینک</label>
-                                    {{ portfolio_form.url }}
-                                </div>
-                                <div class="form-col"></div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-col full-width">
-                                    <label>توضیحات</label>
-                                    {{ portfolio_form.description }}
-                                </div>
-                            </div>
-
-                            {% if portfolio_form.DELETE %}
-                            <div class="portfolio-checkbox">
-                                {{ portfolio_form.DELETE }}
-                                <label for="{{ portfolio_form.DELETE.id_for_label }}">حذف</label>
-                            </div>
-                            {% endif %}
-                        </div>
-
-                        {% if portfolio_form.errors %}
-                        <div class="error-message">{{ portfolio_form.errors }}</div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
+            <div class="portfolio-input-wrapper">
+                <input type="text" name="portfolio-{{ forloop.counter0 }}-title" class="portfolio-input" placeholder="عنوان پروژه" maxlength="255" value="{{ portfolio_form.title.value }}" id="id_portfolio-{{ forloop.counter0 }}-title">
+                {% if portfolio_form.instance.image %}
+                <div class="current-image-preview">
+                    <img src="{{ portfolio_form.instance.image.url }}" alt="تصویر فعلی" style="max-width: 100px; max-height: 100px; border-radius: 8px; margin-bottom: 8px;">
+                    <small style="color: #666; display: block;">تصویر فعلی</small>
                 </div>
+                {% endif %}
+                <input type="file" name="portfolio-{{ forloop.counter0 }}-image" class="portfolio-input" accept="image/*" id="id_portfolio-{{ forloop.counter0 }}-image">
+                <input type="url" name="portfolio-{{ forloop.counter0 }}-url" class="portfolio-input" placeholder="https://example.com" value="{{ portfolio_form.url.value }}" id="id_portfolio-{{ forloop.counter0 }}-url">
+                <textarea name="portfolio-{{ forloop.counter0 }}-description" class="portfolio-input" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-{{ forloop.counter0 }}-description">{{ portfolio_form.description.value }}</textarea>
 
-                <button type="button" class="add-portfolio-btn" id="addPortfolioBtn">
-                    <i class="fas fa-plus"></i> افزودن نمونه کار
-                </button>
-
-                <div style="display: none;">
-                    {{ portfolio_formset.management_form }}
+                {% if portfolio_form.DELETE %}
+                <div class="portfolio-checkbox">
+                    {{ portfolio_form.DELETE }} <!-- checkbox حذف -->
+                    <label for="{{ portfolio_form.DELETE.id_for_label }}">حذف</label>
                 </div>
+                {% endif %}
             </div>
+
+            {% if portfolio_form.errors %}
+            <div class="error-message">{{ portfolio_form.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="add-portfolio-btn" id="addPortfolioBtn">
+        <i class="fas fa-plus"></i> افزودن نمونه کار
+    </button>
+
+    <!-- hidden formset management -->
+    <div style="display: none;">
+        {{ portfolio_formset.management_form }}
+    </div>
+</div>
 
             <!-- Form Actions -->
             <div class="form-actions">
@@ -869,6 +819,70 @@ document.addEventListener('DOMContentLoaded', () => {
     margin: 0;
 }
 
+/* Services Section */
+.services-container {
+    margin-bottom: 20px;
+}
+
+.service-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.service-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.service-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+.service-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+/* Portfolio Section */
+.portfolio-container {
+    margin-bottom: 20px;
+}
+
+.portfolio-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.portfolio-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.portfolio-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+.portfolio-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
 .service-checkbox,
 .portfolio-checkbox {
     display: flex;
@@ -884,7 +898,9 @@ document.addEventListener('DOMContentLoaded', () => {
     margin: 0;
 }
 
-.add-skill-btn {
+.add-skill-btn,
+.add-service-btn,
+.add-portfolio-btn {
     background: rgba(58, 134, 255, 0.2);
     border: 2px solid var(--cyan-neon);
     color: var(--cyan-neon);
@@ -898,7 +914,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gap: 8px;
 }
 
-.add-skill-btn:hover {
+.add-skill-btn:hover,
+.add-service-btn:hover,
+.add-portfolio-btn:hover {
     background: var(--cyan-neon);
     color: var(--bg-dark);
 }
@@ -991,7 +1009,9 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 /* Dark mode for skill inputs */
-.skill-input {
+.skill-input,
+.service-input,
+.portfolio-input {
     width: 100%;
     padding: 12px 15px;
     background: rgba(255, 255, 255, 0.08);
@@ -1000,13 +1020,33 @@ document.addEventListener('DOMContentLoaded', () => {
     color: var(--text-white);
     font-family: inherit;
     transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
-.skill-input:focus {
+/* Special styling for file inputs */
+.portfolio-input[type="file"] {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(58, 134, 255, 0.3);
+}
+
+.portfolio-input[type="file"]:hover {
+    border-color: var(--cyan-neon);
+    background: rgba(0, 246, 255, 0.05);
+}
+
+.skill-input:focus,
+.service-input:focus,
+.portfolio-input:focus {
     outline: none;
     background: rgba(255, 255, 255, 0.12);
     border-color: var(--cyan-neon);
     box-shadow: 0 0 15px rgba(0, 246, 255, 0.2);
+}
+
+.service-input:last-child,
+.portfolio-input:last-child {
+    margin-bottom: 0;
 }
 .template-option.locked {
     opacity: 0.5;

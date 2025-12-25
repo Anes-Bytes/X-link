@@ -2,16 +2,7 @@
    SERVICES & PORTFOLIO SECTIONS STYLING
    ============================================ */
 
-:root {
-    --primary-blue: #3A86FF;
-    --cyan-neon: #00F6FF;
-    --text-white: #F5F8FF;
-    --text-gray: #A5B4D0;
-    --bg-dark: #0A0F1F;
-    --surface-darker: #0E1427;
-    --border-light: rgba(58, 134, 255, 0.2);
-    --border-hover: rgba(58, 134, 255, 0.4);
-}
+/* CSS Variables are inherited from the main card template */
 
 /* ============================================
    SERVICES SECTION
@@ -34,7 +25,7 @@
     gap: 16px;
     padding: 24px;
     background: linear-gradient(135deg, rgba(58, 134, 255, 0.08), rgba(0, 246, 255, 0.05));
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--glass-border);
     border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -52,7 +43,7 @@
 }
 
 .service-item:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(58, 134, 255, 0.4);
     transform: translateY(-6px);
     box-shadow: 0 12px 30px rgba(58, 134, 255, 0.2);
 }
@@ -112,8 +103,8 @@
 }
 
 .portfolio-item {
-    background: var(--surface-darker);
-    border: 1px solid var(--border-light);
+    background: rgba(14, 20, 39, 0.5);
+    border: 1px solid var(--glass-border);
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -122,7 +113,7 @@
 }
 
 .portfolio-item:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(58, 134, 255, 0.4);
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(58, 134, 255, 0.25);
 }
@@ -219,15 +210,15 @@
 .service-form-group,
 .portfolio-form-group {
     padding: 16px;
-    background: rgba(58, 134, 255, 0.05);
-    border: 1px solid var(--border-light);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 8px;
     transition: all 0.3s ease;
 }
 
 .service-form-group:hover,
 .portfolio-form-group:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(58, 134, 255, 0.4);
     background: rgba(58, 134, 255, 0.08);
 }
 
@@ -264,7 +255,7 @@
 
 .form-col input::placeholder,
 .form-col textarea::placeholder {
-    color: rgba(165, 180, 208, 0.6);
+    color: var(--text-light-gray);
 }
 
 .form-col input:focus,
@@ -283,7 +274,7 @@
     gap: 8px;
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid var(--glass-border);
 }
 
 .service-checkbox input[type="checkbox"],
@@ -308,7 +299,7 @@
     gap: 8px;
     padding: 12px 24px;
     background: linear-gradient(135deg, rgba(58, 134, 255, 0.2), rgba(0, 246, 255, 0.1));
-    border: 2px dashed var(--border-light);
+    border: 2px dashed var(--glass-border);
     border-radius: 8px;
     color: var(--cyan-neon);
     font-weight: 600;

@@ -289,10 +289,13 @@
     align-items: center;
     gap: 10px;
     margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .hero-input {
-    width: 260px;
+    width: 100%;
+    max-width: 260px;
     height: 48px;
     padding: 0 14px;
     border-radius: 12px;
@@ -370,6 +373,60 @@
     display: flex;
     align-items: center;      /* وسط عمودی */
     justify-content: center;  /* وسط افقی */
+}
+
+/* Responsive Styles for Hero Section */
+@media (max-width: 768px) {
+    .hero-input-box {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .hero-input-fake {
+        width: 100%;
+    }
+
+    .hero-input-btn {
+        width: 100%;
+        padding: 0 16px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        gap: 10px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-input-box {
+        max-width: 300px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        gap: 8px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+        margin-bottom: 35px;
+    }
+
+    .hero-input,
+    .hero-input-fake {
+        height: 44px;
+    }
+
+    .hero-input-btn {
+        height: 44px;
+    }
 }
 
 </style>

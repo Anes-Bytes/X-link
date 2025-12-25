@@ -354,12 +354,12 @@
                                 {% endif %}
                                 <div class="profile-details">
                                     <div class="detail-row">
-                                        <span class="label">{{ user.email }}</span>
-                                        <span class="value" id="emailDisplay">ایمیل:</span>
+                                        <span class="label">ایمیل:</span>
+                                        <span class="value" id="emailDisplay">{{ user_card.email|default:user.email|default:"تعیین نشده" }}</span>
                                     </div>
                                     <div class="detail-row">
-                                        <span class="label">{{ user.phone|default:"تعیین نشده" }}</span>
-                                        <span class="value" id="phoneDisplay">شماره تماس:</span>
+                                        <span class="label">شماره تماس:</span>
+                                        <span class="value" id="phoneDisplay">{{ user_card.phone_number|default:user.phone|default:"تعیین نشده" }}</span>
                                     </div>
                                     <div class="detail-row">
                                         <span class="label">{{ user.date_joined|date:"M d, Y" }}</span>

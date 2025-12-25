@@ -266,7 +266,7 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    user_card = UserCard.objects.filter(user=request.user).first()
+    user_card = UserCard.objects.filter(user=request.user).select_related('user').first()
 
     card_url = None
     if user_card and user_card.username:
@@ -287,14 +287,17 @@ def dashboard_view(request):
 
 @login_required
 def card_builder_view(request):
-    user_card, is_new = UserCard.objects.select_related(
-        'user'
-    ).prefetch_related(
-        'skills',
-        'services',
-        'portfolio_items'
-    ).get_or_create(user=request.user)
-
+    user_card = (
+        UserCard.objects
+        .select_related('user')
+        .prefetch_related(
+            'skills',
+            'services',
+            'portfolio_items'
+        )
+        .filter(user=request.user)
+        .first()   # ⬅️ اگر نبود → None
+    )
     user_plan_ids = set(
         request.user.plan.values_list('id', flat=True)
     )
@@ -368,7 +371,7 @@ def card_builder_view(request):
         )
         for template in templates
     }
-
+    is_new = True
     context = {
         'form': form,
         'skill_formset': skill_formset,

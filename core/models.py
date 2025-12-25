@@ -54,7 +54,7 @@ class UserMessages(models.Model):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
-    phone = models.CharField(max_length=11, unique=True)
+    phone = models.CharField(max_length=11, unique=True, blank=True, null=True)
     full_name = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(unique=True, null=True, blank=True)
     username = models.CharField(
@@ -90,7 +90,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.plan_expires_at:
             return False
 
-        # زمان فعلی
         now = datetime.now()
 
         remaining = self.plan_expires_at - now
@@ -98,7 +97,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return remaining <= timedelta(days=8)
 
     def __str__(self):
-        return self.phone
+        return self.full_name if self.full_name else str(self.id)
 
 
 class OTP(models.Model):
@@ -304,6 +303,7 @@ class Template(models.Model):
     image = models.ImageField(upload_to='templates')
     description = models.TextField(blank=True)
     delay = models.IntegerField()
+    only_for_premium = models.BooleanField(default=False)
     allowed_plans = models.ManyToManyField(UserPlan, blank=True)
     is_active = models.BooleanField(default=True)
 
