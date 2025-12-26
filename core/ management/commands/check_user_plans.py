@@ -17,9 +17,10 @@ class Command(BaseCommand):
             try:
                 if remaining <= timedelta(seconds=0):
                     # پلن تمام شده → Free
-                    free_plan, _ = UserPlan.objects.get_or_create(value=UserPlan.PlanChoices.Free)
-                    user.plan.clear()
-                    user.plan.add(free_plan)
+                    free_plan = UserPlan.objects.get(
+                        value=UserPlan.PlanChoices.Free
+                    )
+                    user.plan.set([free_plan])
                     user.save()
                     send_sms(
                         user,
