@@ -137,6 +137,7 @@
                 </div>
             </div>
 
+            {% if user_card.skills.all %}
             <!-- Skills Section -->
             <div class="card-section skills-section">
                 <h3 class="section-title">توانایی ها</h3>
@@ -146,6 +147,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
             {% if user_card.services.all %}
             <!-- Services Section -->
             <div class="card-section services-section">

@@ -15,7 +15,7 @@ from django.utils.crypto import get_random_string
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.db.models import F
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 # Third-party imports
 from melipayamak import Api
@@ -35,7 +35,6 @@ env.read_env()
 
 
 def send_sms(phone: str, code: str) -> bool:
-    print(code)
     """
     Send OTP SMS via Melipayamak
     """

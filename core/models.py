@@ -238,13 +238,19 @@ class UserCard(models.Model):
     def clean(self):
         super().clean()
 
+        if not self.user_id:
+            if self.color != 'default':
+                raise ValidationError({
+                    'color': 'این رنگ فقط برای کاربران پلن پایه و پرمیوم فعال است. شما فقط می‌توانید از رنگ پیش‌فرض استفاده کنید.'
+                })
+            return
+
         user_plans = set(self.user.plan.values_list('value', flat=True))
+        allowed_colors = {'Basic', 'Pro'}
 
-        allowed_plans_for_color = {'Basic', 'Pro'}
-
-        if self.color != 'default' and user_plans.isdisjoint(allowed_plans_for_color):
+        if self.color != 'default' and user_plans.isdisjoint(allowed_colors):
             raise ValidationError({
-                'color': 'این رنگ فقط برای کاربران پلن پایه و پرمیوم فعال است. شما فقط می‌توانید از رنگ پیش‌فرض ایکس‌لینک استفاده نمایید.'
+                'color': 'این رنگ فقط برای کاربران پلن پایه و پرمیوم فعال است. شما فقط می‌توانید از رنگ پیش‌فرض استفاده کنید.'
             })
 
 

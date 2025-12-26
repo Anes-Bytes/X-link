@@ -1,8 +1,19 @@
 from django import forms
 from core.models import UserCard, Skill, Service, Portfolio
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 
 class UserCardForm(forms.ModelForm):
+    username = forms.CharField(
+        min_length=3,
+        max_length=32,
+        validators=[MinLengthValidator(3), MaxLengthValidator(32)],
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'نام کاربری (3 تا 32 کاراکتر، بدون فاصله)',
+            'dir': 'ltr',
+        })
+    )
     class Meta:
         model = UserCard
         fields = [
