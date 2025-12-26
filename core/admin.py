@@ -19,17 +19,17 @@ class SkillInline(admin.TabularInline):
 
 class ServiceInline(admin.TabularInline):
     model = Service
-    extra = 1
+    extra = 0
 
 
 class PortfolioInline(admin.TabularInline):
     model = Portfolio
-    extra = 1
+    extra = 0
 
 
 class UserMessagesInline(admin.TabularInline):
     model = UserMessages
-    extra = 1
+    extra = 0
 
 
 class OTPInline(admin.TabularInline):
@@ -40,20 +40,6 @@ class OTPInline(admin.TabularInline):
 
 
 # ========== MAIN ADMINS ==========
-
-@admin.register(Customers)
-class CustomersAdmin(admin.ModelAdmin):
-    list_display = ('company_name', 'company_url', 'get_site_context')
-    search_fields = ('company_name', 'company_url')
-    list_filter = ('SiteContext',)
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('SiteContext')
-
-    def get_site_context(self, obj):
-        return obj.SiteContext.site_name
-    get_site_context.short_description = 'سایت'
-    get_site_context.admin_order_field = 'SiteContext__site_name'
 
 
 @admin.register(Plan)
@@ -76,38 +62,6 @@ class PlansAdmin(admin.ModelAdmin):
         return "بدون تخفیف"
     get_discount_percentage.short_description = 'تخفیف'
     get_discount_percentage.admin_order_field = 'discount__value'
-
-
-@admin.register(SiteContext)
-class SiteContextAdmin(admin.ModelAdmin):
-    list_display = ('site_name',)
-    search_fields = ('site_name',)
-
-
-@admin.register(Template)
-class TemplatesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'delay', 'only_for_premium', 'is_active', 'get_allowed_plans', 'get_usage_count')
-    list_filter = ('only_for_premium', 'is_active', 'allowed_plans')
-    search_fields = ('name', 'description')
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related(
-            'allowed_plans',
-            'user_cards'
-        ).annotate(
-            usage_count=Count('user_cards')
-        )
-
-    def get_allowed_plans(self, obj):
-        plans = obj.allowed_plans.all()
-        if plans:
-            return ", ".join([plan.get_value_display() for plan in plans])
-        return "همه پلن‌ها"
-    get_allowed_plans.short_description = 'پلن‌های مجاز'
-
-    def get_usage_count(self, obj):
-        return obj.usage_count
-    get_usage_count.short_description = 'تعداد استفاده'
 
 
 @admin.register(UserCard)
@@ -219,78 +173,6 @@ class CustomUserAdmin(UserAdmin):
         UserMessagesInline,
         OTPInline,
     ]
-
-
-
-@admin.register(Discount)
-class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('value', 'get_percentage_display')
-    search_fields = ('value',)
-
-    def get_percentage_display(self, obj):
-        return f"{obj.value}%"
-    get_percentage_display.short_description = 'درصد تخفیف'
-
-
-@admin.register(Banners)
-class BannersAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'image')
-    search_fields = ('title', 'description')
-
-
-@admin.register(UserPlan)
-class UserPlanAdmin(admin.ModelAdmin):
-    list_display = ('value', 'get_display_name')
-    search_fields = ('value',)
-
-    def get_display_name(self, obj):
-        return obj.get_value_display()
-    get_display_name.short_description = 'نام نمایشی'
-
-
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'get_user_card_name', 'created_at')
-    search_fields = ('title', 'user_card__name', 'user_card__username')
-    list_filter = ('created_at',)
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('user_card')
-
-    def get_user_card_name(self, obj):
-        return obj.user_card.name
-    get_user_card_name.short_description = 'کارت کاربر'
-    get_user_card_name.admin_order_field = 'user_card__name'
-
-
-@admin.register(Portfolio)
-class PortfolioAdmin(admin.ModelAdmin):
-    list_display = ('title', 'get_user_card_name', 'url', 'created_at')
-    search_fields = ('title', 'user_card__name', 'user_card__username', 'url')
-    list_filter = ('created_at',)
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('user_card')
-
-    def get_user_card_name(self, obj):
-        return obj.user_card.name
-    get_user_card_name.short_description = 'کارت کاربر'
-    get_user_card_name.admin_order_field = 'user_card__name'
-
-
-@admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_user_card_name', 'created_at')
-    search_fields = ('name', 'user_card__name', 'user_card__username')
-    list_filter = ('created_at',)
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('user_card')
-
-    def get_user_card_name(self, obj):
-        return obj.user_card.name
-    get_user_card_name.short_description = 'کارت کاربر'
-    get_user_card_name.admin_order_field = 'user_card__name'
 
 
 @admin.register(UserMessages)

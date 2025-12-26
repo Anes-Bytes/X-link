@@ -29,6 +29,8 @@ INSTALLED_APPS = [
 
     # project apps:
     'core',
+    'Billing',
+    'site_management',
 
     "debug_toolbar",
 

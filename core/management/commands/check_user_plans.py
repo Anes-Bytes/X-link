@@ -5,7 +5,7 @@ from core.models import CustomUser, UserPlan
 
 
 class Command(BaseCommand):
-    help = 'Check user plans and update expired plans'
+    help = 'Check user Billing and update expired Billing'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -25,7 +25,7 @@ class Command(BaseCommand):
         # Get current time
         now = timezone.now()
 
-        # Find users with expired plans
+        # Find users with expired Billing
         expired_users = CustomUser.objects.filter(
             plan_expires_at__lt=now
         ).exclude(
@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
         if not expired_users.exists():
             self.stdout.write(
-                self.style.SUCCESS('No expired plans found.')
+                self.style.SUCCESS('No expired Billing found.')
             )
             return
 
@@ -46,11 +46,11 @@ class Command(BaseCommand):
 
             if dry_run:
                 self.stdout.write(
-                    f'Would expire plans for user {user.full_name or user.phone}: '
+                    f'Would expire Billing for user {user.full_name or user.phone}: '
                     f'{", ".join(plan_names)} → Would add Free plan (expired: {user.plan_expires_at})'
                 )
             else:
-                # Remove all plans from expired user
+                # Remove all Billing from expired user
                 user.plan.clear()
 
                 # Add Free plan to expired user
@@ -62,18 +62,18 @@ class Command(BaseCommand):
 
                     self.stdout.write(
                         self.style.SUCCESS(
-                            f'Expired plans for user {user.full_name or user.phone}: '
+                            f'Expired Billing for user {user.full_name or user.phone}: '
                             f'{", ".join(plan_names)} → Added Free plan'
                         )
                     )
                 except UserPlan.DoesNotExist:
-                    # If Free plan doesn't exist, just clear plans
+                    # If Free plan doesn't exist, just clear Billing
                     user.plan_expires_at = None
                     user.save()
 
                     self.stdout.write(
                         self.style.ERROR(
-                            f'Expired plans for user {user.full_name or user.phone}: '
+                            f'Expired Billing for user {user.full_name or user.phone}: '
                             f'{", ".join(plan_names)} → Free plan not found!'
                         )
                     )
@@ -84,13 +84,13 @@ class Command(BaseCommand):
         if dry_run:
             self.stdout.write(
                 self.style.WARNING(
-                    f'DRY RUN: Would process {processed_count} users with expired plans'
+                    f'DRY RUN: Would process {processed_count} users with expired Billing'
                 )
             )
         else:
             self.stdout.write(
                 self.style.SUCCESS(
-                    f'Successfully processed {processed_count} users with expired plans'
+                    f'Successfully processed {processed_count} users with expired Billing'
                 )
             )
 
@@ -103,7 +103,7 @@ class Command(BaseCommand):
         ).prefetch_related('plan')
 
         if soon_expiring.exists():
-            self.stdout.write('\nUsers with plans expiring soon:')
+            self.stdout.write('\nUsers with Billing expiring soon:')
             for user in soon_expiring:
                 days_left = (user.plan_expires_at.date() - now.date()).days
                 user_plans = list(user.plan.all())

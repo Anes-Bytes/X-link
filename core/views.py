@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.db.models import F
-
+from site_management.models import *
 from datetime import timedelta
 
 # Third-party imports
@@ -22,7 +22,7 @@ from melipayamak import Api
 from environs import Env
 
 # Local app imports
-from .models import UserCard, Skill, Service, Portfolio, Template, Customers, Plan, UserPlan
+from .models import UserCard, Skill, Service, Portfolio, Template, Plan, UserPlan
 from .forms import UserCardForm, SkillInlineFormSet, ServiceInlineFormSet, PortfolioInlineFormSet
 from core.models import CustomUser, OTP
 
@@ -231,7 +231,7 @@ def landing_view(request):
         {
             "templates": templates,
             "customers": customers,
-            "plans": plans,
+            "Billing": plans,
             "current_period": period,
         }
     )
@@ -508,8 +508,8 @@ def pricing_view(request):
     else:
         plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
 
-    return render(request, 'core/pricing.html', context={'plans': plans, "current_period": period,})
-3
+    return render(request, 'core/pricing.html', context={'Billing': plans, "current_period": period,})
+
 @login_required
 def payment_success_view(request):
     messages.success(request, "با تشکر از اعتماد شما")

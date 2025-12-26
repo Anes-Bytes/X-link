@@ -5,7 +5,7 @@ from core.models import CustomUser, UserPlan
 from core.utils import send_sms
 
 class Command(BaseCommand):
-    help = 'Check user plans and send notifications'
+    help = 'Check user Billing and send notifications'
 
     def handle(self, *args, **kwargs):
         now = timezone.now()
@@ -48,4 +48,4 @@ class Command(BaseCommand):
             except Exception as e:
                 print(f"Error checking plan for user {user.id}: {e}")
 
-        self.stdout.write(self.style.SUCCESS("All user plans checked successfully."))
+        self.stdout.write(self.style.SUCCESS("All user Billing checked successfully."))
