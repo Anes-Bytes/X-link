@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.db.models import Count
 
-from Billing.models import UserPlan, Discount, Template
+from Billing.models import UserPlan, Discount, Template, Plan, Feature
+
+
+class FeaturesInline(admin.TabularInline):
+    model = Feature
+    extra = 0
+
 
 @admin.register(UserPlan)
 class UserPlanAdmin(admin.ModelAdmin):
@@ -11,6 +17,28 @@ class UserPlanAdmin(admin.ModelAdmin):
     def get_display_name(self, obj):
         return obj.get_value_display()
     get_display_name.short_description = 'نام نمایشی'
+
+
+@admin.register(Plan)
+class PlansAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type', 'period', 'price', 'get_final_price', 'is_special', 'get_discount_percentage')
+    list_filter = ('type', 'period', 'is_special', 'discount')
+    search_fields = ('name', 'type')
+    inlines = [FeaturesInline]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('discount').prefetch_related('Features')
+
+    def get_final_price(self, obj):
+        return f"{obj.get_final_price():,}"
+    get_final_price.short_description = 'قیمت نهایی'
+
+    def get_discount_percentage(self, obj):
+        if obj.discount:
+            return f"{obj.discount.value}%"
+        return "بدون تخفیف"
+    get_discount_percentage.short_description = 'تخفیف'
+    get_discount_percentage.admin_order_field = 'discount__value'
 
 
 @admin.register(Discount)

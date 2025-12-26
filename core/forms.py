@@ -1,5 +1,5 @@
 from django import forms
-from core.models import UserCard, Skill, Service, Portfolio
+from cards.models import UserCard, Skill, Service, Portfolio
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 

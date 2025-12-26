@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'core',
     'Billing',
     'site_management',
+    'cards',
 
     "debug_toolbar",
 
