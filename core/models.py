@@ -30,21 +30,6 @@ class UserManager(BaseUserManager):
         return user
 
 
-def default_expire_time():
-    return timezone.now() + timedelta(days=30)
-
-
-class UserPlan(models.Model):
-    name = models.CharField(max_length=50, choices=[
-        ("Free", "رایگان"),
-        ("Basic", "پایه"),
-        ("Pro", "پرمیوم"),
-    ])
-
-    def __str__(self):
-        return self.name
-
-
 class UserMessages(models.Model):
     user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="messages")
     text = models.TextField()
@@ -52,8 +37,18 @@ class UserMessages(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class UserPlan(models.Model):
+    class PlanChoices(models.TextChoices):
+        Free = "Free", "رایگان"
+        Basic = "Basic", "پلن پایه"
+        Pro = "Pro", "پرمیوم"
+    value = models.CharField(choices=PlanChoices.choices, max_length=20)
 
+    def __str__(self):
+        return self.value
+
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=11, unique=True, blank=True, null=True)
     full_name = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(unique=True, null=True, blank=True)
@@ -69,7 +64,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     REQUIRED_FIELDS = ["full_name"]
 
-    plan = models.ManyToManyField(UserPlan)
+    plan = models.ManyToManyField(UserPlan, blank=True)
     plan_expires_at = models.DateTimeField(blank=True, null=True)
 
     is_active = models.BooleanField(default=True)
@@ -240,12 +235,16 @@ class UserCard(models.Model):
     def get_card_url(self):
         return f"https://x-link.ir/{self.username}"
 
-
-
     def clean(self):
-        if self.user.plan == 'free' and self.color != 'default':
+        super().clean()
+
+        user_plans = set(self.user.plan.values_list('value', flat=True))
+
+        allowed_plans_for_color = {'Basic', 'Pro'}
+
+        if self.color != 'default' and user_plans.isdisjoint(allowed_plans_for_color):
             raise ValidationError({
-                'color': 'این رنگ فقط برای کاربران پلن پرمیوم و پایه فعال است. شما فقط میتوانید از رنگ پیشفرض ایکس لینک استفاده نمایید.'
+                'color': 'این رنگ فقط برای کاربران پلن پایه و پرمیوم فعال است. شما فقط می‌توانید از رنگ پیش‌فرض ایکس‌لینک استفاده نمایید.'
             })
 
 

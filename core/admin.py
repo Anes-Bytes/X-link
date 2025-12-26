@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .models import CustomUser, Customers, Template, SiteContext, Plan, Discount, Feature, UserCard, Skill, Banners, \
-    UserPlan, UserMessages
+    UserMessages, UserPlan
 
 
 # ========== Inline ADMINS ==========

@@ -146,7 +146,7 @@
                     {% endfor %}
                 </div>
             </div>
-
+            {% if user_card.services.all %}
             <!-- Services Section -->
             <div class="card-section services-section">
                 <h3 class="section-title">Services</h3>
@@ -166,7 +166,8 @@
                     {% endfor %}
                 </div>
             </div>
-
+            {% endif %}
+            {% if user_card.portfolio_items.all %}
             <!-- Portfolio Section -->
             <div class="card-section portfolio-section">
                 <h3 class="section-title">Portfolio</h3>
@@ -195,6 +196,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
         </div>
         <!-- Mini Footer -->
 <div class="mini-footer">

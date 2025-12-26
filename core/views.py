@@ -273,7 +273,7 @@ def dashboard_view(request):
         scheme = "https" if request.is_secure() else "http"
         card_url = f"{scheme}://{request.get_host()}/{user_card.username}"
 
-    user_plans = set(request.user.plan.values_list('name', flat=True))
+    user_plans = set(request.user.plan.values_list('value', flat=True))
 
     context = {
         "user_card": user_card,
@@ -296,14 +296,9 @@ def card_builder_view(request):
             'portfolio_items'
         )
         .filter(user=request.user)
-        .first()   # ⬅️ اگر نبود → None
+        .first()
     )
-    user_plan_ids = set(
-        request.user.plan.values_list('id', flat=True)
-    )
-    user_plan_names = set(
-        request.user.plan.values_list('name', flat=True)
-    )
+    has_pro_plan = request.user.plan.filter(value=UserPlan.PlanChoices.Pro).exists()
 
     if request.method == 'POST':
         form = UserCardForm(request.POST, request.FILES, instance=user_card)
@@ -320,7 +315,8 @@ def card_builder_view(request):
             card = form.save(commit=False)
             card.user = request.user
 
-            if 'Pro' in user_plan_names:
+
+            if has_pro_plan:
                 card.black_background = bool(request.POST.get("black_bg"))
                 card.stars_background = bool(request.POST.get("stars_bg"))
                 card.blue_tick = bool(request.POST.get("blue_tick"))
@@ -358,29 +354,23 @@ def card_builder_view(request):
         service_formset = ServiceInlineFormSet(instance=user_card, prefix='service')
         portfolio_formset = PortfolioInlineFormSet(instance=user_card, prefix='portfolio')
 
-    # ⬅️ templates با prefetch واقعی
-    templates = Template.objects.filter(
-        is_active=True
-    ).prefetch_related('allowed_plans')
+    user_plans = request.user.plan.all()
+    templates = Template.objects.prefetch_related("allowed_plans")
 
-    # ⬅️ بدون حتی یک کوئری اضافه
-    template_access = {
-        template.id: any(
-            plan.id in user_plan_ids
-            for plan in template.allowed_plans.all()
+    for t in templates:
+        # اگر allowed_plans خالی باشد یعنی همه می‌تونند استفاده کنند
+        t.is_allowed = (
+                not t.allowed_plans.exists() or
+                t.allowed_plans.filter(id__in=user_plans).exists()
         )
-        for template in templates
-    }
-    is_new = True
+
     context = {
         'form': form,
         'skill_formset': skill_formset,
         'service_formset': service_formset,
         'portfolio_formset': portfolio_formset,
         'templates': templates,
-        'template_access': template_access,
-        'is_new': is_new,
-        'has_pro_plan': 'Pro' in user_plan_names,
+        'has_pro_plan':has_pro_plan
     }
 
     return render(request, 'core/card_builder.html', context)
@@ -520,95 +510,7 @@ def pricing_view(request):
         plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
 
     return render(request, 'core/pricing.html', context={'plans': plans, "current_period": period,})
-
-@login_required
-def purchase_view(request, plan_id):
-    try:
-        plan = Plan.objects.select_related("discount").get(id=plan_id)
-    except Plan.DoesNotExist:
-        messages.error(request, "پلن انتخاب شده یافت نشد")
-        return redirect('pricing')
-
-    context = {
-        'plan': plan,
-    }
-
-    return render(request, 'core/purchase.html', context)
-
-@login_required
-def process_payment(request, plan_id):
-    if request.method != 'POST':
-        return redirect('pricing')
-
-    try:
-        plan = Plan.objects.get(id=plan_id)
-    except Plan.DoesNotExist:
-        messages.error(request, "پلن انتخاب شده یافت نشد")
-        return redirect('pricing')
-
-    # Here you would integrate with payment gateway (Zarinpal as mentioned)
-    # For now, we'll simulate a successful payment
-    isvalid = True  # Hardcoded for now - replace with actual Zarinpal verification
-
-    if isvalid:
-        # Clear all existing user plans
-        user = request.user
-        user.plan.clear()  # Remove all existing plans
-
-        # Add the new plan based on purchased plan type
-        if plan.type == 'Basic':
-            user_plan, created = UserPlan.objects.get_or_create(name='Basic')
-            user.plan.add(user_plan)
-        elif plan.type == 'Pro':
-            user_plan, created = UserPlan.objects.get_or_create(name='Pro')
-            user.plan.add(user_plan)
-        # Free plan is default and doesn't need to be added explicitly
-
-        # Set expiration time based on purchased plan period
-        if plan.period == 'monthly':
-            user.plan_expires_at = timezone.now() + timedelta(days=30)
-        else:  # annual
-            user.plan_expires_at = timezone.now() + timedelta(days=365)
-
-        user.save()
-
-        # Store plan info in session for the processing page
-        request.session['purchased_plan'] = {
-            'id': plan.id,
-            'name': plan.name,
-            'type': plan.get_type_display(),
-            'period': plan.get_period_display(),
-            'expires_at': user.plan_expires_at.isoformat() if user.plan_expires_at else None
-        }
-
-        return redirect('payment_processing', plan_id=plan.id)
-    else:
-        messages.error(request, "پرداخت ناموفق بود. لطفاً دوباره تلاش کنید.")
-        return redirect('purchase', plan_id=plan_id)
-
-def payment_info_view(request):
-    """Payment information page - redirects to Telegram"""
-    return render(request, 'core/payment-info.html')
-
-@login_required
-def payment_processing(request, plan_id):
-    """Show payment processing result before success page"""
-    plan_info = request.session.get('purchased_plan')
-
-    if not plan_info:
-        return redirect('pricing')
-
-    # Clear the session data
-    if 'purchased_plan' in request.session:
-        del request.session['purchased_plan']
-
-    context = {
-        'plan_info': plan_info,
-        'user': request.user,
-    }
-
-    return render(request, 'core/payment-processing.html', context)
-
+3
 @login_required
 def payment_success_view(request):
     messages.success(request, "با تشکر از اعتماد شما")

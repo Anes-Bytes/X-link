@@ -76,8 +76,7 @@
     {% if templates %}
     <div class="template-grid">
         {% for template in templates %}
-            {% if template_access|dict_get:template.id %}
-                <!-- تمپلیت قابل انتخاب -->
+            {% if template.is_allowed %}
                 <div class="template-option">
                     <div class="template-option-image">
                         <img src="{{ template.image.url }}" alt="{{ template.name }}">
@@ -90,7 +89,6 @@
                     </label>
                 </div>
             {% else %}
-                <!-- تمپلیت قفل‌شده -->
                 <div class="template-option locked">
                     <div class="template-option-image">
                         <img src="{{ template.image.url }}" alt="{{ template.name }}">
@@ -105,11 +103,14 @@
                         font-weight: bold;
                         cursor: not-allowed;">
                         <input type="radio" disabled>
-                        {% if template.only_for_premium %}
-                        <span>فقط برای کاربران basic  premium 🔒</span>
-                        {% else %}
-                        <span>فقط برای کاربران premium 🔒</span>
-                        {% endif %}
+<span>
+    فقط برای کاربران
+    {% for plan in template.allowed_plans.all %}
+        {{ plan.get_value_display }}{% if not forloop.last %} و {% endif %}
+    {% endfor %}
+
+</span>
+
                     </label>
                 </div>
             {% endif %}
