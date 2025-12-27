@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.db.models import Prefetch, Count, Q
+from django.db.models import Prefetch, Count
 
 from cards.models import UserCard
 from .models import CustomUser, UserMessages, OTP

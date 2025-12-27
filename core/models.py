@@ -1,9 +1,9 @@
+from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
 from datetime import datetime, timedelta
 
-from Billing.models import *
-from site_management.models import *
+from Billing.models import UserPlan
 
 class UserManager(BaseUserManager):
     def create_user(self, phone, full_name=None, password=None):
@@ -96,6 +96,3 @@ class OTP(models.Model):
 
     def __str__(self):
         return f"{self.user.phone} - {self.code}"
-
-
-

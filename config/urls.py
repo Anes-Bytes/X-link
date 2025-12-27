@@ -4,6 +4,11 @@ from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.urls import path, include
 
+from django.contrib import admin
+
+admin.site.site_header = "پنل مدیریت X-Link"
+admin.site.site_title = "مدیریت X-Link"
+admin.site.index_title = "داشبورد مدیریت"
 
 urlpatterns = [
     path('admin/', admin.site.urls),

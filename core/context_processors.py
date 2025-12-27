@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from .models import SiteContext, Banners
+from site_management.models import SiteContext, Banners
 
 
 def site_context(request):
