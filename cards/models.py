@@ -59,7 +59,7 @@ class UserCard(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.user.username} - {self.name}"
+        return f"{self.user.phone} - {self.name}"
 
     def get_card_url(self):
         return f"https://x-link.ir/{self.username}"

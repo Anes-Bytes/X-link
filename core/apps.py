@@ -7,4 +7,4 @@ class CoreConfig(AppConfig):
 
 
     def ready(self):
-        from .signals import assign_pro_plan
+        from .signals import assign_free_plan

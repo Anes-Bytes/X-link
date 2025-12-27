@@ -75,7 +75,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.plan_expires_at:
             return False
 
-        now = datetime.now()
+        now = timezone.now()
 
         remaining = self.plan_expires_at - now
 

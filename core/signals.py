@@ -3,10 +3,11 @@ from django.dispatch import receiver
 from .models import CustomUser, UserPlan
 
 @receiver(post_save, sender=CustomUser)
-def assign_pro_plan(sender, instance, created, **kwargs):
+def assign_free_plan(sender, instance, created, **kwargs):
     if created:
         try:
-            pro_plan = UserPlan.objects.get(value=UserPlan.PlanChoices.Free)
-            instance.plan.add(pro_plan)
+            free_plan = UserPlan.objects.get(value=UserPlan.PlanChoices.Free)
+            instance.plan.add(free_plan)
         except UserPlan.DoesNotExist:
-            print("پلن Pro هنوز در دیتابیس ساخته نشده است.")
+            # Free plan doesn't exist yet, skip silently in tests
+            pass

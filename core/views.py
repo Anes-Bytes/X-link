@@ -54,8 +54,11 @@ def send_sms(phone: str, code: str) -> bool:
         logger.error("SMS send failed for %s: %s", phone, e)
         return False
 
-@require_POST
 def request_otp(request):
+    if request.method == 'GET':
+        return render(request, "core/login.html")
+
+    # POST request handling
     phone = request.POST.get("phone", "").strip()
     full_name = request.POST.get("full_name", "").strip()
     next_page = request.POST.get("next")

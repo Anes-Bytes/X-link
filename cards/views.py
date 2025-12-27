@@ -150,92 +150,80 @@ def view_card(request, username):
 @login_required
 def add_skill_ajax(request):
     """AJAX endpoint to add a new skill dynamically"""
+    data = json.loads(request.body)
+    skill_name = data.get('name', '').strip()
+
+    if not skill_name:
+        return JsonResponse({'error': 'Skill name is required'}, status=400)
+
     try:
-        data = json.loads(request.body)
-        skill_name = data.get('name', '').strip()
-
-        if not skill_name:
-            return JsonResponse({'error': 'Skill name is required'}, status=400)
-
         user_card = UserCard.objects.get(user=request.user)
-        skill = Skill.objects.create(user_card=user_card, name=skill_name)
-
-        return JsonResponse({
-            'success': True,
-            'skill': {
-                'id': skill.id,
-                'name': skill.name,
-            }
-        })
     except UserCard.DoesNotExist:
         return JsonResponse({'error': 'User card not found'}, status=404)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+
+    skill = Skill.objects.create(user_card=user_card, name=skill_name)
+
+    return JsonResponse({
+        'success': True,
+        'skill': {
+            'id': skill.id,
+            'name': skill.name,
+        }
+    })
 
 @require_http_methods(["DELETE"])
 @login_required
 def delete_skill_ajax(request, skill_id):
     """AJAX endpoint to delete a skill"""
-    try:
-        skill = get_object_or_404(Skill, id=skill_id, user_card__user=request.user)
-        skill.delete()
+    skill = get_object_or_404(Skill, id=skill_id, user_card__user=request.user)
+    skill.delete()
 
-        return JsonResponse({'success': True})
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'success': True})
 
 @require_http_methods(["POST"])
 @login_required
 def add_service_ajax(request):
     """AJAX endpoint to add a new service dynamically"""
+    data = json.loads(request.body)
+    title = data.get('title', '').strip()
+
+    if not title:
+        return JsonResponse({'error': 'Service title is required'}, status=400)
+
     try:
-        data = json.loads(request.body)
-        title = data.get('title', '').strip()
-
-        if not title:
-            return JsonResponse({'error': 'Service title is required'}, status=400)
-
         user_card = UserCard.objects.get(user=request.user)
-        service = Service.objects.create(
-            user_card=user_card,
-            title=title,
-            description=data.get('description', '')
-        )
-
-        return JsonResponse({
-            'success': True,
-            'service': {
-                'id': service.id,
-                'title': service.title,
-                'description': service.description,
-                'icon': service.icon,
-            }
-        })
     except UserCard.DoesNotExist:
         return JsonResponse({'error': 'User card not found'}, status=404)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+
+    service = Service.objects.create(
+        user_card=user_card,
+        title=title,
+        description=data.get('description', '')
+    )
+
+    return JsonResponse({
+        'success': True,
+        'service': {
+            'id': service.id,
+            'title': service.title,
+            'description': service.description,
+        }
+    })
 
 @require_http_methods(["DELETE"])
 @login_required
 def delete_service_ajax(request, service_id):
     """AJAX endpoint to delete a service"""
-    try:
-        service = get_object_or_404(Service, id=service_id, user_card__user=request.user)
-        service.delete()
+    service = get_object_or_404(Service, id=service_id, user_card__user=request.user)
+    service.delete()
 
-        return JsonResponse({'success': True})
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'success': True})
 
 @require_http_methods(["DELETE"])
 @login_required
 def delete_portfolio_ajax(request, portfolio_id):
     """AJAX endpoint to delete a portfolio item"""
-    try:
-        portfolio = get_object_or_404(Portfolio, id=portfolio_id, user_card__user=request.user)
-        portfolio.delete()
+    portfolio = get_object_or_404(Portfolio, id=portfolio_id, user_card__user=request.user)
+    portfolio.delete()
 
-        return JsonResponse({'success': True})
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'success': True})
