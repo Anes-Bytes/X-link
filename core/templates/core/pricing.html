@@ -94,12 +94,12 @@
                 {% if plan.type == "Free" %}
                 <a href="{% url 'card_builder' %}" class="cta-button cta-secondary">
                     <span>شروع رایگان</span>
-                    <i class="fas fa-arrow-left"></i>
+                    <i class="fas fa-arrow-right"></i>
                 </a>
                 {% else %}
                 <a href="{% url 'purchase' plan.id %}" class="cta-button cta-primary">
                     <span>انتخاب پلن</span>
-                    <i class="fas fa-arrow-left"></i>
+                    <i class="fas fa-arrow-right"></i>
                 </a>
                 {% endif %}
 

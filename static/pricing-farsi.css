@@ -401,20 +401,20 @@ body {
 .featured-badge {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     background: linear-gradient(135deg, var(--cyan-neon), var(--primary-blue));
     color: var(--bg-dark);
     padding: 0.5rem 1.5rem;
     font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 1px;
-    border-radius: 0 0 20px 0;
-    animation: slideInLeft 0.6s ease-out;
+    border-radius: 0 0 0 20px;
+    animation: slideInRight 0.6s ease-out;
 }
 
-@keyframes slideInLeft {
+@keyframes slideInRight {
     from {
-        transform: translateX(-100px);
+        transform: translateX(100px);
         opacity: 0;
     }
     to {
@@ -500,7 +500,7 @@ body {
 .period {
     color: var(--text-gray);
     font-size: 0.95rem;
-    margin-right: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .price-info {
@@ -562,7 +562,7 @@ body {
 }
 
 .features-list li:hover {
-    transform: translateX(-5px);
+    transform: translateX(5px);
     color: var(--text-white);
 }
 
@@ -637,7 +637,7 @@ body {
 }
 
 .cta-button:hover i {
-    transform: translateX(-5px);
+    transform: translateX(5px);
 }
 
 .cta-primary {
