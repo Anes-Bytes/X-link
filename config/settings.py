@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'site_management',
     'cards',
 
-    "debug_toolbar",
 
     # third party apps:
     'allauth',
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 
 ]
 
@@ -156,9 +154,3 @@ MESSAGE_TAGS = {
     'WARNING': 'warning',
     'ERROR': 'error',
 }
-
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
