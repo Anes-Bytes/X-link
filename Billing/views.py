@@ -43,7 +43,7 @@ def landing_view(request):
 
     return render(
         request,
-        "core/landing.html",
+        "Billing/landing.html",
         {
             "templates": templates,
             "customers": customers,
@@ -62,20 +62,20 @@ def pricing_view(request):
     else:
         plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
 
-    return render(request, 'core/pricing.html', context={'Billing': plans, "current_period": period,})
+    return render(request, 'Billing/pricing.html', context={'Billing': plans, "current_period": period,})
 
 @login_required
 def payment_success_view(request):
     messages.success(request, "با تشکر از اعتماد شما")
-    return render(request, 'core/payment-success.html')
+    return render(request, 'Billing/payment-success.html')
 
 @login_required
 def payment_failed_view(request):
     messages.error(request, "خطایی در هنگام پرداخت رخ داده است. مجددا تلاش کنید")
-    return render(request, 'core/payment-failed.html')
+    return render(request, 'Billing/payment-failed.html')
 
 def about_view(request):
     """
     About Us page for X-link
     """
-    return render(request, 'core/about.html')
+    return render(request, 'Billing/about.html')
