@@ -4,6 +4,7 @@ from django.urls import path, include
 
 from django.contrib import admin
 
+# Admin site configuration
 admin.site.site_header = "پنل مدیریت X-Link"
 admin.site.site_title = "مدیریت X-Link"
 admin.site.index_title = "داشبورد مدیریت"

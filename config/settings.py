@@ -1,84 +1,99 @@
+"""
+Django settings for X-Link project.
+
+This file contains all the configuration for the Django project,
+organized by functionality for better maintainability.
+"""
+
 import os
 from pathlib import Path
 from environs import Env
 
+# Environment setup
 env = Env()
 env.read_env()
 
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = BASE_DIR.parent
 
+# =============================================================================
+# SECURITY SETTINGS
+# =============================================================================
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ["*"]
+# Host configuration
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
+# Security headers (only in production)
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    X_FRAME_OPTIONS = 'DENY'
 
-# Application definition
+# =============================================================================
+# APPLICATION DEFINITION
+# =============================================================================
 
 INSTALLED_APPS = [
+    # Django core apps
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django.contrib.humanize',
 
-    # project apps:
+    # Project apps
     'core',
+    'cards',
     'Billing',
     'site_management',
-    'cards',
 
-
-    # third party apps:
+    # Third-party apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    "allauth.socialaccount.providers.github",
-
+    'allauth.socialaccount.providers.github',
 ]
 
-SITE_ID = 1
+# =============================================================================
+# MIDDLEWARE CONFIGURATION
+# =============================================================================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
+
+# =============================================================================
+# URL CONFIGURATION
+# =============================================================================
 
 ROOT_URLCONF = 'config.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'core.context_processors.site_context',
-            ],
-        },
-    },
-]
-
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
 
 DATABASES = {
     'default': {
@@ -87,15 +102,41 @@ DATABASES = {
     }
 }
 
+# =============================================================================
+# AUTHENTICATION & USER MANAGEMENT
+# =============================================================================
+
+AUTH_USER_MODEL = 'core.CustomUser'
+
+# Django Allauth configuration
+SITE_ID = 1
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # 5 minutes
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+# Social account settings
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_STORE_TOKENS = True
+
+# Authentication URLs
+LOGIN_URL = '/register'
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGOUT_REDIRECT_URL = '/'
 
 # Password validation
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'OPTIONS': {'user_attributes': ('username', 'email', 'full_name')},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 8},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -105,48 +146,93 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# =============================================================================
+# INTERNATIONALIZATION & LOCALIZATION
+# =============================================================================
 
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'fa'
+TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
+# Persian localization
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
-# Static files (CSS, JavaScript, Images)
+# =============================================================================
+# STATIC & MEDIA FILES
+# =============================================================================
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-AUTH_USER_MODEL = 'core.CustomUser'
+# File upload settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+# =============================================================================
+# TEMPLATES CONFIGURATION
+# =============================================================================
 
-# Django Allauth settings
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # 5 minutes
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'core.context_processors.site_context',
+            ],
+        },
+    },
+]
 
-# Social Account Settings
-SOCIALACCOUNT_LOGIN_ON_GET = True
-SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_STORE_TOKENS = True
+# =============================================================================
+# CACHE CONFIGURATION
+# =============================================================================
 
-LOGIN_URL = '/register'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
-# Django Messages Configuration
+# Cache time settings
+LANDING_PAGE_CACHE_TIMEOUT = 60 * 15  # 15 minutes
+TEMPLATES_CACHE_TIMEOUT = 60 * 60     # 1 hour
+CUSTOMERS_CACHE_TIMEOUT = 60 * 60     # 1 hour
+
+# =============================================================================
+# EMAIL CONFIGURATION
+# =============================================================================
+
+EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = env('EMAIL_HOST', default='')
+EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@x-link.ir')
+
+# =============================================================================
+# MESSAGES CONFIGURATION
+# =============================================================================
+
 MESSAGE_TAGS = {
     'DEBUG': 'debug',
     'INFO': 'info',
@@ -154,3 +240,77 @@ MESSAGE_TAGS = {
     'WARNING': 'warning',
     'ERROR': 'error',
 }
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django.log',
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'cards': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'core': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+# =============================================================================
+# THIRD-PARTY SERVICE CONFIGURATION
+# =============================================================================
+
+# SMS service configuration
+MELIPAYAMAK_USERNAME = env('MELIPAYAMAK_USERNAME')
+MELIPAYAMAK_APIKEY = env('MELIPAYAMAK_APIKEY')
+MELIPAYAMAK_NUMBER = env('MELIPAYAMAK_NUMBER')
+
+# Payment gateway (placeholder for future implementation)
+PAYMENT_MERCHANT_ID = env('PAYMENT_MERCHANT_ID', default='')
+
+# =============================================================================
+# DJANGO DEFAULTS
+# =============================================================================
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Admin site customization
+ADMIN_SITE_HEADER = "پنل مدیریت X-Link"
+ADMIN_SITE_TITLE = "مدیریت X-Link"
+ADMIN_INDEX_TITLE = "داشبورد مدیریت"

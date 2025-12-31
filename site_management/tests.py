@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from .models import SiteContext, Banners, Customers
+from .models import SiteContext, Banners, Customer
 
 
 class SiteContextModelTestCase(TestCase):
@@ -61,8 +61,8 @@ class BannersModelTestCase(TestCase):
         self.assertEqual(banner.image.name, "")  # Django ImageField returns empty string when no image
 
 
-class CustomersModelTestCase(TestCase):
-    """Test cases for Customers model"""
+class CustomerModelTestCase(TestCase):
+    """Test cases for Customer model"""
 
     def setUp(self):
         self.logo = SimpleUploadedFile("logo.png", b"logo_content", content_type="image/png")
@@ -77,7 +77,7 @@ class CustomersModelTestCase(TestCase):
 
     def test_create_customer(self):
         """Test creating a customer"""
-        customer = Customers.objects.create(
+        customer = Customer.objects.create(
             SiteContext=self.site_context,
             company_name="Tech Corp",
             company_url="https://techcorp.com",

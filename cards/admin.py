@@ -24,12 +24,80 @@ class PortfolioInline(admin.TabularInline):
 
 @admin.register(UserCard)
 class UserCardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'username', 'get_user_full_name', 'get_user_plans', 'color', 'is_published', 'get_views_count', 'created_at')
-    list_filter = ('color', 'is_published', 'created_at', 'user__plan')
-    search_fields = ('name', 'username', 'user__username', 'user__email', 'user__full_name')
-    readonly_fields = ('created_at', 'updated_at', 'views')
-    inlines = [SkillInline, ServiceInline, PortfolioInline]
+    """
+    Admin interface for UserCard model with comprehensive management.
+    """
+
+    list_display = (
+        'name',
+        'username',
+        'get_user_display',
+        'get_user_plans',
+        'color',
+        'is_published',
+        'get_views_display',
+        'get_card_url_link',
+        'created_at'
+    )
+    list_filter = (
+        'color',
+        'is_published',
+        'template',
+        'created_at',
+        'user__plan__value'
+    )
+    search_fields = (
+        'name',
+        'username',
+        'user__full_name',
+        'user__phone',
+        'user__email'
+    )
+    readonly_fields = (
+        'created_at',
+        'updated_at',
+        'views',
+        'get_card_url_link'
+    )
     raw_id_fields = ('user',)
+    inlines = [SkillInline, ServiceInline, PortfolioInline]
+
+    actions = ['publish_cards', 'unpublish_cards', 'reset_view_counts']
+
+    fieldsets = (
+        ('اطلاعات کاربر', {
+            'fields': ('user', 'name', 'username', 'profile_picture'),
+            'classes': ('wide',)
+        }),
+        ('محتوا', {
+            'fields': ('short_bio', 'description', 'phone_number', 'email', 'website'),
+            'classes': ('wide',)
+        }),
+        ('شبکه‌های اجتماعی', {
+            'fields': (
+                ('instagram_username', 'telegram_username'),
+                ('linkedin_username', 'github_username'),
+                ('youtube_username', 'twitter_username'),
+            ),
+            'classes': ('collapse',)
+        }),
+        ('طراحی و قالب', {
+            'fields': ('template', 'color'),
+            'classes': ('wide',)
+        }),
+        ('ویژگی‌های ویژه', {
+            'fields': ('blue_tick', 'stars_background', 'black_background'),
+            'classes': ('collapse',)
+        }),
+        ('آمار و وضعیت', {
+            'fields': ('views', 'show_views', 'is_published', 'get_card_url_link'),
+            'classes': ('wide',)
+        }),
+        ('تاریخچه', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related(
@@ -38,48 +106,65 @@ class UserCardAdmin(admin.ModelAdmin):
             'skills',
             'services',
             'portfolio_items',
-            Prefetch('user__plan', queryset=UserPlan.objects.all())
+            'user__plan'
         )
 
-    def get_user_full_name(self, obj):
-        return obj.user.full_name if obj.user.full_name else obj.user.phone
-    get_user_full_name.short_description = 'کاربر'
-    get_user_full_name.admin_order_field = 'user__full_name'
+    def get_user_display(self, obj):
+        """Display user information."""
+        user = obj.user
+        return f"{user.full_name or 'بدون نام'} ({user.phone})"
+    get_user_display.short_description = 'کاربر'
+    get_user_display.admin_order_field = 'user__full_name'
 
     def get_user_plans(self, obj):
-        plans = obj.user.plan.all()
+        """Display user's active plans."""
+        plans = obj.user.get_active_plans()
         if plans:
-            return ", ".join([plan.get_value_display() for plan in plans])
+            return ", ".join(plans)
         return "بدون پلن"
-    get_user_plans.short_description = 'پلن‌ها'
-    get_user_plans.admin_order_field = 'user__plan__value'
+    get_user_plans.short_description = 'پلن‌های فعال'
 
-    def get_views_count(self, obj):
+    def get_views_display(self, obj):
+        """Display formatted view count."""
         return f"{obj.views:,}"
-    get_views_count.short_description = 'بازدیدها'
+    get_views_display.short_description = 'بازدیدها'
+    get_views_display.admin_order_field = 'views'
 
-    fieldsets = (
-        ('User Info', {
-            'fields': ('user', 'username', "profile_picture",'template', "black_background", "blue_tick", "stars_background", 'views', 'show_views')
-        }),
-        ('Personal Information', {
-            'fields': ('name', 'short_bio', 'description', 'email', 'website')
-        }),
-        ('Social Media', {
-            'fields': (
-                'instagram_username',
-                'telegram_username',
-                'linkedin_username',
-                'github_username',
-                'youtube_username',
-                'twitter_username',
-            )
-        }),
-        ('Styling', {
-            'fields': ('color',)
-        }),
-        ('Status', {
-            'fields': ('is_published', 'created_at', 'updated_at')
-        }),
-    )
+    def get_card_url_link(self, obj):
+        """Display clickable link to the card."""
+        url = obj.get_card_url()
+        return f'<a href="{url}" target="_blank">{url}</a>'
+    get_card_url_link.short_description = 'لینک کارت'
+    get_card_url_link.allow_tags = True
+
+    # Actions
+    def publish_cards(self, request, queryset):
+        """Publish selected cards."""
+        updated = queryset.update(is_published=True)
+        self.message_user(
+            request,
+            f'{updated} کارت منتشر شدند.',
+            level='SUCCESS'
+        )
+    publish_cards.short_description = 'انتشار کارت‌های انتخاب شده'
+
+    def unpublish_cards(self, request, queryset):
+        """Unpublish selected cards."""
+        updated = queryset.update(is_published=False)
+        self.message_user(
+            request,
+            f'{updated} کارت از انتشار خارج شدند.',
+            level='SUCCESS'
+        )
+    unpublish_cards.short_description = 'لغو انتشار کارت‌های انتخاب شده'
+
+    def reset_view_counts(self, request, queryset):
+        """Reset view counts for selected cards."""
+        updated = queryset.update(views=0)
+        self.message_user(
+            request,
+            f'آمار بازدید {updated} کارت ریست شد.',
+            level='SUCCESS'
+        )
+    reset_view_counts.short_description = 'ریست آمار بازدید'
 

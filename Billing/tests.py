@@ -174,7 +174,7 @@ class BillingViewsTestCase(XLinkTestCase):
         )
 
         # Create test customers (from site_management)
-        from site_management.models import SiteContext, Customers
+        from site_management.models import SiteContext, Customer
         self.site_context = SiteContext.objects.create(
             site_name="Test Site",
             logo=self.template_image,
@@ -182,7 +182,7 @@ class BillingViewsTestCase(XLinkTestCase):
             hero_section_text_part2="Hero Text 2",
             hero_section_text_description="Description"
         )
-        self.customer = Customers.objects.create(
+        self.customer = Customer.objects.create(
             SiteContext=self.site_context,
             company_name="Test Company",
             company_url="https://test.com",
@@ -194,7 +194,7 @@ class BillingViewsTestCase(XLinkTestCase):
         response = self.client.get(reverse('home'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'core/landing.html')
+        self.assertTemplateUsed(response, 'Billing/landing.html')
         self.assertIn('templates', response.context)
         self.assertIn('customers', response.context)
         self.assertIn('Billing', response.context)
@@ -302,4 +302,4 @@ class BillingViewsTestCase(XLinkTestCase):
         response = self.client.get(reverse('about'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'core/about.html')
+        self.assertTemplateUsed(response, 'Billing/about.html')

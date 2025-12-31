@@ -1,7 +1,10 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
+
 from cards.models import UserCard, Skill, Service, Portfolio
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
+from .models import CustomUser
 
 class UserCardForm(forms.ModelForm):
     username = forms.CharField(
@@ -208,3 +211,14 @@ PortfolioInlineFormSet = forms.inlineformset_factory(
     extra=0,
     can_delete=True,
 )
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = "__all__"
+
+    def clean_username(self):
+        return self.cleaned_data.get("username") or ""
+
+    def clean_email(self):
+        return self.cleaned_data.get("email") or ""

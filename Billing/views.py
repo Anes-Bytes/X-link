@@ -2,18 +2,18 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.shortcuts import render
 from django.contrib import messages
-from site_management.models import Customers
+from site_management.models import Customer
 from .models import Plan, Template
 
 
 def landing_view(request):
-    period = request.GET.get("period", Plan.PeriodChoices.MONTHLY)
+    period = request.GET.get("period", Plan.Period.MONTHLY)
 
     if period not in (
-        Plan.PeriodChoices.MONTHLY,
-        Plan.PeriodChoices.ANNUAL,
+        Plan.Period.MONTHLY,
+        Plan.Period.ANNUAL,
     ):
-        period = Plan.PeriodChoices.MONTHLY
+        period = Plan.Period.MONTHLY
 
     plans_cache_key = f"landing_plans_{period}"
     plans = cache.get(plans_cache_key)
@@ -22,7 +22,7 @@ def landing_view(request):
         plans = list(
             Plan.objects
             .select_related("discount")
-            .prefetch_related("Features")
+            .prefetch_related("features")
             .filter(period=period)
         )
         cache.set(plans_cache_key, plans, 60 * 15)
@@ -38,7 +38,7 @@ def landing_view(request):
     customers = cache.get("landing_customers")
 
     if customers is None:
-        customers = list(Customers.objects.all())
+        customers = list(Customer.objects.filter(is_active=True))
         cache.set("landing_customers", customers, 60 * 60)
 
     return render(
@@ -49,6 +49,7 @@ def landing_view(request):
             "customers": customers,
             "Billing": plans,
             "current_period": period,
+            "plans": plans,
         }
     )
 
@@ -56,11 +57,11 @@ def landing_view(request):
 def pricing_view(request):
     period = request.GET.get("period")
     if period == "monthly":
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
+        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=Plan.Period.MONTHLY))
     elif period == "annual":
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.ANNUAL))
+        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=Plan.Period.ANNUAL))
     else:
-        plans = list(Plan.objects.select_related("discount").prefetch_related("Features").filter(period=Plan.PeriodChoices.MONTHLY))
+        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=Plan.Period.MONTHLY))
 
     return render(request, 'Billing/pricing.html', context={'Billing': plans, "current_period": period,})
 

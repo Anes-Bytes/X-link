@@ -1,0 +1,1065 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block page_title %}کارت دیجیتالی - X-Link{% endblock %}
+
+{% block page_content %}
+
+<br>
+<br>
+<br>
+
+<div class="card-builder-container">
+    <div class="container">
+        <div class="builder-header">
+            <h1>ایجاد کارت دیجیتالی</h1>
+            <p>اطلاعات خود را وارد کنید و کارت دیجیتالی خود را سفارش دهید</p>
+        </div>
+
+        <form method="post" class="card-form" id="cardForm" enctype="multipart/form-data">
+            {% csrf_token %}
+<div id="empty-skill-form" style="display:none;">
+    <div class="skill-form-group" data-form-index="__prefix__">
+        <input type="hidden" name="skill-__prefix__-id" id="id_skill-__prefix__-id">
+        <input type="hidden" name="skill-__prefix__-user_card" id="id_skill-__prefix__-user_card">
+
+        <div class="skill-input-wrapper">
+            <input type="text" name="skill-__prefix__-name" class="skill-input" placeholder="نام مهارت" maxlength="255" id="id_skill-__prefix__-name">
+
+            <div class="skill-checkbox">
+                <input type="checkbox" name="skill-__prefix__-DELETE" id="id_skill-__prefix__-DELETE">
+                <label for="id_skill-__prefix__-DELETE">حذف</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="empty-service-form" style="display:none;">
+    <div class="service-form-group" data-form-index="__prefix__">
+        <input type="hidden" name="service-__prefix__-id" id="id_service-__prefix__-id">
+        <input type="hidden" name="service-__prefix__-user_card" id="id_service-__prefix__-user_card">
+
+        <div class="service-input-wrapper">
+            <input type="text" name="service-__prefix__-title" class="service-input" placeholder="عنوان خدمت" maxlength="255" id="id_service-__prefix__-title">
+            <textarea name="service-__prefix__-description" class="service-input" placeholder="توضیح خدمت" rows="3" maxlength="500" id="id_service-__prefix__-description"></textarea>
+
+            <div class="service-checkbox">
+                <input type="checkbox" name="service-__prefix__-DELETE" id="id_service-__prefix__-DELETE">
+                <label for="id_service-__prefix__-DELETE">حذف</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="empty-portfolio-form" style="display:none;">
+    <div class="portfolio-form-group" data-form-index="__prefix__">
+        <input type="hidden" name="portfolio-__prefix__-id" id="id_portfolio-__prefix__-id">
+        <input type="hidden" name="portfolio-__prefix__-user_card" id="id_portfolio-__prefix__-user_card">
+
+        <div class="portfolio-input-wrapper">
+            <input type="text" name="portfolio-__prefix__-title" class="portfolio-input" placeholder="عنوان پروژه" maxlength="255" id="id_portfolio-__prefix__-title">
+            <input type="file" name="portfolio-__prefix__-image" class="portfolio-input" accept="image/*" id="id_portfolio-__prefix__-image">
+            <input type="url" name="portfolio-__prefix__-url" class="portfolio-input" placeholder="https://example.com" id="id_portfolio-__prefix__-url">
+            <textarea name="portfolio-__prefix__-description" class="portfolio-input" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-__prefix__-description"></textarea>
+
+            <div class="portfolio-checkbox">
+                <input type="checkbox" name="portfolio-__prefix__-DELETE" id="id_portfolio-__prefix__-DELETE">
+                <label for="id_portfolio-__prefix__-DELETE">حذف</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Template Selection Section -->
+<div class="form-section">
+    <h2>مرحله 1: انتخاب قالب</h2>
+
+    {% if templates %}
+    <div class="template-grid">
+        {% for template in templates %}
+            {% if template.is_allowed %}
+                <div class="template-option">
+                    <div class="template-option-image">
+                        <img src="{{ template.image.url }}" alt="{{ template.name }}">
+                    </div>
+                    <h4>{{ template.name }}</h4>
+                    <label class="template-radio">
+                        <input type="radio" name="template" value="{{ template.id }}"
+                               {% if form.instance.template.id == template.id %}checked{% endif %}>
+                        <span>انتخاب</span>
+                    </label>
+                </div>
+            {% else %}
+                <div class="template-option locked">
+                    <div class="template-option-image">
+                        <img src="{{ template.image.url }}" alt="{{ template.name }}">
+                    </div>
+                    <h4>{{ template.name }}</h4>
+                    <label class="template-radio" style="
+                        background: #007BFF;
+                        color: white;
+                        padding: 6px 12px;
+                        border-radius: 6px;
+                        display: inline-block;
+                        font-weight: bold;
+                        cursor: not-allowed;">
+                        <input type="radio" disabled>
+<span>
+    فقط برای کاربران
+    {% for plan in template.allowed_plans.all %}
+        {{ plan.get_value_display }}{% if not forloop.last %} و {% endif %}
+    {% endfor %}
+
+</span>
+
+                    </label>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+            <!-- Color Theme Selection -->
+            <div class="form-section">
+                <h2>مرحله 2: انتخاب رنگ</h2>
+                <div class="form-group">
+                    <label for="{{ form.color.id_for_label }}">رنگ قالب</label>
+                    {{ form.color }}
+                    {% if form.color.errors %}
+                    <div class="error-message">{{ form.color.errors }}</div>
+                    {% endif %}
+                </div>
+                {% if has_pro_plan %}
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                    <input
+                        type="checkbox"
+                        id="stars_bg"
+                        name="stars_bg"
+                        {% if form.instance.stars_background %}checked{% endif %}
+                    >
+                    <label for="stars_bg">بک‌گراند ستاره‌ای</label>
+                </div>
+
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                    <input
+                        type="checkbox"
+                        id="black_bg"
+                        name="black_bg"
+                        {% if form.instance.black_background %}checked{% endif %}
+                    >
+                    <label for="black_bg">رنگ مشکی</label>
+                </div>
+
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+                    <input
+                        type="checkbox"
+                        id="blue_check"
+                        name="blue_tick"
+                        {% if form.instance.blue_tick %}checked{% endif %}
+                    >
+                    <label for="blue_check" style="cursor: pointer;">تیک آبی</label>
+
+                </div>
+                {% else %}
+                <div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input
+            type="checkbox"
+            id="stars_bg"
+            name="stars_bg"
+            disabled
+        >
+        <label for="stars_bg">بک‌گراند ستاره‌ای</label>
+    </div>
+    <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+</div>
+
+<div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input
+            type="checkbox"
+            id="black_bg"
+            name="black_bg"
+            disabled
+        >
+        <label for="black_bg">رنگ مشکی</label>
+    </div>
+    <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+</div>
+
+<div class="extra-color-option" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; opacity: 0.6;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <input
+            type="checkbox"
+            id="blue_check"
+            name="blue_tick"
+            disabled
+        >
+        <label for="blue_check">تیک آبی</label>
+    </div>
+    <span style="color: #d9534f; font-size: 12px;">فقط برای کاربران پرمیوم</span>
+
+</div>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h2>مرحله 3: اطلاعات شخصی</h2>
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">نام کاربری *</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                    <div class="error-message">{{ form.username.errors }}</div>
+                    {% endif %}
+                    <small class="help-text">نام کاربری برای لینک کارت (مثال: example.com/username)</small>
+                </div>
+    <div class="form-group">
+        <label for="{{ form.phone_number.id_for_label }}">شماره تماس</label>
+        {{ form.phone_number }}
+        {% if form.phone_number.errors %}
+        <div class="error-message">{{ form.phone_number.errors }}</div>
+        {% endif %}
+        <small class="help-text">مثال: +98 912 345 6789</small>
+    </div>
+<!-- آپلود عکس پروفایل -->
+<div class="form-group">
+    <label for="{{ form.profile_picture.id_for_label }}">آپلود عکس پروفایل *</label>
+    {% if form.instance.profile_picture %}
+    <div class="current-image-preview">
+        <img src="{{ form.instance.profile_picture.url }}" alt="عکس پروفایل فعلی" style="max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--cyan-neon);">
+        <small style="color: #666; display: block;">عکس پروفایل فعلی</small>
+    </div>
+    {% endif %}
+    {{ form.profile_picture }}
+    {% if form.profile_picture.errors %}
+    <div class="error-message">{{ form.profile_picture.errors }}</div>
+    {% endif %}
+    <small class="help-text">عکس پروفایل شما باید JPG یا PNG باشد</small>
+</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">نام کامل *</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                        <div class="error-message">{{ form.name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">ایمیل</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.short_bio.id_for_label }}">توضیح مختصر</label>
+                        {{ form.short_bio }}
+                        {% if form.short_bio.errors %}
+                        <div class="error-message">{{ form.short_bio.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.website.id_for_label }}">وبسایت</label>
+                        {{ form.website }}
+                        {% if form.website.errors %}
+                        <div class="error-message">{{ form.website.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">توضیحات تفصیلی</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <div class="error-message">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="form-section">
+                <h2>مرحله 4: شبکه های اجتماعی</h2>
+
+                <div class="social-inputs">
+                    <div class="form-group">
+                        <label for="{{ form.instagram_username.id_for_label }}">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </label>
+                        {{ form.instagram_username }}
+                        {% if form.instagram_username.errors %}
+                        <div class="error-message">{{ form.instagram_username.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.telegram_username.id_for_label }}">
+                            <i class="fab fa-telegram-plane"></i> Telegram
+                        </label>
+                        {{ form.telegram_username }}
+                        {% if form.telegram_username.errors %}
+                        <div class="error-message">{{ form.telegram_username.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.linkedin_username.id_for_label }}">
+                            <i class="fab fa-linkedin-in"></i> LinkedIn
+                        </label>
+                        {{ form.linkedin_username }}
+                        {% if form.linkedin_username.errors %}
+                        <div class="error-message">{{ form.linkedin_username.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.youtube_username.id_for_label }}">
+                            <i class="fab fa-youtube"></i> YouTube
+                        </label>
+                        {{ form.youtube_username }}
+                        {% if form.youtube_username.errors %}
+                        <div class="error-message">{{ form.youtube_username.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.twitter_username.id_for_label }}">
+                            <i class="fab fa-x-twitter"></i> X/Twitter
+                        </label>
+                        {{ form.twitter_username }}
+                        {% if form.twitter_username.errors %}
+                        <div class="error-message">{{ form.twitter_username.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+<div class="form-section">
+    <h2>مرحله 5: مهارت‌ها</h2>
+
+    <!-- container مهارت‌ها -->
+    <div id="skillsContainer" class="skills-container">
+{% for skill_form in skill_formset %}
+        <div class="skill-form-group" data-form-index="{{ forloop.counter0 }}">
+            {{ skill_form.id }}  <!-- hidden field PK فرم‌های موجود -->
+
+            <div class="skill-input-wrapper">
+                {{ skill_form.name }} <!-- نام مهارت -->
+
+                {% if skill_form.DELETE %}
+                <div class="skill-checkbox">
+                    {{ skill_form.DELETE }} <!-- checkbox حذف -->
+                    <label for="{{ skill_form.DELETE.id_for_label }}">حذف</label>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if skill_form.errors %}
+            <div class="error-message">{{ skill_form.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="add-skill-btn" id="addSkillBtn">
+        <i class="fas fa-plus"></i> افزودن مهارت
+    </button>
+
+    <!-- hidden formset management -->
+    <div style="display: none;">
+        {{ skill_formset.management_form }}
+    </div>
+</div>
+
+
+            <!-- Services Section -->
+<div class="form-section">
+    <h2>مرحله 6: خدمات</h2>
+
+    <!-- container خدمات -->
+    <div id="servicesContainer" class="services-container">
+{% for service_form in service_formset %}
+        <div class="service-form-group" data-form-index="{{ forloop.counter0 }}">
+            {{ service_form.id }}  <!-- hidden field PK فرم‌های موجود -->
+
+            <div class="service-input-wrapper">
+                <input type="text" name="service-{{ forloop.counter0 }}-title" class="service-input" placeholder="عنوان خدمت" maxlength="255" value="{{ service_form.title.value }}" id="id_service-{{ forloop.counter0 }}-title">
+                <textarea name="service-{{ forloop.counter0 }}-description" class="service-input" placeholder="توضیح خدمت" rows="3" maxlength="500" id="id_service-{{ forloop.counter0 }}-description">{{ service_form.description.value }}</textarea>
+
+                {% if service_form.DELETE %}
+                <div class="service-checkbox">
+                    {{ service_form.DELETE }} <!-- checkbox حذف -->
+                    <label for="{{ service_form.DELETE.id_for_label }}">حذف</label>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if service_form.errors %}
+            <div class="error-message">{{ service_form.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="add-service-btn" id="addServiceBtn">
+        <i class="fas fa-plus"></i> افزودن خدمت
+    </button>
+
+    <!-- hidden formset management -->
+    <div style="display: none;">
+        {{ service_formset.management_form }}
+    </div>
+</div>
+
+            <!-- Portfolio Section -->
+            <div class="form-section">
+                <h2>مرحله 7: نمونه کارها</h2>
+
+                <!-- container نمونه کارها -->
+                <div id="portfolioContainer" class="portfolio-container">
+{% for portfolio_form in portfolio_formset %}
+        <div class="portfolio-form-group" data-form-index="{{ forloop.counter0 }}">
+            {{ portfolio_form.id }}  <!-- hidden field PK فرم‌های موجود -->
+
+            <div class="portfolio-input-wrapper">
+                <input type="text" name="portfolio-{{ forloop.counter0 }}-title" class="portfolio-input" placeholder="عنوان پروژه" maxlength="255" value="{{ portfolio_form.title.value }}" id="id_portfolio-{{ forloop.counter0 }}-title">
+                {% if portfolio_form.instance.image %}
+                <div class="current-image-preview">
+                    <img src="{{ portfolio_form.instance.image.url }}" alt="تصویر فعلی" style="max-width: 100px; max-height: 100px; border-radius: 8px; margin-bottom: 8px;">
+                    <small style="color: #666; display: block;">تصویر فعلی</small>
+                </div>
+                {% endif %}
+                <input type="file" name="portfolio-{{ forloop.counter0 }}-image" class="portfolio-input" accept="image/*" id="id_portfolio-{{ forloop.counter0 }}-image">
+                <input type="url" name="portfolio-{{ forloop.counter0 }}-url" class="portfolio-input" placeholder="https://example.com" value="{{ portfolio_form.url.value }}" id="id_portfolio-{{ forloop.counter0 }}-url">
+                <textarea name="portfolio-{{ forloop.counter0 }}-description" class="portfolio-input" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-{{ forloop.counter0 }}-description">{{ portfolio_form.description.value }}</textarea>
+
+                {% if portfolio_form.DELETE %}
+                <div class="portfolio-checkbox">
+                    {{ portfolio_form.DELETE }} <!-- checkbox حذف -->
+                    <label for="{{ portfolio_form.DELETE.id_for_label }}">حذف</label>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if portfolio_form.errors %}
+            <div class="error-message">{{ portfolio_form.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="add-portfolio-btn" id="addPortfolioBtn">
+        <i class="fas fa-plus"></i> افزودن نمونه کار
+    </button>
+
+    <!-- hidden formset management -->
+    <div style="display: none;">
+        {{ portfolio_formset.management_form }}
+    </div>
+</div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary submit-btn">
+                    <i class="fas fa-check"></i> ایجاد کارت
+                </button>
+                <a href="{% url 'home' %}" class="btn-secondary">
+                    <i class="fas fa-times"></i> لغو
+                </a>
+            </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to add a new form to any formset
+    function addForm(containerId, emptyFormId, totalFormsName) {
+        const container = document.getElementById(containerId);
+        const template = document.getElementById(emptyFormId);
+        const totalFormsInput = document.querySelector(`[name="${totalFormsName}"]`);
+
+        if (!container || !template || !totalFormsInput) {
+            console.error(`Missing elements for ${containerId}: container=${!!container}, template=${!!template}, input=${!!totalFormsInput}`);
+            return;
+        }
+
+        const formIndex = parseInt(totalFormsInput.value, 10);
+        const newFormHtml = template.innerHTML.replace(/__prefix__/g, formIndex);
+        container.insertAdjacentHTML('beforeend', newFormHtml);
+        totalFormsInput.value = formIndex + 1;
+    }
+
+    // Add event listeners for formset add buttons
+    const addSkillBtn = document.getElementById('addSkillBtn');
+    const addServiceBtn = document.getElementById('addServiceBtn');
+    const addPortfolioBtn = document.getElementById('addPortfolioBtn');
+
+    if (addSkillBtn) {
+        addSkillBtn.addEventListener('click', () => addForm('skillsContainer', 'empty-skill-form', 'skill-TOTAL_FORMS'));
+    }
+
+    if (addServiceBtn) {
+        addServiceBtn.addEventListener('click', () => addForm('servicesContainer', 'empty-service-form', 'service-TOTAL_FORMS'));
+    }
+
+    if (addPortfolioBtn) {
+        addPortfolioBtn.addEventListener('click', () => addForm('portfolioContainer', 'empty-portfolio-form', 'portfolio-TOTAL_FORMS'));
+    }
+
+    // Handle delete buttons for all formsets
+    document.addEventListener('click', async (e) => {
+        // Delete skill
+        if (e.target.classList.contains('delete-skill-btn')) {
+            const id = e.target.dataset.skillId;
+            const row = e.target.closest('.skill-form-group');
+            try {
+                const res = await fetch(`/ajax/skills/${id}/delete/`, {
+                    method: 'DELETE',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                });
+                const data = await res.json();
+                if (data.success) row.remove();
+                else alert(data.error || 'خطا در حذف مهارت');
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            }
+        }
+
+        // Delete service
+        if (e.target.classList.contains('delete-service-btn')) {
+            const id = e.target.dataset.serviceId;
+            const row = e.target.closest('.service-form-group');
+            try {
+                const res = await fetch(`/ajax/services/${id}/delete/`, {
+                    method: 'DELETE',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                });
+                const data = await res.json();
+                if (data.success) row.remove();
+                else alert(data.error || 'خطا در حذف خدمت');
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            }
+        }
+
+        // Delete portfolio
+        if (e.target.classList.contains('delete-portfolio-btn')) {
+            const id = e.target.dataset.portfolioId;
+            const row = e.target.closest('.portfolio-form-group');
+            try {
+                const res = await fetch(`/ajax/portfolio/${id}/delete/`, {
+                    method: 'DELETE',
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                });
+                const data = await res.json();
+                if (data.success) row.remove();
+                else alert(data.error || 'خطا در حذف نمونه کار');
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            }
+        }
+    });
+});
+</script>
+
+
+        </form>
+    </div>
+</div>
+
+<!-- Card Builder Styles -->
+<style>
+.card-builder-container {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(10, 15, 31, 0.95) 0%, rgba(20, 30, 60, 0.95) 100%);
+}
+
+.builder-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.builder-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #3A86FF, #00F6FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.builder-header p {
+    color: rgba(245, 248, 255, 0.7);
+    font-size: 1.1rem;
+}
+
+.card-form {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.form-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.form-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    color: var(--cyan-neon);
+    display: flex;
+    align-items: center;
+}
+
+.form-section h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(135deg, #3A86FF, #00F6FF);
+    border-radius: 2px;
+    margin-right: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--cyan-neon);
+    box-shadow: 0 0 15px rgba(0, 246, 255, 0.2);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.help-text {
+    display: block;
+    margin-top: 5px;
+    color: rgba(245, 248, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Template Grid */
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.template-option {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(58, 134, 255, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.template-option:hover {
+    background: rgba(58, 134, 255, 0.1);
+    border-color: var(--cyan-neon);
+}
+
+.template-option input[type="radio"]:checked ~ span {
+    color: var(--cyan-neon);
+}
+
+.template-option-image {
+    width: 100%;
+    height: 120px;
+    background: rgba(58, 134, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.template-option img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.template-placeholder {
+    font-size: 40px;
+    color: rgba(58, 134, 255, 0.3);
+}
+
+.template-option h4 {
+    margin-bottom: 10px;
+    color: var(--text-white);
+}
+
+.template-radio input {
+    display: none;
+}
+
+.template-radio span {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #fff;
+    border: 2px solid #4B47FF;
+    color: #4B47FF;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 14px;
+    box-shadow: 0 3px 10px rgba(75, 71, 255, 0.15);
+}
+
+.template-radio:hover span {
+    background: #4B47FF;
+    color: white;
+    box-shadow: 0 5px 15px rgba(75, 71, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.template-radio input:checked + span {
+    background: #4B47FF;
+    color: #fff;
+    border-color: #4B47FF;
+    box-shadow: 0 5px 15px rgba(75, 71, 255, 0.45);
+}
+
+
+/* Social Inputs */
+.social-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.social-inputs .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Skills Section */
+.skills-container {
+    margin-bottom: 20px;
+}
+
+.skill-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.skill-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex: 1;
+}
+
+.skill-input-wrapper .skill-input {
+    flex: 1;
+}
+
+.skill-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+}
+
+.skill-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+/* Services Section */
+.services-container {
+    margin-bottom: 20px;
+}
+
+.service-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.service-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.service-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+.service-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+/* Portfolio Section */
+.portfolio-container {
+    margin-bottom: 20px;
+}
+
+.portfolio-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.portfolio-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.portfolio-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+.portfolio-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.service-checkbox,
+.portfolio-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+.service-checkbox input[type="checkbox"],
+.portfolio-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.add-skill-btn,
+.add-service-btn,
+.add-portfolio-btn {
+    background: rgba(58, 134, 255, 0.2);
+    border: 2px solid var(--cyan-neon);
+    color: var(--cyan-neon);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-skill-btn:hover,
+.add-service-btn:hover,
+.add-portfolio-btn:hover {
+    background: var(--cyan-neon);
+    color: var(--bg-dark);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3A86FF, #00F6FF);
+    color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 246, 255, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--text-gray);
+    color: var(--text-gray);
+}
+
+.btn-secondary:hover {
+    border-color: var(--cyan-neon);
+    color: var(--cyan-neon);
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .builder-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .social-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* ظاهر خود Select */
+.color-select {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-white) !important;
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+}
+
+/* منوی باز شونده */
+.color-select option {
+    background: #11192f !important;
+    color: var(--text-white) !important;
+}
+
+/* گزینه hover شده */
+.color-select option:hover {
+    background: rgba(58, 134, 255, 0.3) !important;
+    color: #fff !important;
+}
+
+/* Dark mode for skill inputs */
+.skill-input,
+.service-input,
+.portfolio-input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(58, 134, 255, 0.3);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: inherit;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+/* Special styling for file inputs */
+.portfolio-input[type="file"] {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(58, 134, 255, 0.3);
+}
+
+.portfolio-input[type="file"]:hover {
+    border-color: var(--cyan-neon);
+    background: rgba(0, 246, 255, 0.05);
+}
+
+.skill-input:focus,
+.service-input:focus,
+.portfolio-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--cyan-neon);
+    box-shadow: 0 0 15px rgba(0, 246, 255, 0.2);
+}
+
+.service-input:last-child,
+.portfolio-input:last-child {
+    margin-bottom: 0;
+}
+.template-option.locked {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.lock-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+}
+
+</style>
+
+{% endblock %}

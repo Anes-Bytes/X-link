@@ -133,7 +133,7 @@
             <div class="pricing-header-landing">
                 <h2 class="section-title">پلن مناسب خود را انتخاب کنید</h2>
                 <p class="pricing-subtitle">با پلن‌های اشتراک انعطاف‌پذیر ما حضور آنلاین خود را گسترش دهید. رایگان شروع کنید و هر زمان ارتقا دهید.</p>
-                
+
                 <!-- Period Toggle -->
                 <div class="period-toggle">
                     <a href="?period=monthly#pricing-landing" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">
@@ -150,10 +150,10 @@
             <div class="pricing-cards-landing" id="monthly-pricing">
                 {% for plan in plans %}
                 <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}" data-plan="{{ plan.type }}">
-                    {% if plan.type == "Pro" %}
+                    {% if plan.plan_type == "Pro" %}
                     <div class="featured-badge">پرمیوم</div>
-                    <span class="plan-badge">توصیه شده</span>
-                    {% elif plan.type == "Basic" %}
+                    <span class="plan-badge">Premium</span>
+                    {% elif plan.plan_type == "Basic" %}
                     <div class="featured-badge">پرمخاطب</div>
                     {% else %}
                     <div class="featured-badge">رایگان</div>
@@ -161,28 +161,28 @@
 
                     <div class="card-header-landing">
                         <h3 class="plan-name-landing">
-                            {% if plan.type == "Pro" %}
+                            {% if plan.plan_type == "Pro" %}
                                 حرفه‌ای
-                            {% elif plan.type == "Basic" %}
+                            {% elif plan.plan_type == "Basic" %}
                                 پایه
                             {% else %}
                                 رایگان
                             {% endif %}
                         </h3>
-                        <p class="plan-description-landing">
-                            {% if plan.type == "Pro" %}
-                                برای حرفه‌ای‌های در حال رشد
-                            {% elif plan.type == "Basic" %}
-                                برای کسب‌وکارهای کوچک
-                            {% else %}
-                                برای شروع کنندگان
-                            {% endif %}
-                        </p>
+<p class="plan-description-landing">
+    {% if plan.plan_type == "Pro" %}
+        مناسب حرفه‌ای‌هایی که در حال رشد هستند
+    {% elif plan.plan_type == "Basic" %}
+        مناسب کسب‌وکارهای کوچک و نوپا
+    {% else %}
+        مناسب شروع و آشنایی با سرویس
+    {% endif %}
+</p>
                     </div>
 
                     <div class="price-section-landing">
                         <div class="price-wrapper-landing">
-                            <span class="price-value">{{ plan.get_final_price|floatformat|intcomma }}</span>
+                            <span class="price-value">{{ plan.get_discounted_price|floatformat|intcomma }}</span>
                             <span class="price-currency">تومان</span>
                         {% if plan.period == "monthly" %}
                         <span class="period">/ماه</span>
@@ -207,7 +207,7 @@
                     </ul>
 
                     <div class="card-actions-landing">
-                        {% if plan.type == "Pro" or plan.type == "Basic" %}
+                        {% if plan.plan_type == "Pro" or plan.plan_type == "Basic" %}
                         <a href="{% url 'pricing' %}" class="cta-button-landing cta-primary-landing">
                             <span>انتخاب</span>
                             <i class="fas fa-arrow-left"></i>
@@ -225,7 +225,7 @@
 
             <!-- Comparison Table -->
             <div class="comparison-section-landing">
-                <h3>مقایسه تفصیلی ویژگی‌ها</h3>
+                <h3>مقایسه ویژگی‌ها</h3>
                 <div class="comparison-table-landing">
                     <table>
                         <thead>
@@ -239,33 +239,59 @@
                         <tbody>
                             <tr>
                                 <td>قالب ها</td>
-                                <td><span class="badge-check">پیشفرض ایکس لینک</span></td>
-                                <td><span class="badge-check">همه قالب ها</span></td>
-                                <td><span class="badge-check">همه قالب ها+مشکی</span></td>
+                                {% for plan in Billing %}
+                                <td>
+                                    {% if plan.plan_type == 'Free' %}
+                                        <span class="badge-check">پیشفرض ایکس لینک</span>
+                                    {% elif plan.plan_type == 'Basic' %}
+                                        <span class="badge-check">همه قالب ها</span>
+                                    {% elif plan.plan_type == 'Pro' %}
+                                        <span class="badge-check">همه قالب ها+مشکی</span>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
                             </tr>
                             <tr>
                                 <td>بخش فروشگاه</td>
-                                <td><span class="badge-cross">ندارد</span></td>
-                                <td><span class="badge-cross">ندارد</span></td>
-                                <td><span class="badge-check">دارد</span></td>
+                                {% for plan in Billing %}
+                                <td>
+                                    {% if plan.plan_type == 'Pro' %}
+                                        <span class="badge-check">دارد</span>
+                                    {% else %}
+                                        <span class="badge-cross">ندارد</span>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
                             </tr>
                             <tr>
                                 <td>آپتایم</td>
+                                {% for plan in Billing %}
                                 <td><span class="badge-check">%99.9</span></td>
-                                <td><span class="badge-check">%99.9</span></td>
-                                <td><span class="badge-check">%99.9</span></td>
+                                {% endfor %}
                             </tr>
                             <tr>
                                 <td>تیک آبی</td>
-                                <td><span class="badge-check">ندارد</span></td>
-                                <td><span class="badge-cross">ندارد</span></td>
-                                <td><span class="badge-check">دارد</span></td>
+                                {% for plan in Billing %}
+                                <td>
+                                    {% if plan.plan_type == 'Pro' %}
+                                        <span class="badge-check">دارد</span>
+                                    {% else %}
+                                        <span class="badge-cross">ندارد</span>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
                             </tr>
                             <tr>
                                 <td>بک گراند ستاره ای</td>
-                                <td><span class="badge-cross">ندارد</span></td>
-                                <td><span class="badge-cross">ندارد</span></td>
-                                <td><span class="badge-check">دارد</span></td>
+                                {% for plan in Billing %}
+                                <td>
+                                    {% if plan.plan_type == 'Pro' %}
+                                        <span class="badge-check">دارد</span>
+                                    {% else %}
+                                        <span class="badge-cross">ندارد</span>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
                             </tr>
                         </tbody>
                     </table>
