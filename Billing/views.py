@@ -49,7 +49,6 @@ def landing_view(request):
             "customers": customers,
             "Billing": plans,
             "current_period": period,
-            "plans": plans,
         }
     )
 
@@ -80,3 +79,10 @@ def about_view(request):
     About Us page for X-link
     """
     return render(request, 'Billing/about.html')
+
+
+def telegram_checkout_view(request):
+    """
+    Telegram checkout page for when online purchase is not available
+    """
+    return render(request, 'Billing/telegram_checkout.html')
