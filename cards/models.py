@@ -231,34 +231,32 @@ class UserCard(models.Model):
         return links
 
     def can_use_color(self, color):
-        """
-        Check if user can use a specific color based on their plan.
+        if not self.user_id:
+            return color == 'default'
 
-        Args:
-            color (str): Color choice to check
-
-        Returns:
-            bool: True if user can use this color
-        """
         if color == 'default':
             return True
 
-        # Premium colors require Basic or Pro plan
         return self.user.has_plan('Basic') or self.user.has_plan('Pro')
 
     def clean(self):
-        """
-        Validate model data before saving.
-        """
         super().clean()
 
-        # Validate color permissions
+        # اگر یوزر هنوز ست نشده
+        if not self.user_id:
+            if self.color != 'default':
+                raise ValidationError({
+                    'color': 'در حال حاضر فقط رنگ پیش‌فرض قابل انتخاب است.'
+                })
+            return
+
+        # Validate color permissions (وقتی user داریم)
         if not self.can_use_color(self.color):
             raise ValidationError({
                 'color': 'این رنگ فقط برای کاربران با پلن پایه یا حرفه‌ای فعال است. لطفاً پلن خود را ارتقا دهید.'
             })
 
-        # Validate username format (should be URL-safe)
+        # Validate username format
         if self.username and not self.username.replace('-', '').replace('_', '').isalnum():
             raise ValidationError({
                 'username': 'نام کاربری فقط می‌تواند شامل حروف، اعداد، خط تیره و زیرخط باشد.'

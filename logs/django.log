@@ -6961,3 +6961,819 @@ Traceback (most recent call last):
     raise MultipleObjectsReturned
 django.core.exceptions.MultipleObjectsReturned
 ERROR 2025-12-31 15:14:20,105 basehttp 23748 16364 "GET /register?next=/dashboard HTTP/1.1" 500 165711
+INFO 2025-12-31 22:38:54,482 autoreload 23112 16432 Watching for file changes with StatReloader
+INFO 2025-12-31 22:38:56,725 basehttp 23112 23548 "GET / HTTP/1.1" 200 31541
+INFO 2025-12-31 22:38:56,748 basehttp 23112 23548 "GET /static/styles.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,750 basehttp 23112 23548 "GET /media/templates/Screenshot_2025-12-13_115036.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,751 basehttp 23112 24036 "GET /media/templates/Screenshot_2025-12-13_115411.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,755 basehttp 23112 14408 "GET /media/templates/Screenshot_2025-12-13_115226.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,756 basehttp 23112 24036 "GET /media/templates/Screenshot_2025-12-13_115145.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,757 basehttp 23112 20236 "GET /static/script.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,757 basehttp 23112 23548 "GET /media/templates/Screenshot_2025-12-13_115241.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,757 basehttp 23112 2096 "GET /static/carousel.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,758 basehttp 23112 24060 "GET /static/pricing-landing.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,764 basehttp 23112 2096 "GET /media/templates/Screenshot_2025-12-13_115331.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,764 basehttp 23112 24060 "GET /media/templates/Screenshot_2025-12-13_115205.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,764 basehttp 23112 23548 "GET /media/templates/Screenshot_2025-12-13_115110.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:56,764 basehttp 23112 20236 "GET /media/templates/Screenshot_2025-12-13_115350.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:59,593 basehttp 23112 20236 "GET /pricing/ HTTP/1.1" 200 20103
+INFO 2025-12-31 22:38:59,613 basehttp 23112 20236 "GET /static/pricing-farsi.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:38:59,613 basehttp 23112 23548 "GET /static/pricing-farsi.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:01,840 basehttp 23112 23548 "GET / HTTP/1.1" 200 31541
+INFO 2025-12-31 22:39:07,102 basehttp 23112 23548 "GET /card/builder/ HTTP/1.1" 302 0
+ERROR 2025-12-31 22:39:07,289 log 23112 23548 Internal Server Error: /register
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Work Space\dajngo\X-link\core\views.py", line 204, in login_view
+    return render(
+        request,
+    ...<3 lines>...
+        }
+    )
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\library.py", line 321, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\templatetags\socialaccount.py", line 21, in provider_login_url
+    provider = adapter.get_provider(request, provider)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\adapter.py", line 212, in get_provider
+    app = self.get_app(request, provider=provider, client_id=client_id)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\adapter.py", line 299, in get_app
+    raise MultipleObjectsReturned
+django.core.exceptions.MultipleObjectsReturned
+ERROR 2025-12-31 22:39:07,293 basehttp 23112 23548 "GET /register?next=/card/builder/ HTTP/1.1" 500 166140
+WARNING 2025-12-31 22:39:07,384 log 23112 23548 Not Found: /favicon.ico
+WARNING 2025-12-31 22:39:07,385 basehttp 23112 23548 "GET /favicon.ico HTTP/1.1" 404 5800
+INFO 2025-12-31 22:39:12,239 basehttp 23112 23548 "GET /dashboard HTTP/1.1" 302 0
+ERROR 2025-12-31 22:39:12,268 log 23112 23548 Internal Server Error: /register
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Work Space\dajngo\X-link\core\views.py", line 204, in login_view
+    return render(
+        request,
+    ...<3 lines>...
+        }
+    )
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\library.py", line 321, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\templatetags\socialaccount.py", line 21, in provider_login_url
+    provider = adapter.get_provider(request, provider)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\adapter.py", line 212, in get_provider
+    app = self.get_app(request, provider=provider, client_id=client_id)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\adapter.py", line 299, in get_app
+    raise MultipleObjectsReturned
+django.core.exceptions.MultipleObjectsReturned
+ERROR 2025-12-31 22:39:12,270 basehttp 23112 23548 "GET /register?next=/dashboard HTTP/1.1" 500 166016
+INFO 2025-12-31 22:39:14,815 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-12-31 22:39:14,920 basehttp 23112 23548 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4410
+INFO 2025-12-31 22:39:14,929 basehttp 23112 23548 "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,929 basehttp 23112 24060 "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,930 basehttp 23112 20236 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,941 basehttp 23112 20236 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,941 basehttp 23112 24060 "GET /static/admin/css/login.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,941 basehttp 23112 23548 "GET /static/admin/css/rtl.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,947 basehttp 23112 20236 "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,947 basehttp 23112 23548 "GET /static/admin/css/responsive_rtl.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:14,947 basehttp 23112 24060 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:20,120 basehttp 23112 24060 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4680
+INFO 2025-12-31 22:39:25,258 basehttp 23112 24060 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-12-31 22:39:25,293 basehttp 23112 24060 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:39:25,310 basehttp 23112 24060 "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:25,316 basehttp 23112 24060 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:25,316 basehttp 23112 23548 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:25,317 basehttp 23112 2096 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:25,316 basehttp 23112 20236 "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,136 basehttp 23112 2096 "GET /admin/site_management/banners/ HTTP/1.1" 200 22516
+INFO 2025-12-31 22:39:31,155 basehttp 23112 14408 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,155 basehttp 23112 2096 "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,156 basehttp 23112 20236 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,156 basehttp 23112 24060 "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,157 basehttp 23112 24036 "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,160 basehttp 23112 2096 "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,159 basehttp 23112 14408 "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,160 basehttp 23112 20236 "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,161 basehttp 23112 24060 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,162 basehttp 23112 24060 "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,165 basehttp 23112 24060 "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:31,190 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:39:31,201 basehttp 23112 23548 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:32,838 basehttp 23112 23548 "GET /admin/site_management/banners/4/change/ HTTP/1.1" 200 21557
+INFO 2025-12-31 22:39:32,850 basehttp 23112 23548 "GET /static/admin/css/forms.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:32,855 basehttp 23112 24060 "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:32,855 basehttp 23112 20236 "GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:32,858 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:39:32,859 basehttp 23112 20236 "GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:33,416 basehttp 23112 23548 "GET /admin/site_management/banners/ HTTP/1.1" 200 22516
+INFO 2025-12-31 22:39:33,663 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:39:35,462 basehttp 23112 23548 "GET /admin/core/otp/ HTTP/1.1" 200 20215
+INFO 2025-12-31 22:39:35,479 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:39:36,355 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:39:37,942 basehttp 23112 23548 "GET /admin/Billing/userplan/ HTTP/1.1" 200 20579
+INFO 2025-12-31 22:39:37,961 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:39:38,594 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:39:39,457 basehttp 23112 23548 "GET /admin/Billing/template/ HTTP/1.1" 200 27564
+INFO 2025-12-31 22:39:39,475 basehttp 23112 20236 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:39,475 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:39:39,489 basehttp 23112 23548 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:39:39,987 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:40:06,643 basehttp 23112 23548 "GET /admin/core/otp/ HTTP/1.1" 200 20215
+INFO 2025-12-31 22:40:06,659 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:40:10,725 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:40:39,418 basehttp 23112 23548 "GET /admin/socialaccount/socialaccount/ HTTP/1.1" 200 19092
+INFO 2025-12-31 22:40:39,435 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:40:40,663 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:40:45,531 basehttp 23112 23548 "GET /admin/Billing/ HTTP/1.1" 200 7692
+INFO 2025-12-31 22:40:46,142 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:40:46,896 basehttp 23112 23548 "GET /admin/Billing/discount/ HTTP/1.1" 200 20227
+INFO 2025-12-31 22:40:46,913 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:40:47,241 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:40:49,296 basehttp 23112 23548 "GET /admin/Billing/plan/ HTTP/1.1" 200 25391
+INFO 2025-12-31 22:40:49,312 basehttp 23112 20236 "GET /static/admin/img/icon-no.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:40:49,315 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:40:49,953 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:41:03,380 basehttp 23112 23548 "GET / HTTP/1.1" 200 31546
+INFO 2025-12-31 22:41:08,814 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:41:11,360 basehttp 23112 23548 "GET /admin/site_management/banners/ HTTP/1.1" 200 22516
+INFO 2025-12-31 22:41:11,375 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:41:11,861 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:41:49,140 basehttp 23112 23548 "GET /admin/Billing/discount/2/change/ HTTP/1.1" 200 18969
+INFO 2025-12-31 22:41:49,154 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:41:49,775 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:41:52,392 basehttp 23112 23548 "GET /admin/socialaccount/socialapp/2/change/ HTTP/1.1" 200 25320
+INFO 2025-12-31 22:41:52,410 basehttp 23112 24060 "GET /static/admin/js/SelectFilter2.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:41:52,410 basehttp 23112 20236 "GET /static/admin/js/SelectBox.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:41:52,413 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:41:52,437 basehttp 23112 23548 "GET /static/admin/img/selector-icons.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:41:53,006 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:41:55,022 basehttp 23112 23548 "GET /admin/socialaccount/socialapp/2/change/ HTTP/1.1" 200 25320
+INFO 2025-12-31 22:41:55,039 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:41:55,707 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:41:58,541 basehttp 23112 23548 "GET /admin/Billing/userplan/ HTTP/1.1" 200 20579
+INFO 2025-12-31 22:41:58,560 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:41:59,131 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:42:00,185 basehttp 23112 23548 "GET /admin/Billing/template/ HTTP/1.1" 200 27564
+INFO 2025-12-31 22:42:00,202 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:42:00,786 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:42:40,909 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:12,267 basehttp 23112 23548 "GET /admin/site_management/banners/ HTTP/1.1" 200 22516
+INFO 2025-12-31 22:43:12,288 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:43:12,845 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:14,127 basehttp 23112 23548 "GET /admin/core/customuser/ HTTP/1.1" 200 27046
+INFO 2025-12-31 22:43:14,146 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:43:14,507 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:16,975 basehttp 23112 23548 "GET /admin/core/otp/ HTTP/1.1" 200 20215
+INFO 2025-12-31 22:43:16,991 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:43:17,555 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:18,986 basehttp 23112 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25697
+INFO 2025-12-31 22:43:19,002 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:43:19,815 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:20,436 basehttp 23112 23548 "GET /admin/Billing/userplan/ HTTP/1.1" 200 20579
+INFO 2025-12-31 22:43:20,451 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:43:21,904 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:28,097 basehttp 23112 23548 "GET / HTTP/1.1" 200 31546
+INFO 2025-12-31 22:43:28,138 basehttp 23112 23548 "GET /media/logo/Screenshot_2025-12-13_115036.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:43:51,531 basehttp 23112 23548 "GET /admin/site_management/sitecontext/ HTTP/1.1" 200 19031
+INFO 2025-12-31 22:43:53,821 basehttp 23112 23548 "GET /admin/site_management/sitecontext/1/change/ HTTP/1.1" 200 31106
+INFO 2025-12-31 22:43:53,840 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:43:54,564 basehttp 23112 23548 "GET /admin/site_management/sitecontext/ HTTP/1.1" 200 19031
+INFO 2025-12-31 22:43:55,238 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:43:57,076 basehttp 23112 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25697
+INFO 2025-12-31 22:43:57,094 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:44:22,364 basehttp 23112 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25697
+INFO 2025-12-31 22:44:22,380 basehttp 23112 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:47:35,491 basehttp 23112 23548 "GET / HTTP/1.1" 200 31546
+INFO 2025-12-31 22:47:38,218 basehttp 23112 23548 "GET /pricing/ HTTP/1.1" 200 20108
+INFO 2025-12-31 22:47:54,548 basehttp 23112 23548 "GET /dashboard HTTP/1.1" 200 36614
+INFO 2025-12-31 22:47:54,563 basehttp 23112 23548 "GET /static/dashboard-themed.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:47:54,565 basehttp 23112 23548 "GET /media/profile_pics/Screenshot_2025-12-13_115036.png HTTP/1.1" 304 0
+INFO 2025-12-31 22:47:59,851 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:49:31,611 basehttp 23112 23548 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:49:31,782 autoreload 23112 16432 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 22:49:32,683 autoreload 4680 3892 Watching for file changes with StatReloader
+INFO 2025-12-31 22:49:33,212 basehttp 4680 21136 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:49:33,318 basehttp 4680 21136 "GET /dashboard HTTP/1.1" 200 36614
+INFO 2025-12-31 22:49:34,033 basehttp 4680 21136 "GET /dashboard HTTP/1.1" 200 36614
+INFO 2025-12-31 22:49:34,708 basehttp 4680 21136 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:49:36,942 basehttp 4680 21136 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:49:37,444 basehttp 4680 21136 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:49:45,812 basehttp 4680 21136 "GET /admin/core/customuser/ HTTP/1.1" 200 27046
+INFO 2025-12-31 22:49:45,859 basehttp 4680 21136 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:49:48,798 basehttp 4680 21136 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 64287
+INFO 2025-12-31 22:49:48,818 basehttp 4680 20152 "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:49:48,818 basehttp 4680 15756 "GET /static/admin/js/calendar.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:49:48,819 basehttp 4680 19804 "GET /static/admin/js/inlines.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:49:48,822 basehttp 4680 21136 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:49:48,822 basehttp 4680 19804 "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:49:48,886 basehttp 4680 21136 "GET /static/admin/img/icon-clock.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:49:48,886 basehttp 4680 19804 "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 304 0
+INFO 2025-12-31 22:49:52,322 basehttp 4680 19804 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 64287
+INFO 2025-12-31 22:49:52,340 basehttp 4680 19804 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:49:56,889 basehttp 4680 19804 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:50:14,069 autoreload 4680 3892 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 22:50:14,834 autoreload 16520 23844 Watching for file changes with StatReloader
+ERROR 2025-12-31 22:50:15,377 log 16520 22684 Internal Server Error: /admin/core/customuser/3/change/
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1987, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1840, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1916, in _changeform_view
+    formsets, inline_instances = self._create_formsets(
+                                 ~~~~~~~~~~~~~~~~~~~~~^
+        request, obj, change=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 2358, in _create_formsets
+    for FormSet, inline in self.get_formsets_with_inlines(*get_formsets_args):
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 938, in get_formsets_with_inlines
+    yield inline.get_formset(request, obj), inline
+          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 2535, in get_formset
+    return inlineformset_factory(self.parent_model, self.model, **defaults)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 1343, in inlineformset_factory
+    FormSet = modelformset_factory(model, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 1051, in modelformset_factory
+    form = modelform_factory(
+        model,
+    ...<9 lines>...
+        field_classes=field_classes,
+    )
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (phone, full_name) specified for UserCard
+ERROR 2025-12-31 22:50:15,381 basehttp 16520 22684 "GET /admin/core/customuser/3/change/ HTTP/1.1" 500 179251
+ERROR 2025-12-31 22:50:16,887 log 16520 22684 Internal Server Error: /admin/core/customuser/3/change/
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1987, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1840, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1916, in _changeform_view
+    formsets, inline_instances = self._create_formsets(
+                                 ~~~~~~~~~~~~~~~~~~~~~^
+        request, obj, change=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 2358, in _create_formsets
+    for FormSet, inline in self.get_formsets_with_inlines(*get_formsets_args):
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 938, in get_formsets_with_inlines
+    yield inline.get_formset(request, obj), inline
+          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 2535, in get_formset
+    return inlineformset_factory(self.parent_model, self.model, **defaults)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 1343, in inlineformset_factory
+    FormSet = modelformset_factory(model, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 1051, in modelformset_factory
+    form = modelform_factory(
+        model,
+    ...<9 lines>...
+        field_classes=field_classes,
+    )
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (phone, full_name) specified for UserCard
+ERROR 2025-12-31 22:50:16,890 basehttp 16520 22684 "GET /admin/core/customuser/3/change/ HTTP/1.1" 500 179251
+INFO 2025-12-31 22:50:25,557 autoreload 16520 23844 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 22:50:26,265 autoreload 16140 3580 Watching for file changes with StatReloader
+ERROR 2025-12-31 22:50:26,743 log 16140 12700 Internal Server Error: /admin/core/customuser/3/change/
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1987, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1840, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 1916, in _changeform_view
+    formsets, inline_instances = self._create_formsets(
+                                 ~~~~~~~~~~~~~~~~~~~~~^
+        request, obj, change=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 2358, in _create_formsets
+    for FormSet, inline in self.get_formsets_with_inlines(*get_formsets_args):
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 938, in get_formsets_with_inlines
+    yield inline.get_formset(request, obj), inline
+          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\admin\options.py", line 2535, in get_formset
+    return inlineformset_factory(self.parent_model, self.model, **defaults)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 1343, in inlineformset_factory
+    FormSet = modelformset_factory(model, **kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 1051, in modelformset_factory
+    form = modelform_factory(
+        model,
+    ...<9 lines>...
+        field_classes=field_classes,
+    )
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 334, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (phone) specified for UserCard
+ERROR 2025-12-31 22:50:26,747 basehttp 16140 12700 "GET /admin/core/customuser/3/change/ HTTP/1.1" 500 178959
+INFO 2025-12-31 22:50:36,938 autoreload 16140 3580 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 22:50:37,660 autoreload 23232 12624 Watching for file changes with StatReloader
+INFO 2025-12-31 22:50:49,433 autoreload 23232 12624 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 22:50:50,091 autoreload 1212 14380 Watching for file changes with StatReloader
+INFO 2025-12-31 22:50:55,905 autoreload 22496 10072 Watching for file changes with StatReloader
+INFO 2025-12-31 22:51:50,593 autoreload 22496 10072 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 22:51:51,458 autoreload 19572 14356 Watching for file changes with StatReloader
+INFO 2025-12-31 22:51:52,653 basehttp 19572 24440 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:51:53,239 basehttp 19572 24440 "GET /admin/ HTTP/1.1" 200 22982
+INFO 2025-12-31 22:51:55,218 basehttp 19572 24440 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 22:51:55,243 basehttp 19572 24440 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 22:52:01,885 basehttp 19572 24440 "GET /dashboard HTTP/1.1" 200 36614
+INFO 2025-12-31 22:52:04,014 basehttp 19572 24440 "GET /dashboard HTTP/1.1" 200 36614
+INFO 2025-12-31 22:52:04,066 basehttp 19572 24440 "GET /static/dashboard-themed.css HTTP/1.1" 200 39023
+INFO 2025-12-31 22:52:04,072 basehttp 19572 24440 "GET /media/profile_pics/Screenshot_2025-12-13_115036.png HTTP/1.1" 200 157103
+INFO 2025-12-31 22:52:08,152 basehttp 19572 24440 "GET /Anes HTTP/1.1" 200 5559
+INFO 2025-12-31 22:52:08,163 basehttp 19572 24440 "GET /static/card-template-orange.css HTTP/1.1" 304 0
+INFO 2025-12-31 22:52:08,167 basehttp 19572 24440 "GET /static/services-portfolio.css HTTP/1.1" 304 0
+WARNING 2025-12-31 22:52:08,174 log 19572 23428 Not Found: /card-template.js
+WARNING 2025-12-31 22:52:08,174 basehttp 19572 23428 "GET /card-template.js HTTP/1.1" 404 5815
+INFO 2025-12-31 22:52:11,865 basehttp 19572 23428 "GET /Anes HTTP/1.1" 200 5559
+WARNING 2025-12-31 22:52:11,883 log 19572 23428 Not Found: /card-template.js
+WARNING 2025-12-31 22:52:11,883 basehttp 19572 23428 "GET /card-template.js HTTP/1.1" 404 5815
+INFO 2025-12-31 22:52:16,377 basehttp 19572 23428 "GET /Anes HTTP/1.1" 200 5559
+WARNING 2025-12-31 22:52:16,396 log 19572 23428 Not Found: /card-template.js
+WARNING 2025-12-31 22:52:16,397 basehttp 19572 23428 "GET /card-template.js HTTP/1.1" 404 5815
+INFO 2025-12-31 22:52:26,755 basehttp 19572 23428 "GET /admin/cards/usercard/ HTTP/1.1" 200 25698
+INFO 2025-12-31 22:52:26,776 basehttp 19572 23428 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+WARNING 2025-12-31 22:52:26,823 log 19572 23428 Not Found: /favicon.ico
+WARNING 2025-12-31 22:52:26,823 basehttp 19572 23428 "GET /favicon.ico HTTP/1.1" 404 5800
+INFO 2025-12-31 22:52:33,927 basehttp 19572 23428 "POST /admin/cards/usercard/ HTTP/1.1" 200 18144
+INFO 2025-12-31 22:52:33,940 basehttp 19572 23428 "GET /static/admin/js/cancel.js HTTP/1.1" 304 0
+INFO 2025-12-31 22:52:35,024 basehttp 19572 23428 "POST /admin/cards/usercard/ HTTP/1.1" 302 0
+INFO 2025-12-31 22:52:35,037 basehttp 19572 23428 "GET /admin/cards/usercard/ HTTP/1.1" 200 22203
+INFO 2025-12-31 22:52:35,056 basehttp 19572 23428 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+WARNING 2025-12-31 22:52:37,716 log 19572 23428 Not Found: /Anes
+WARNING 2025-12-31 22:52:37,716 basehttp 19572 23428 "GET /Anes HTTP/1.1" 404 5779
+INFO 2025-12-31 22:52:40,003 basehttp 19572 23428 "GET / HTTP/1.1" 200 31546
+INFO 2025-12-31 22:52:43,452 basehttp 19572 23428 "GET /card/builder/ HTTP/1.1" 200 42375
+ERROR 2025-12-31 22:52:59,054 log 19572 23428 Internal Server Error: /card/builder/
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Work Space\dajngo\X-link\cards\views.py", line 49, in card_builder_view
+    form.is_valid()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\forms.py", line 206, in is_valid
+    return self.is_bound and not self.errors
+                                 ^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\forms.py", line 201, in errors
+    self.full_clean()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\forms.py", line 339, in full_clean
+    self._post_clean()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 498, in _post_clean
+    self.instance.full_clean(exclude=exclude, validate_unique=False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\db\models\base.py", line 1654, in full_clean
+    self.clean()
+    ~~~~~~~~~~^^
+  File "D:\Work Space\dajngo\X-link\cards\models.py", line 256, in clean
+    if not self.can_use_color(self.color):
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "D:\Work Space\dajngo\X-link\cards\models.py", line 247, in can_use_color
+    return self.user.has_plan('Basic') or self.user.has_plan('Pro')
+           ^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 271, in __get__
+    raise self.RelatedObjectDoesNotExist(
+        "%s has no %s." % (self.field.model.__name__, self.field.name)
+    )
+cards.models.UserCard.user.RelatedObjectDoesNotExist: UserCard has no user.
+ERROR 2025-12-31 22:52:59,059 basehttp 19572 23428 "POST /card/builder/ HTTP/1.1" 500 122128
+INFO 2025-12-31 23:07:54,978 basehttp 19572 22692 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2025-12-31 23:08:07,229 views 19572 22692 Card saved for user , card_id=2
+INFO 2025-12-31 23:08:07,230 basehttp 19572 22692 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2025-12-31 23:08:07,237 views 19572 22692 Card success page viewed by user  for card_id=2
+INFO 2025-12-31 23:08:07,239 basehttp 19572 22692 "GET /card/success/2/ HTTP/1.1" 200 21802
+INFO 2025-12-31 23:08:27,076 basehttp 19572 22692 "GET /card/builder/ HTTP/1.1" 200 42941
+INFO 2025-12-31 23:08:27,095 basehttp 19572 22692 "GET /media/profile_pics/Screenshot_2025-12-13_115443.png HTTP/1.1" 200 215035
+INFO 2025-12-31 23:08:29,253 basehttp 19572 22692 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 23:08:29,277 basehttp 19572 22692 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:08:29,843 basehttp 19572 22692 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 23:08:29,865 basehttp 19572 22692 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:08:30,328 basehttp 19572 22692 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 23:08:30,344 basehttp 19572 22692 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:08:30,541 basehttp 19572 22692 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 23:08:30,561 basehttp 19572 22692 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:08:30,813 basehttp 19572 22692 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 23:08:30,835 basehttp 19572 22692 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:08:32,041 basehttp 19572 22692 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 49119
+INFO 2025-12-31 23:08:32,056 basehttp 19572 22692 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:08:33,403 basehttp 19572 22692 "GET /static/admin/img/inline-delete.svg HTTP/1.1" 304 0
+INFO 2025-12-31 23:09:15,880 autoreload 19572 14356 D:\Work Space\dajngo\X-link\core\admin.py changed, reloading.
+INFO 2025-12-31 23:09:16,727 autoreload 24148 15640 Watching for file changes with StatReloader
+INFO 2025-12-31 23:09:19,516 basehttp 24148 12172 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 46937
+INFO 2025-12-31 23:09:19,534 basehttp 24148 12172 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:28:33,587 basehttp 24148 11588 "GET /card/builder/ HTTP/1.1" 200 42941
+INFO 2025-12-31 23:28:33,612 basehttp 24148 11588 "GET /media/profile_pics/Screenshot_2025-12-13_115443.png HTTP/1.1" 304 0
+INFO 2025-12-31 23:30:45,738 basehttp 24148 5108 "GET /card/builder/ HTTP/1.1" 200 42941
+INFO 2025-12-31 23:30:45,760 basehttp 24148 5108 "GET /media/profile_pics/Screenshot_2025-12-13_115443.png HTTP/1.1" 304 0
+INFO 2025-12-31 23:31:32,555 basehttp 24148 5108 "GET /card/builder/ HTTP/1.1" 200 42941
+INFO 2025-12-31 23:31:34,756 basehttp 24148 5108 "GET /admin/core/customuser/3/change/ HTTP/1.1" 200 46937
+INFO 2025-12-31 23:31:34,779 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:31:36,384 basehttp 24148 5108 "GET /admin/core/customuser/ HTTP/1.1" 200 27046
+INFO 2025-12-31 23:31:44,201 basehttp 24148 5108 "GET /admin/ HTTP/1.1" 200 22920
+INFO 2025-12-31 23:31:59,609 basehttp 24148 5108 "GET /admin/site_management/sitecontext/ HTTP/1.1" 200 19031
+INFO 2025-12-31 23:32:00,607 basehttp 24148 5108 "GET /admin/ HTTP/1.1" 200 22920
+INFO 2025-12-31 23:32:02,008 basehttp 24148 5108 "GET /admin/site_management/customer/ HTTP/1.1" 200 24561
+INFO 2025-12-31 23:32:02,025 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:32:09,041 basehttp 24148 5108 "GET /admin/site_management/customer/1/change/ HTTP/1.1" 200 25182
+INFO 2025-12-31 23:32:09,061 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:32:15,435 basehttp 24148 5108 "GET /admin/site_management/customer/ HTTP/1.1" 200 24561
+INFO 2025-12-31 23:32:17,636 basehttp 24148 5108 "GET /admin/site_management/customer/2/change/ HTTP/1.1" 200 25174
+INFO 2025-12-31 23:32:17,652 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:32:20,220 basehttp 24148 5108 "GET /admin/site_management/customer/ HTTP/1.1" 200 24561
+INFO 2025-12-31 23:32:22,760 basehttp 24148 5108 "GET /admin/ HTTP/1.1" 200 22920
+INFO 2025-12-31 23:32:24,830 basehttp 24148 5108 "GET /admin/cards/usercard/ HTTP/1.1" 200 25721
+INFO 2025-12-31 23:32:24,847 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:32:26,841 basehttp 24148 5108 "GET /admin/cards/usercard/2/change/ HTTP/1.1" 200 52624
+INFO 2025-12-31 23:32:26,857 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:32:43,028 basehttp 24148 5108 "GET /admin/cards/usercard/2/delete/ HTTP/1.1" 200 17964
+INFO 2025-12-31 23:32:44,173 basehttp 24148 5108 "POST /admin/cards/usercard/2/delete/ HTTP/1.1" 302 0
+INFO 2025-12-31 23:32:44,187 basehttp 24148 5108 "GET /admin/cards/usercard/ HTTP/1.1" 200 22218
+INFO 2025-12-31 23:32:44,209 basehttp 24148 5108 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2025-12-31 23:32:46,572 basehttp 24148 5108 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2025-12-31 23:32:55,645 views 24148 5108 Card saved for user , card_id=3
+INFO 2025-12-31 23:32:55,646 basehttp 24148 5108 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2025-12-31 23:32:55,652 views 24148 5108 Card success page viewed by user  for card_id=3
+INFO 2025-12-31 23:32:55,654 basehttp 24148 5108 "GET /card/success/3/ HTTP/1.1" 200 21802
+INFO 2025-12-31 23:32:57,460 views 24148 5108 Card success page viewed by user  for card_id=3
+INFO 2025-12-31 23:32:57,461 basehttp 24148 5108 "GET /card/success/3/ HTTP/1.1" 200 21802
+INFO 2026-01-01 22:55:09,014 autoreload 17720 17724 Watching for file changes with StatReloader
+INFO 2026-01-01 23:04:42,398 autoreload 17720 17724 D:\Work Space\dajngo\X-link\cards\models.py changed, reloading.
+INFO 2026-01-01 23:04:43,208 autoreload 22436 24384 Watching for file changes with StatReloader
+INFO 2026-01-01 23:10:23,081 autoreload 22436 24384 D:\Work Space\dajngo\X-link\cards\models.py changed, reloading.
+INFO 2026-01-01 23:10:23,813 autoreload 21800 23364 Watching for file changes with StatReloader
+INFO 2026-01-01 23:10:30,633 basehttp 21800 23532 "GET /admin/ HTTP/1.1" 200 22873
+INFO 2026-01-01 23:10:30,641 basehttp 21800 23532 "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,642 basehttp 21800 21920 "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,642 basehttp 21800 21248 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,651 basehttp 21800 21248 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,651 basehttp 21800 23532 "GET /static/admin/css/rtl.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,652 basehttp 21800 21920 "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,656 basehttp 21800 21248 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,656 basehttp 21800 21920 "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,656 basehttp 21800 23532 "GET /static/admin/css/responsive_rtl.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,661 basehttp 21800 21920 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,662 basehttp 21800 21248 "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,662 basehttp 21800 23532 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:10:30,664 basehttp 21800 23532 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+WARNING 2026-01-01 23:10:30,976 log 21800 23532 Not Found: /favicon.ico
+WARNING 2026-01-01 23:10:30,976 basehttp 21800 23532 "GET /favicon.ico HTTP/1.1" 404 5800
+INFO 2026-01-01 23:16:25,005 basehttp 21800 16092 "GET /admin/cards/usercard/ HTTP/1.1" 200 25721
+INFO 2026-01-01 23:16:25,026 basehttp 21800 16092 "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,031 basehttp 21800 16092 "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,031 basehttp 21800 22580 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,033 basehttp 21800 24852 "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,034 basehttp 21800 10464 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,034 basehttp 21800 23816 "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,035 basehttp 21800 16092 "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,036 basehttp 21800 22580 "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,036 basehttp 21800 24852 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,038 basehttp 21800 24852 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,038 basehttp 21800 22580 "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,042 basehttp 21800 22580 "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,065 basehttp 21800 2352 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:16:25,078 basehttp 21800 2352 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:25,079 basehttp 21800 22580 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:35,582 basehttp 21800 22580 "POST /admin/cards/usercard/ HTTP/1.1" 200 18144
+INFO 2026-01-01 23:16:35,609 basehttp 21800 22580 "GET /static/admin/js/cancel.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:37,157 basehttp 21800 22580 "POST /admin/cards/usercard/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:16:37,173 basehttp 21800 22580 "GET /admin/cards/usercard/ HTTP/1.1" 200 22203
+INFO 2026-01-01 23:16:37,193 basehttp 21800 22580 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:16:47,404 basehttp 21800 22580 "GET / HTTP/1.1" 200 31546
+INFO 2026-01-01 23:16:47,421 basehttp 21800 22580 "GET /static/styles.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,429 basehttp 21800 2352 "GET /media/templates/Screenshot_2025-12-13_115036.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,430 basehttp 21800 22580 "GET /media/templates/Screenshot_2025-12-13_115411.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,431 basehttp 21800 16092 "GET /media/templates/Screenshot_2025-12-13_115226.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,431 basehttp 21800 24852 "GET /media/templates/Screenshot_2025-12-13_115241.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,431 basehttp 21800 23816 "GET /media/templates/Screenshot_2025-12-13_115145.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,432 basehttp 21800 10464 "GET /static/script.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,437 basehttp 21800 10464 "GET /static/carousel.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,438 basehttp 21800 16092 "GET /media/templates/Screenshot_2025-12-13_115205.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,439 basehttp 21800 24852 "GET /media/templates/Screenshot_2025-12-13_115331.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,439 basehttp 21800 2352 "GET /media/templates/Screenshot_2025-12-13_115110.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,439 basehttp 21800 22580 "GET /media/templates/Screenshot_2025-12-13_115350.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,439 basehttp 21800 23816 "GET /static/pricing-landing.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:47,535 basehttp 21800 23816 "GET /media/logo/Screenshot_2025-12-13_115036.png HTTP/1.1" 304 0
+INFO 2026-01-01 23:16:51,464 basehttp 21800 23816 "GET /card/builder/ HTTP/1.1" 200 42375
+ERROR 2026-01-01 23:17:01,659 log 21800 23816 Internal Server Error: /card/builder/
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Work Space\dajngo\X-link\cards\views.py", line 49, in card_builder_view
+    form.is_valid()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\forms.py", line 206, in is_valid
+    return self.is_bound and not self.errors
+                                 ^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\forms.py", line 201, in errors
+    self.full_clean()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\forms.py", line 339, in full_clean
+    self._post_clean()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\forms\models.py", line 498, in _post_clean
+    self.instance.full_clean(exclude=exclude, validate_unique=False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\db\models\base.py", line 1654, in full_clean
+    self.clean()
+    ~~~~~~~~~~^^
+  File "D:\Work Space\dajngo\X-link\cards\models.py", line 252, in clean
+    if not self.user:
+           ^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 271, in __get__
+    raise self.RelatedObjectDoesNotExist(
+        "%s has no %s." % (self.field.model.__name__, self.field.name)
+    )
+cards.models.UserCard.user.RelatedObjectDoesNotExist: UserCard has no user.
+ERROR 2026-01-01 23:17:01,663 basehttp 21800 23816 "POST /card/builder/ HTTP/1.1" 500 117713
+INFO 2026-01-01 23:18:13,669 autoreload 21800 23364 D:\Work Space\dajngo\X-link\cards\models.py changed, reloading.
+INFO 2026-01-01 23:18:14,430 autoreload 5100 12848 Watching for file changes with StatReloader
+INFO 2026-01-01 23:18:24,251 autoreload 5100 12848 D:\Work Space\dajngo\X-link\cards\models.py changed, reloading.
+INFO 2026-01-01 23:18:24,926 autoreload 3164 8372 Watching for file changes with StatReloader
+INFO 2026-01-01 23:18:25,640 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:18:27,568 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 22046
+INFO 2026-01-01 23:18:27,590 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:18:28,147 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 22046
+INFO 2026-01-01 23:18:28,164 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:18:29,146 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:18:38,831 views 3164 23548 Card saved for user , card_id=4
+INFO 2026-01-01 23:18:38,832 basehttp 3164 23548 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:18:38,842 views 3164 23548 Card success page viewed by user  for card_id=4
+INFO 2026-01-01 23:18:38,846 basehttp 3164 23548 "GET /card/success/4/ HTTP/1.1" 200 21802
+INFO 2026-01-01 23:18:41,571 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:18:41,589 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:18:52,118 basehttp 3164 23548 "POST /admin/cards/usercard/ HTTP/1.1" 200 18144
+INFO 2026-01-01 23:18:53,196 basehttp 3164 23548 "POST /admin/cards/usercard/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:18:53,209 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 22203
+INFO 2026-01-01 23:18:53,231 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+WARNING 2026-01-01 23:18:55,167 log 3164 23548 Not Found: /card/success/4/
+WARNING 2026-01-01 23:18:55,168 basehttp 3164 23548 "GET /card/success/4/ HTTP/1.1" 404 5549
+INFO 2026-01-01 23:18:56,356 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:18:57,536 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:19:07,471 views 3164 23548 Card saved for user , card_id=5
+INFO 2026-01-01 23:19:07,472 basehttp 3164 23548 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:19:07,478 views 3164 23548 Card success page viewed by user  for card_id=5
+INFO 2026-01-01 23:19:07,480 basehttp 3164 23548 "GET /card/success/5/ HTTP/1.1" 200 21802
+INFO 2026-01-01 23:19:14,500 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:19:14,516 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:19:14,708 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:19:14,727 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:19:18,284 basehttp 3164 23548 "POST /admin/cards/usercard/ HTTP/1.1" 200 18144
+INFO 2026-01-01 23:19:19,047 basehttp 3164 23548 "POST /admin/cards/usercard/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:19:19,059 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 22203
+INFO 2026-01-01 23:19:19,080 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+WARNING 2026-01-01 23:19:21,058 log 3164 23548 Not Found: /card/success/5/
+WARNING 2026-01-01 23:19:21,058 basehttp 3164 23548 "GET /card/success/5/ HTTP/1.1" 404 5549
+INFO 2026-01-01 23:19:21,619 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:19:31,309 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 22046
+INFO 2026-01-01 23:19:31,327 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:19:33,371 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:19:48,503 views 3164 23548 Card saved for user , card_id=6
+INFO 2026-01-01 23:19:48,504 basehttp 3164 23548 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:19:48,512 views 3164 23548 Card success page viewed by user  for card_id=6
+INFO 2026-01-01 23:19:48,514 basehttp 3164 23548 "GET /card/success/6/ HTTP/1.1" 200 21802
+INFO 2026-01-01 23:19:58,039 basehttp 3164 23548 "GET /Anes HTTP/1.1" 200 5560
+INFO 2026-01-01 23:19:58,078 basehttp 3164 23548 "GET /static/card-template.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:19:58,082 basehttp 3164 23548 "GET /static/services-portfolio.css HTTP/1.1" 304 0
+WARNING 2026-01-01 23:19:58,090 log 3164 6964 Not Found: /card-template.js
+WARNING 2026-01-01 23:19:58,091 basehttp 3164 6964 "GET /card-template.js HTTP/1.1" 404 5815
+INFO 2026-01-01 23:19:58,119 basehttp 3164 23548 "GET /media/profile_pics/Screenshot_2025-12-13_115036_QsdWCSA.png HTTP/1.1" 200 157103
+INFO 2026-01-01 23:20:02,067 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:20:02,086 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:20:03,835 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:20:04,987 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:20:06,014 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:20:06,486 basehttp 3164 23548 "GET /admin/ HTTP/1.1" 200 22769
+INFO 2026-01-01 23:20:07,735 basehttp 3164 23548 "GET /admin/ HTTP/1.1" 200 22769
+INFO 2026-01-01 23:20:08,543 basehttp 3164 23548 "GET /admin/ HTTP/1.1" 200 22769
+INFO 2026-01-01 23:20:09,720 basehttp 3164 23548 "GET /admin/ HTTP/1.1" 200 22769
+INFO 2026-01-01 23:20:47,879 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 25720
+INFO 2026-01-01 23:20:47,894 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:20:50,836 basehttp 3164 23548 "GET /admin/cards/usercard/?o=2.-9 HTTP/1.1" 200 26610
+INFO 2026-01-01 23:20:50,857 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:20:55,023 basehttp 3164 23548 "POST /admin/cards/usercard/?o=2.-9 HTTP/1.1" 200 18144
+INFO 2026-01-01 23:20:56,078 basehttp 3164 23548 "POST /admin/cards/usercard/?o=2.-9 HTTP/1.1" 302 0
+INFO 2026-01-01 23:20:56,092 basehttp 3164 23548 "GET /admin/cards/usercard/?o=2.-9 HTTP/1.1" 200 22630
+INFO 2026-01-01 23:20:56,109 basehttp 3164 23548 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:21:00,691 basehttp 3164 23548 "GET /dashboard HTTP/1.1" 200 32649
+INFO 2026-01-01 23:21:00,703 basehttp 3164 23548 "GET /static/dashboard-themed.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:21:02,784 basehttp 3164 23548 "GET /card/builder/ HTTP/1.1" 200 42375
+INFO 2026-01-01 23:21:07,435 basehttp 3164 23548 "GET /admin/cards/usercard/?o=2.-9 HTTP/1.1" 200 22473
+INFO 2026-01-01 23:21:08,019 basehttp 3164 23548 "GET /admin/cards/usercard/ HTTP/1.1" 200 22046
+INFO 2026-01-01 23:21:08,785 basehttp 3164 23548 "GET /admin/ HTTP/1.1" 200 22707
+INFO 2026-01-01 23:24:16,014 basehttp 3164 23548 "GET /admin/site_management/customer/ HTTP/1.1" 200 24561
+INFO 2026-01-01 23:24:16,029 basehttp 3164 23548 "GET /static/admin/css/forms.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:16,033 basehttp 3164 6964 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:24:16,033 basehttp 3164 23548 "GET /static/admin/css/widgets.css HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:17,676 basehttp 3164 6964 "GET /admin/ HTTP/1.1" 200 22707
+INFO 2026-01-01 23:24:20,221 basehttp 3164 6964 "GET /admin/core/customuser/ HTTP/1.1" 200 27046
+INFO 2026-01-01 23:24:20,243 basehttp 3164 23548 "GET /static/admin/img/icon-no.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:20,244 basehttp 3164 6964 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:24:43,675 basehttp 3164 6964 "GET /admin/core/customuser/1/change/ HTTP/1.1" 200 46968
+INFO 2026-01-01 23:24:43,697 basehttp 3164 23548 "GET /static/admin/js/calendar.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,697 basehttp 3164 24604 "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,699 basehttp 3164 12888 "GET /static/admin/js/inlines.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,701 basehttp 3164 22356 "GET /static/admin/js/SelectBox.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,702 basehttp 3164 16036 "GET /static/admin/js/SelectFilter2.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,702 basehttp 3164 24604 "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,704 basehttp 3164 6964 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:24:43,704 basehttp 3164 24604 "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,707 basehttp 3164 24604 "GET /static/admin/js/change_form.js HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,741 basehttp 3164 24604 "GET /static/admin/img/selector-icons.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,755 basehttp 3164 24604 "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:24:43,755 basehttp 3164 6964 "GET /static/admin/img/icon-clock.svg HTTP/1.1" 304 0
+INFO 2026-01-01 23:25:08,745 basehttp 3164 6964 "POST /admin/core/customuser/1/change/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:25:08,762 basehttp 3164 6964 "GET /admin/core/customuser/ HTTP/1.1" 200 27255
+INFO 2026-01-01 23:25:08,783 basehttp 3164 6964 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:25:10,768 basehttp 3164 6964 "GET /card/builder/ HTTP/1.1" 200 44531
+INFO 2026-01-01 23:30:42,146 views 3164 10888 Card saved for user , card_id=7
+INFO 2026-01-01 23:30:42,146 basehttp 3164 10888 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2026-01-01 23:30:42,153 views 3164 10888 Card success page viewed by user  for card_id=7
+INFO 2026-01-01 23:30:42,154 basehttp 3164 10888 "GET /card/success/7/ HTTP/1.1" 200 21802
+INFO 2026-01-01 23:37:56,487 autoreload 3164 8372 D:\Work Space\dajngo\X-link\cards\models.py changed, reloading.
+INFO 2026-01-01 23:37:57,186 autoreload 24864 17260 Watching for file changes with StatReloader
+INFO 2026-01-01 23:37:58,703 autoreload 24864 17260 D:\Work Space\dajngo\X-link\cards\models.py changed, reloading.
+INFO 2026-01-01 23:37:59,415 autoreload 10680 21644 Watching for file changes with StatReloader
+INFO 2026-01-01 23:37:59,855 basehttp 10680 20584 "GET /admin/core/customuser/ HTTP/1.1" 200 27045
+INFO 2026-01-01 23:37:59,879 basehttp 10680 20584 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:38:01,650 basehttp 10680 20584 "GET /admin/core/customuser/ HTTP/1.1" 200 27045
+INFO 2026-01-01 23:38:01,672 basehttp 10680 20584 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-01 23:38:02,274 basehttp 10680 20584 "GET /admin/core/customuser/ HTTP/1.1" 200 27045
+INFO 2026-01-01 23:38:02,293 basehttp 10680 20584 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
