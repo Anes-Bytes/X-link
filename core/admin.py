@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.db.models import Prefetch, Count
 
 from cards.models import UserCard
-from .models import CustomUser, OTP
+from .models import CustomUser, OTP, TelegramBot
 from .forms import CustomUserChangeForm
 
 
@@ -244,3 +244,6 @@ class OTPAdmin(admin.ModelAdmin):
         if obj and obj.is_expired():
             return True
         return super().has_delete_permission(request, obj)
+
+
+admin.site.register(TelegramBot)

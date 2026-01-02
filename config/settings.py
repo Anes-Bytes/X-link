@@ -97,17 +97,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default='3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # =============================================================================
@@ -311,6 +305,10 @@ MELIPAYAMAK_NUMBER = env('MELIPAYAMAK_NUMBER')
 
 # Payment gateway (placeholder for future implementation)
 PAYMENT_MERCHANT_ID = env('PAYMENT_MERCHANT_ID', default='')
+
+# Telegram Bot Configuration
+TELEGRAM_BOT_TOKEN = env('TELEGRAM_BOT_TOKEN', default='')
+TELEGRAM_ADMIN_CHAT_IDS = env.list('TELEGRAM_ADMIN_CHAT_IDS', default=[])
 
 # =============================================================================
 # DJANGO DEFAULTS
