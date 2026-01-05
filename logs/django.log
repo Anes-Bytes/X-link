@@ -139,3 +139,67 @@ INFO 2026-01-05 15:11:48,316 _client 3536 12020 HTTP Request: POST https://api.t
 INFO 2026-01-05 15:11:48,317 _application 3536 12020 Application is stopping. This might take a moment.
 INFO 2026-01-05 15:11:48,318 base 3536 12020 Scheduler has been shut down
 INFO 2026-01-05 15:11:48,318 _application 3536 12020 Application.stop() complete
+INFO 2026-01-05 15:22:06,725 basehttp 13332 22428 "GET / HTTP/1.1" 200 22842
+INFO 2026-01-05 15:22:06,818 basehttp 13332 22428 "GET /static/styles.css HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,818 basehttp 13332 16468 "GET /media/templates/Screenshot_2025-12-13_115036.png HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,820 basehttp 13332 1492 "GET /media/templates/Screenshot_2025-12-13_115350.png HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,847 basehttp 13332 1492 "GET /media/templates/Screenshot_2025-12-13_115110.png HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,847 basehttp 13332 16468 "GET /media/templates/Screenshot_2025-12-13_115145.png HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,859 basehttp 13332 16468 "GET /media/templates/Screenshot_2025-12-13_115241.png HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,860 basehttp 13332 22428 "GET /static/carousel.js HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,860 basehttp 13332 1492 "GET /static/script.js HTTP/1.1" 304 0
+INFO 2026-01-05 15:22:06,860 basehttp 13332 11896 "GET /static/pricing-landing.js HTTP/1.1" 304 0
+WARNING 2026-01-05 15:22:06,967 log 13332 11896 Not Found: /favicon.ico
+WARNING 2026-01-05 15:22:06,968 basehttp 13332 11896 "GET /favicon.ico HTTP/1.1" 404 6077
+INFO 2026-01-05 15:23:09,853 basehttp 13332 3444 "GET / HTTP/1.1" 200 22842
+INFO 2026-01-05 15:24:38,986 base 6456 14528 Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO 2026-01-05 15:24:38,986 bot 6456 14528 Bot started...
+INFO 2026-01-05 15:24:39,778 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getMe "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:40,026 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/deleteWebhook "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:40,029 base 6456 14528 Added job "hourly_backup" to job store "default"
+INFO 2026-01-05 15:24:40,029 base 6456 14528 Scheduler started
+INFO 2026-01-05 15:24:40,030 _application 6456 14528 Application started
+INFO 2026-01-05 15:24:46,803 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:47,590 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:48,994 base 6456 14528 Running job "hourly_backup (trigger: interval[1:00:00], next run at: 2026-01-05 12:54:48 UTC)" (scheduled at 2026-01-05 11:54:48.986049+00:00)
+INFO 2026-01-05 15:24:48,995 bot 6456 14528 Starting hourly backup...
+INFO 2026-01-05 15:24:51,382 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendDocument "HTTP/1.1 400 Bad Request"
+ERROR 2026-01-05 15:24:51,383 bot 6456 14528 Failed to send backup to channel XDB_BACKUP: Chat not found
+INFO 2026-01-05 15:24:51,692 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:54,138 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendDocument "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:54,427 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:24:54,428 base 6456 14528 Job "hourly_backup (trigger: interval[1:00:00], next run at: 2026-01-05 12:54:48 UTC)" executed successfully
+INFO 2026-01-05 15:24:57,059 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:07,308 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:17,558 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:18,792 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:20,762 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:28,206 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:29,625 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:31,310 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:40,849 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:43,449 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:45,413 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:49,049 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:49,324 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/sendMessage "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:25:52,381 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:26:02,632 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:26:12,882 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:26:23,133 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:26:33,384 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:26:43,632 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:26:53,887 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:27:04,137 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:27:14,397 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:27:24,647 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:27:34,896 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:27:45,144 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:27:55,394 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:28:05,642 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:28:15,888 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:28:26,141 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:28:36,392 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:28:40,956 _client 6456 14528 HTTP Request: POST https://api.telegram.org/bot8513870179:AAH6ON0eV0yf6837KEVSk7UJbGWW1xL2HEw/getUpdates "HTTP/1.1 200 OK"
+INFO 2026-01-05 15:28:40,958 _application 6456 14528 Application is stopping. This might take a moment.
+INFO 2026-01-05 15:28:40,959 base 6456 14528 Scheduler has been shut down
+INFO 2026-01-05 15:28:40,959 _application 6456 14528 Application.stop() complete
