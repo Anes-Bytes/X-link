@@ -118,6 +118,25 @@ def request_otp(request):
         )
         created = True
 
+        # Send registration signal if this is a signup
+        if is_signup:
+            # Get IP address
+            if hasattr(request, 'META') and 'HTTP_X_FORWARDED_FOR' in request.META:
+                ip = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()
+            elif hasattr(request, 'META') and 'REMOTE_ADDR' in request.META:
+                ip = request.META['REMOTE_ADDR']
+            else:
+                ip = 'unknown'
+
+            from .signals import user_registered
+            user_registered.send(
+                sender=user.__class__,
+                user=user,
+                request=request,
+                ip_address=ip,
+                event_type='registration'
+            )
+
     # Expire previous OTPs
     user.otps.filter(expires_at__gt=timezone.now()).update(expires_at=timezone.now())
 

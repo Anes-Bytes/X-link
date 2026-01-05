@@ -18,6 +18,11 @@
     /* Card & Border Colors */
     --card-bg: rgba(58, 134, 255, 0.05);
     --card-border: rgba(0, 246, 255, 0.2);
+}
+
+body {
+    direction: rtl;
+}
     --card-hover: rgba(58, 134, 255, 0.1);
     --border-color: rgba(58, 134, 255, 0.15);
 

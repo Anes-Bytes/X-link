@@ -47,7 +47,7 @@ def landing_view(request):
         {
             "templates": templates,
             "customers": customers,
-            "Billing": plans,
+            "plans": plans,
             "current_period": period,
         }
     )

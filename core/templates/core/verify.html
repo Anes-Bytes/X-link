@@ -9,6 +9,46 @@
         <link rel="icon" type="image/x-icon" href="{{ site_context.logo.url }}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+.neon-link {
+    position: relative;
+    color: #5ad7ff;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: color 0.25s ease;
+}
+
+/* خط زیر ظریف */
+.neon-link::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #5ad7ff, #2fb7ff);
+    box-shadow: 0 0 6px rgba(90, 215, 255, 0.5);
+    transition: width 0.3s ease;
+}
+
+.neon-link:hover {
+    color: #9ae9ff;
+}
+
+/* انیمیشن خط زیر */
+.neon-link:hover::after {
+    width: 100%;
+}
+
+/* فوکوس برای موبایل و کیبورد */
+.neon-link:focus-visible {
+    outline: none;
+    text-shadow: 0 0 4px rgba(90, 215, 255, 0.4);
+}
+
+
+    </style>
 </head>
 <body>
     <div class="messages-container">
@@ -55,7 +95,7 @@
             <div class="auth-card" data-aos="fade-up">
                 <!-- Tabs -->
                 <div class="auth-tabs">
-                    <button class="auth-tab active" data-tab="login">
+                    <button class="auth-tab active">
                         تایید کد
                     </button>
                 </div>
@@ -86,12 +126,14 @@
                         <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
+<p>شماره را اشتباه وارد کرده‌اید؟</p>
+<a href="{% url 'login' %}" class="neon-link">بازگشت به ورود</a>
             </div>
         </div>
     </section>
-
     <script src="{% static 'script.js' %}"></script>
     <script src="{% static 'auth.js' %}"></script>
+
 </body>
 </html>
 

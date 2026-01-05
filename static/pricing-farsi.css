@@ -46,7 +46,7 @@ body {
     overflow-x: hidden;
     position: relative;
     line-height: 1.6;
-    direction: rtl;
+    direction: ltr;
 }
 
 /* ============================================
@@ -250,7 +250,7 @@ body {
     color: var(--text-gray);
     margin-bottom: 3rem;
     max-width: 600px;
-    margin-left: auto;
+    margin-right: auto;
     margin-right: auto;
 }
 
@@ -500,7 +500,7 @@ body {
 .period {
     color: var(--text-gray);
     font-size: 0.95rem;
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .price-info {
@@ -554,7 +554,7 @@ body {
     color: var(--text-gray);
     border-bottom: 1px solid rgba(0, 246, 255, 0.05);
     transition: var(--transition);
-    flex-direction: row-reverse;
+    flex-direction: row;
 }
 
 .features-list li:last-child {
@@ -708,7 +708,7 @@ table thead {
 
 table th {
     padding: 1.5rem;
-    text-align: right;
+    text-align: left;
     color: var(--cyan-neon);
     font-weight: 700;
     font-size: 1rem;
@@ -718,7 +718,7 @@ table td {
     padding: 1.5rem;
     border-bottom: 1px solid rgba(0, 246, 255, 0.05);
     color: var(--text-gray);
-    text-align: right;
+    text-align: left;
 }
 
 table tbody tr:hover {
@@ -794,8 +794,8 @@ table tbody tr:hover {
     justify-content: space-between;
     align-items: center;
     transition: var(--transition);
-    text-align: right;
-    flex-direction: row-reverse;
+    text-align: left;
+    flex-direction: row;
 }
 
 .faq-question:hover {
@@ -826,7 +826,7 @@ table tbody tr:hover {
     padding: 1.5rem;
     color: var(--text-gray);
     line-height: 1.8;
-    text-align: right;
+    text-align: left;
 }
 
 /* ============================================
@@ -857,7 +857,7 @@ table tbody tr:hover {
     color: var(--text-gray);
     margin-bottom: 2rem;
     max-width: 600px;
-    margin-left: auto;
+    margin-right: auto;
     margin-right: auto;
 }
 

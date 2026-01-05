@@ -2,6 +2,10 @@
    ABOUT PAGE STYLES
    ============================================ */
 
+body {
+    direction: rtl;
+}
+
 /* Typography & Spacing Improvements */
 .hero-description {
     margin-top: 48px;

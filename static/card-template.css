@@ -13,6 +13,10 @@
     --cyan-neon: #00F6FF;
     --text-white: #F5F8FF;
     --text-gray: rgba(245, 248, 255, 0.7);
+}
+
+body {
+    direction: rtl;
     --text-light-gray: rgba(245, 248, 255, 0.5);
     --glass-bg: rgba(58, 134, 255, 0.05);
     --glass-border: rgba(58, 134, 255, 0.2);

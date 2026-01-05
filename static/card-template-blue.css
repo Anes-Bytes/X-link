@@ -19,6 +19,10 @@
 }
 
 body {
+    direction: rtl;
+}
+
+body {
     font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-white);

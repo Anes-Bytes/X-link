@@ -124,6 +124,8 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_STORE_TOKENS = True
+SOCIALACCOUNT_ADAPTER = 'core.adapters.CustomSocialAccountAdapter'
+ACCOUNT_ADAPTER = 'core.adapters.CustomAccountAdapter'
 
 # Authentication URLs
 LOGIN_URL = '/register'
@@ -309,6 +311,7 @@ PAYMENT_MERCHANT_ID = env('PAYMENT_MERCHANT_ID', default='')
 # Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = env('TELEGRAM_BOT_TOKEN', default='')
 TELEGRAM_ADMIN_CHAT_IDS = env.list('TELEGRAM_ADMIN_CHAT_IDS', default=[])
+TELEGRAM_BACKUP_CHANNEL_ID = env('TELEGRAM_BACKUP_CHANNEL_ID', default='')
 
 # =============================================================================
 # DJANGO DEFAULTS

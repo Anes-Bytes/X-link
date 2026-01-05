@@ -2,6 +2,10 @@
    SERVICES & PORTFOLIO SECTIONS STYLING
    ============================================ */
 
+body {
+    direction: rtl;
+}
+
 /* CSS Variables are inherited from the main card template */
 
 /* ============================================
