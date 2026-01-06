@@ -203,3 +203,8 @@ INFO 2026-01-05 15:28:40,956 _client 6456 14528 HTTP Request: POST https://api.t
 INFO 2026-01-05 15:28:40,958 _application 6456 14528 Application is stopping. This might take a moment.
 INFO 2026-01-05 15:28:40,959 base 6456 14528 Scheduler has been shut down
 INFO 2026-01-05 15:28:40,959 _application 6456 14528 Application.stop() complete
+INFO 2026-01-06 13:11:14,668 autoreload 22016 4628 Watching for file changes with StatReloader
+INFO 2026-01-06 13:16:44,373 autoreload 22860 8648 Watching for file changes with StatReloader
+INFO 2026-01-06 13:18:16,388 autoreload 10804 19460 Watching for file changes with StatReloader
+INFO 2026-01-06 13:19:38,651 autoreload 20096 22128 Watching for file changes with StatReloader
+INFO 2026-01-06 13:20:07,122 autoreload 24980 17112 Watching for file changes with StatReloader
