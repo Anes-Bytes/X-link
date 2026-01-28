@@ -23,7 +23,7 @@ PROJECT_ROOT = BASE_DIR.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = True # Forced for local run as per user request
 
 # Host configuration
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
@@ -95,20 +95,28 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # DATABASE CONFIGURATION
 # =============================================================================
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST", default="localhost"),
-        'PORT': env("DB_PORT", default="3306"),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env("DB_NAME"),
+            'USER': env("DB_USER"),
+            'PASSWORD': env("DB_PASSWORD"),
+            'HOST': env("DB_HOST", default="localhost"),
+            'PORT': env("DB_PORT", default="3306"),
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
+        }
+    }
 
 
 
@@ -316,11 +324,6 @@ MELIPAYAMAK_NUMBER = env('MELIPAYAMAK_NUMBER')
 
 # Payment gateway (placeholder for future implementation)
 PAYMENT_MERCHANT_ID = env('PAYMENT_MERCHANT_ID', default='')
-
-# Telegram Bot Configuration
-TELEGRAM_BOT_TOKEN = env('TELEGRAM_BOT_TOKEN', default='')
-TELEGRAM_ADMIN_CHAT_IDS = env.list('TELEGRAM_ADMIN_CHAT_IDS', default=[])
-TELEGRAM_BACKUP_CHANNEL_ID = env('TELEGRAM_BACKUP_CHANNEL_ID', default='')
 
 # =============================================================================
 # DJANGO DEFAULTS

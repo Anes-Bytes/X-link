@@ -1,43 +1,20 @@
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_in
-from django.dispatch import receiver, Signal
 from .models import CustomUser
-from Billing.models import UserPlan
-from bot.notifier import send_telegram_notification
-import logging
-
-logger = logging.getLogger(__name__)
-
-
-user_registered = Signal()
-user_card_created = Signal()
-admin_accessed = Signal()
-backup_completed = Signal()
+from cards.models import UserCard
+from .utils import send_telegram_notification
 
 @receiver(post_save, sender=CustomUser)
-def notify_new_user(sender, instance, created, **kwargs):
+def notify_signup(sender, instance, created, **kwargs):
     if created:
-        # Assign free plan
-        try:
-            free_plan = UserPlan.objects.get(value=UserPlan.PlanChoices.Free)
-            instance.plan.add(free_plan)
-        except UserPlan.DoesNotExist:
-            pass
-        
-        # Send Telegram notification
-        msg = (
-            "🆕 **ثبت نام کاربر جدید**\n\n"
-            f"👤 نام: {instance.full_name or 'N/A'}\n"
-            f"📞 شماره: {instance.phone}\n"
-            f"📧 ایمیل: {instance.email or 'N/A'}"
-        )
-        send_telegram_notification(msg)
+        send_telegram_notification(f"🆕 کاربر جدید ثبت‌نام کرد:\n👤 نام: {instance.full_name or 'نامشخص'}\n📞 شماره: {instance.phone or 'نامشخص'}")
 
 @receiver(user_logged_in)
-def notify_user_login(sender, request, user, **kwargs):
-    msg = (
-        "🔑 **ورود کاربر**\n\n"
-        f"👤 کاربر: {user.full_name or user.phone}\n"
-        f"⏰ زمان: {user.last_login.strftime('%Y-%m-%d %H:%M:%S')}"
-    )
-    send_telegram_notification(msg)
+def notify_login(sender, request, user, **kwargs):
+    send_telegram_notification(f"👤 کاربر `{user.full_name or user.phone}` وارد سیستم شد.")
+
+@receiver(post_save, sender=UserCard)
+def notify_card_creation(sender, instance, created, **kwargs):
+    if created:
+        send_telegram_notification(f"🏗 کارت جدید ایجاد شد:\n👤 مالک: {instance.name}\n🔗 آیدی: @{instance.username}")

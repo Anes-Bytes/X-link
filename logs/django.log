@@ -208,3 +208,779 @@ INFO 2026-01-06 13:16:44,373 autoreload 22860 8648 Watching for file changes wit
 INFO 2026-01-06 13:18:16,388 autoreload 10804 19460 Watching for file changes with StatReloader
 INFO 2026-01-06 13:19:38,651 autoreload 20096 22128 Watching for file changes with StatReloader
 INFO 2026-01-06 13:20:07,122 autoreload 24980 17112 Watching for file changes with StatReloader
+INFO 2026-01-27 22:17:39,448 autoreload 6660 18332 Watching for file changes with StatReloader
+INFO 2026-01-27 22:22:57,591 autoreload 6660 18332 D:\Work Space\X-link\config\settings.py changed, reloading.
+INFO 2026-01-27 22:22:58,047 autoreload 1376 19764 Watching for file changes with StatReloader
+INFO 2026-01-27 22:52:35,995 autoreload 22764 22496 Watching for file changes with StatReloader
+INFO 2026-01-27 23:16:28,269 autoreload 17028 6344 Watching for file changes with StatReloader
+INFO 2026-01-27 23:18:43,465 autoreload 20248 5020 Watching for file changes with StatReloader
+INFO 2026-01-27 23:18:45,999 basehttp 17028 24848 "GET / HTTP/1.1" 200 14753
+INFO 2026-01-27 23:18:46,102 basehttp 17028 24848 "GET /static/styles.css HTTP/1.1" 200 95922
+INFO 2026-01-27 23:18:46,108 basehttp 17028 11016 "GET /static/pricing-landing.js HTTP/1.1" 200 7328
+INFO 2026-01-27 23:18:46,109 basehttp 17028 7532 "GET /static/carousel.js HTTP/1.1" 200 9068
+INFO 2026-01-27 23:18:46,109 basehttp 17028 3844 "GET /static/script.js HTTP/1.1" 200 12095
+INFO 2026-01-27 23:19:10,776 basehttp 17028 7532 "GET / HTTP/1.1" 200 14753
+WARNING 2026-01-27 23:19:11,635 log 17028 7532 Not Found: /favicon.ico
+WARNING 2026-01-27 23:19:11,635 basehttp 17028 7532 "GET /favicon.ico HTTP/1.1" 404 5800
+INFO 2026-01-27 23:21:34,470 basehttp 17028 7532 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-01-27 23:21:34,588 basehttp 17028 7532 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4410
+INFO 2026-01-27 23:21:34,616 basehttp 17028 7532 "GET /static/admin/css/rtl.css HTTP/1.1" 200 4772
+INFO 2026-01-27 23:21:34,616 basehttp 17028 3844 "GET /static/admin/css/responsive_rtl.css HTTP/1.1" 200 1991
+INFO 2026-01-27 23:21:38,461 basehttp 17028 3844 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-01-27 23:21:38,498 basehttp 17028 3844 "GET /admin/ HTTP/1.1" 200 19357
+INFO 2026-01-27 23:21:38,537 basehttp 17028 3844 "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2026-01-27 23:21:46,981 basehttp 17028 3844 "GET /admin/socialaccount/socialtoken/add/ HTTP/1.1" 200 22664
+INFO 2026-01-27 23:21:47,009 basehttp 17028 3844 "GET /static/admin/css/forms.css HTTP/1.1" 200 8525
+INFO 2026-01-27 23:21:47,020 basehttp 17028 27368 "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2026-01-27 23:21:47,025 basehttp 17028 24848 "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+INFO 2026-01-27 23:21:47,027 basehttp 17028 20972 "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2026-01-27 23:21:47,031 basehttp 17028 27368 "GET /static/admin/css/widgets.css HTTP/1.1" 200 11973
+INFO 2026-01-27 23:21:47,032 basehttp 17028 3844 "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2026-01-27 23:21:47,038 basehttp 17028 7532 "GET /admin/jsi18n/ HTTP/1.1" 200 12738
+INFO 2026-01-27 23:21:47,047 basehttp 17028 24848 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2026-01-27 23:21:47,048 basehttp 17028 3844 "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2026-01-27 23:21:47,049 basehttp 17028 27368 "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2026-01-27 23:21:47,051 basehttp 17028 20972 "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2026-01-27 23:21:47,058 basehttp 17028 11016 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2026-01-27 23:21:47,062 basehttp 17028 24848 "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2026-01-27 23:21:47,081 basehttp 17028 24848 "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2026-01-27 23:21:47,120 basehttp 17028 7532 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2026-01-27 23:21:47,140 basehttp 17028 7532 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2026-01-27 23:21:47,163 basehttp 17028 24848 "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2026-01-27 23:21:47,164 basehttp 17028 7532 "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2026-01-27 23:22:04,471 basehttp 17028 7532 "GET / HTTP/1.1" 200 14758
+INFO 2026-01-27 23:22:07,074 basehttp 17028 7532 "GET /dashboard HTTP/1.1" 200 32608
+INFO 2026-01-27 23:22:07,085 basehttp 17028 7532 "GET /static/dashboard-themed.css HTTP/1.1" 200 39060
+INFO 2026-01-27 23:22:11,363 basehttp 17028 7532 "GET /dashboard HTTP/1.1" 200 32608
+INFO 2026-01-27 23:22:17,278 basehttp 17028 7532 "GET /card/builder/ HTTP/1.1" 200 36988
+INFO 2026-01-27 23:22:46,728 views 17028 7532 Card saved for user None, card_id=1
+INFO 2026-01-27 23:22:46,729 basehttp 17028 7532 "POST /card/builder/ HTTP/1.1" 302 0
+INFO 2026-01-27 23:22:46,736 views 17028 7532 Card success page viewed by user None for card_id=1
+INFO 2026-01-27 23:22:46,739 basehttp 17028 7532 "GET /card/success/1/ HTTP/1.1" 200 23446
+INFO 2026-01-28 13:22:01,501 autoreload 10336 19588 Watching for file changes with StatReloader
+INFO 2026-01-28 13:22:32,458 autoreload 10336 19588 D:\Work Space\X-link\core\apps.py changed, reloading.
+INFO 2026-01-28 13:22:33,193 autoreload 27132 19828 Watching for file changes with StatReloader
+WARNING 2026-01-28 13:22:36,769 base 27132 25740 Session data corrupted
+INFO 2026-01-28 13:22:36,770 basehttp 27132 25740 "GET / HTTP/1.1" 200 14753
+WARNING 2026-01-28 13:22:37,050 log 27132 25740 Not Found: /favicon.ico
+WARNING 2026-01-28 13:22:37,057 basehttp 27132 25740 "GET /favicon.ico HTTP/1.1" 404 5800
+WARNING 2026-01-28 13:22:38,725 base 27132 25740 Session data corrupted
+INFO 2026-01-28 13:22:38,727 basehttp 27132 25740 "GET /card/builder/ HTTP/1.1" 302 0
+WARNING 2026-01-28 13:22:38,731 base 27132 25740 Session data corrupted
+ERROR 2026-01-28 13:22:38,919 log 27132 25740 Internal Server Error: /register
+Traceback (most recent call last):
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Work Space\X-link\core\views.py", line 223, in login_view
+    return render(
+        request,
+    ...<3 lines>...
+        }
+    )
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Anes\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\django\template\library.py", line 321, in render
+    output = self.func(*resolved_args, **resolved_kwargs)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\templatetags\socialaccount.py", line 21, in provider_login_url
+    provider = adapter.get_provider(request, provider)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\adapter.py", line 212, in get_provider
+    app = self.get_app(request, provider=provider, client_id=client_id)
+  File "C:\Users\Anes\AppData\Roaming\Python\Python314\site-packages\allauth\socialaccount\adapter.py", line 302, in get_app
+    raise SocialApp.DoesNotExist()
+allauth.socialaccount.models.SocialApp.DoesNotExist
+ERROR 2026-01-28 13:22:38,922 basehttp 27132 25740 "GET /register?next=/card/builder/ HTTP/1.1" 500 166481
+WARNING 2026-01-28 13:22:48,942 base 27132 14476 Session data corrupted
+INFO 2026-01-28 13:22:48,943 basehttp 27132 14476 "GET /pricing/ HTTP/1.1" 200 16782
+INFO 2026-01-28 13:22:49,006 basehttp 27132 14476 "GET /static/pricing-farsi.css HTTP/1.1" 200 20458
+INFO 2026-01-28 13:22:49,006 basehttp 27132 25136 "GET /static/pricing-farsi.js HTTP/1.1" 200 15011
+WARNING 2026-01-28 13:24:25,526 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:25,527 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:24:29,582 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:29,584 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:24:30,654 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:30,655 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:24:31,710 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:31,711 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:24:33,336 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:33,337 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:24:34,328 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:34,329 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:24:35,442 base 27132 25136 Session data corrupted
+INFO 2026-01-28 13:24:35,443 basehttp 27132 25136 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:32:13,167 base 27132 20848 Session data corrupted
+INFO 2026-01-28 13:32:13,168 basehttp 27132 20848 "GET /pricing/ HTTP/1.1" 200 16780
+WARNING 2026-01-28 13:37:53,924 base 27132 13560 Session data corrupted
+INFO 2026-01-28 13:37:53,925 basehttp 27132 13560 "GET /pricing/ HTTP/1.1" 200 16780
+INFO 2026-01-28 13:54:07,633 autoreload 27132 19828 D:\Work Space\X-link\core\apps.py changed, reloading.
+INFO 2026-01-28 13:54:08,825 autoreload 12616 23536 Watching for file changes with StatReloader
+INFO 2026-01-28 14:00:53,287 autoreload 23404 22320 Watching for file changes with StatReloader
+INFO 2026-01-28 14:14:52,623 autoreload 23192 19540 Watching for file changes with StatReloader
+INFO 2026-01-28 14:18:07,565 base 14292 2620 Adding job tentatively -- it will be properly scheduled when the scheduler starts
+INFO 2026-01-28 14:18:07,566 base 14292 2620 Added job "scheduled_backup" to job store "default"
+INFO 2026-01-28 14:18:07,566 base 14292 2620 Scheduler started
+INFO 2026-01-28 14:18:07,566 bot 14292 2620 Starting bot...
+INFO 2026-01-28 14:18:07,566 dispatcher 14292 2620 Start polling
+INFO 2026-01-28 14:18:12,604 dispatcher 14292 2620 Run polling for bot @XlinxManage_Bot id=8350071126 - 'X-link'
+INFO 2026-01-28 14:18:41,429 autoreload 2500 13316 Watching for file changes with StatReloader
+INFO 2026-01-28 14:20:05,528 dispatcher 14292 2620 Update id=832973123 is handled. Duration 1764 ms by bot id=8350071126
+INFO 2026-01-28 14:20:13,326 dispatcher 14292 2620 Update id=832973124 is handled. Duration 883 ms by bot id=8350071126
+INFO 2026-01-28 14:20:17,619 dispatcher 14292 2620 Update id=832973125 is handled. Duration 2615 ms by bot id=8350071126
+INFO 2026-01-28 14:20:23,590 dispatcher 14292 2620 Update id=832973126 is handled. Duration 1020 ms by bot id=8350071126
+INFO 2026-01-28 14:20:28,258 dispatcher 14292 2620 Update id=832973127 is handled. Duration 1993 ms by bot id=8350071126
+INFO 2026-01-28 14:20:32,823 dispatcher 14292 2620 Update id=832973128 is handled. Duration 1388 ms by bot id=8350071126
+INFO 2026-01-28 14:20:33,795 dispatcher 14292 2620 Update id=832973129 is not handled. Duration 3 ms by bot id=8350071126
+ERROR 2026-01-28 14:25:55,592 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+WARNING 2026-01-28 14:25:55,593 dispatcher 14292 2620 Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8350071126)
+ERROR 2026-01-28 14:25:56,610 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:25:56,611 dispatcher 14292 2620 Sleep for 1.064498 seconds and try again... (tryings = 1, bot id = 8350071126)
+ERROR 2026-01-28 14:25:57,689 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:25:57,689 dispatcher 14292 2620 Sleep for 1.430334 seconds and try again... (tryings = 2, bot id = 8350071126)
+ERROR 2026-01-28 14:25:59,125 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:25:59,125 dispatcher 14292 2620 Sleep for 2.045414 seconds and try again... (tryings = 3, bot id = 8350071126)
+ERROR 2026-01-28 14:26:01,173 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:01,174 dispatcher 14292 2620 Sleep for 2.558823 seconds and try again... (tryings = 4, bot id = 8350071126)
+ERROR 2026-01-28 14:26:03,743 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:03,743 dispatcher 14292 2620 Sleep for 3.319964 seconds and try again... (tryings = 5, bot id = 8350071126)
+ERROR 2026-01-28 14:26:07,073 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:07,073 dispatcher 14292 2620 Sleep for 4.348887 seconds and try again... (tryings = 6, bot id = 8350071126)
+ERROR 2026-01-28 14:26:11,434 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:11,434 dispatcher 14292 2620 Sleep for 5.055529 seconds and try again... (tryings = 7, bot id = 8350071126)
+ERROR 2026-01-28 14:26:16,500 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:16,501 dispatcher 14292 2620 Sleep for 4.961581 seconds and try again... (tryings = 8, bot id = 8350071126)
+ERROR 2026-01-28 14:26:21,474 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:21,475 dispatcher 14292 2620 Sleep for 4.931956 seconds and try again... (tryings = 9, bot id = 8350071126)
+ERROR 2026-01-28 14:26:26,415 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:26,416 dispatcher 14292 2620 Sleep for 4.759263 seconds and try again... (tryings = 10, bot id = 8350071126)
+ERROR 2026-01-28 14:26:31,188 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:31,189 dispatcher 14292 2620 Sleep for 5.017790 seconds and try again... (tryings = 11, bot id = 8350071126)
+ERROR 2026-01-28 14:26:36,223 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:36,223 dispatcher 14292 2620 Sleep for 5.128138 seconds and try again... (tryings = 12, bot id = 8350071126)
+ERROR 2026-01-28 14:26:41,370 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:41,370 dispatcher 14292 2620 Sleep for 4.909725 seconds and try again... (tryings = 13, bot id = 8350071126)
+ERROR 2026-01-28 14:26:46,296 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:46,296 dispatcher 14292 2620 Sleep for 4.987193 seconds and try again... (tryings = 14, bot id = 8350071126)
+ERROR 2026-01-28 14:26:51,290 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:51,291 dispatcher 14292 2620 Sleep for 5.186800 seconds and try again... (tryings = 15, bot id = 8350071126)
+ERROR 2026-01-28 14:26:56,491 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:26:56,492 dispatcher 14292 2620 Sleep for 4.929338 seconds and try again... (tryings = 16, bot id = 8350071126)
+ERROR 2026-01-28 14:27:01,438 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:01,438 dispatcher 14292 2620 Sleep for 4.869117 seconds and try again... (tryings = 17, bot id = 8350071126)
+ERROR 2026-01-28 14:27:06,318 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:06,318 dispatcher 14292 2620 Sleep for 4.988735 seconds and try again... (tryings = 18, bot id = 8350071126)
+ERROR 2026-01-28 14:27:11,308 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:11,308 dispatcher 14292 2620 Sleep for 4.991041 seconds and try again... (tryings = 19, bot id = 8350071126)
+ERROR 2026-01-28 14:27:16,315 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:16,315 dispatcher 14292 2620 Sleep for 4.933413 seconds and try again... (tryings = 20, bot id = 8350071126)
+ERROR 2026-01-28 14:27:21,258 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:21,258 dispatcher 14292 2620 Sleep for 5.133913 seconds and try again... (tryings = 21, bot id = 8350071126)
+ERROR 2026-01-28 14:27:26,405 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:26,405 dispatcher 14292 2620 Sleep for 5.021494 seconds and try again... (tryings = 22, bot id = 8350071126)
+ERROR 2026-01-28 14:27:31,439 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:31,439 dispatcher 14292 2620 Sleep for 4.933630 seconds and try again... (tryings = 23, bot id = 8350071126)
+ERROR 2026-01-28 14:27:36,386 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:36,386 dispatcher 14292 2620 Sleep for 5.039765 seconds and try again... (tryings = 24, bot id = 8350071126)
+ERROR 2026-01-28 14:27:41,444 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:41,444 dispatcher 14292 2620 Sleep for 4.968500 seconds and try again... (tryings = 25, bot id = 8350071126)
+ERROR 2026-01-28 14:27:46,424 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:46,425 dispatcher 14292 2620 Sleep for 5.045030 seconds and try again... (tryings = 26, bot id = 8350071126)
+ERROR 2026-01-28 14:27:51,475 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:51,475 dispatcher 14292 2620 Sleep for 5.003986 seconds and try again... (tryings = 27, bot id = 8350071126)
+ERROR 2026-01-28 14:27:56,494 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:27:56,495 dispatcher 14292 2620 Sleep for 5.085966 seconds and try again... (tryings = 28, bot id = 8350071126)
+ERROR 2026-01-28 14:28:01,592 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:01,592 dispatcher 14292 2620 Sleep for 4.948069 seconds and try again... (tryings = 29, bot id = 8350071126)
+ERROR 2026-01-28 14:28:06,550 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:06,551 dispatcher 14292 2620 Sleep for 5.100033 seconds and try again... (tryings = 30, bot id = 8350071126)
+ERROR 2026-01-28 14:28:11,667 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:11,667 dispatcher 14292 2620 Sleep for 5.067136 seconds and try again... (tryings = 31, bot id = 8350071126)
+ERROR 2026-01-28 14:28:16,749 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:16,749 dispatcher 14292 2620 Sleep for 4.909818 seconds and try again... (tryings = 32, bot id = 8350071126)
+ERROR 2026-01-28 14:28:21,674 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:21,675 dispatcher 14292 2620 Sleep for 5.053831 seconds and try again... (tryings = 33, bot id = 8350071126)
+ERROR 2026-01-28 14:28:26,733 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:26,733 dispatcher 14292 2620 Sleep for 4.912120 seconds and try again... (tryings = 34, bot id = 8350071126)
+ERROR 2026-01-28 14:28:31,651 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:31,651 dispatcher 14292 2620 Sleep for 5.041812 seconds and try again... (tryings = 35, bot id = 8350071126)
+ERROR 2026-01-28 14:28:36,701 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:36,701 dispatcher 14292 2620 Sleep for 4.955881 seconds and try again... (tryings = 36, bot id = 8350071126)
+ERROR 2026-01-28 14:28:41,672 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:41,672 dispatcher 14292 2620 Sleep for 4.802955 seconds and try again... (tryings = 37, bot id = 8350071126)
+ERROR 2026-01-28 14:28:46,477 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:46,477 dispatcher 14292 2620 Sleep for 5.080358 seconds and try again... (tryings = 38, bot id = 8350071126)
+ERROR 2026-01-28 14:28:51,569 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:51,569 dispatcher 14292 2620 Sleep for 5.190865 seconds and try again... (tryings = 39, bot id = 8350071126)
+ERROR 2026-01-28 14:28:56,778 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:28:56,778 dispatcher 14292 2620 Sleep for 5.129751 seconds and try again... (tryings = 40, bot id = 8350071126)
+ERROR 2026-01-28 14:29:01,920 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:01,920 dispatcher 14292 2620 Sleep for 5.134302 seconds and try again... (tryings = 41, bot id = 8350071126)
+ERROR 2026-01-28 14:29:07,071 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:07,071 dispatcher 14292 2620 Sleep for 5.059773 seconds and try again... (tryings = 42, bot id = 8350071126)
+ERROR 2026-01-28 14:29:12,139 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:12,140 dispatcher 14292 2620 Sleep for 5.142640 seconds and try again... (tryings = 43, bot id = 8350071126)
+ERROR 2026-01-28 14:29:17,290 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:17,290 dispatcher 14292 2620 Sleep for 4.964586 seconds and try again... (tryings = 44, bot id = 8350071126)
+ERROR 2026-01-28 14:29:22,264 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:22,264 dispatcher 14292 2620 Sleep for 5.030699 seconds and try again... (tryings = 45, bot id = 8350071126)
+ERROR 2026-01-28 14:29:27,301 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:27,302 dispatcher 14292 2620 Sleep for 4.760234 seconds and try again... (tryings = 46, bot id = 8350071126)
+ERROR 2026-01-28 14:29:32,080 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:32,081 dispatcher 14292 2620 Sleep for 4.887068 seconds and try again... (tryings = 47, bot id = 8350071126)
+ERROR 2026-01-28 14:29:36,980 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:36,980 dispatcher 14292 2620 Sleep for 4.873554 seconds and try again... (tryings = 48, bot id = 8350071126)
+ERROR 2026-01-28 14:29:41,861 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:41,861 dispatcher 14292 2620 Sleep for 5.054429 seconds and try again... (tryings = 49, bot id = 8350071126)
+ERROR 2026-01-28 14:29:46,928 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:46,928 dispatcher 14292 2620 Sleep for 5.111078 seconds and try again... (tryings = 50, bot id = 8350071126)
+ERROR 2026-01-28 14:29:52,053 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:52,054 dispatcher 14292 2620 Sleep for 4.960242 seconds and try again... (tryings = 51, bot id = 8350071126)
+ERROR 2026-01-28 14:29:57,031 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:29:57,031 dispatcher 14292 2620 Sleep for 4.855767 seconds and try again... (tryings = 52, bot id = 8350071126)
+ERROR 2026-01-28 14:30:01,899 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:01,900 dispatcher 14292 2620 Sleep for 5.142577 seconds and try again... (tryings = 53, bot id = 8350071126)
+ERROR 2026-01-28 14:30:07,056 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:07,056 dispatcher 14292 2620 Sleep for 4.904550 seconds and try again... (tryings = 54, bot id = 8350071126)
+ERROR 2026-01-28 14:30:11,973 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:11,973 dispatcher 14292 2620 Sleep for 5.089893 seconds and try again... (tryings = 55, bot id = 8350071126)
+ERROR 2026-01-28 14:30:17,081 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:17,081 dispatcher 14292 2620 Sleep for 4.903019 seconds and try again... (tryings = 56, bot id = 8350071126)
+ERROR 2026-01-28 14:30:21,995 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:21,996 dispatcher 14292 2620 Sleep for 5.092799 seconds and try again... (tryings = 57, bot id = 8350071126)
+ERROR 2026-01-28 14:30:27,092 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:27,093 dispatcher 14292 2620 Sleep for 4.970898 seconds and try again... (tryings = 58, bot id = 8350071126)
+ERROR 2026-01-28 14:30:32,080 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:32,081 dispatcher 14292 2620 Sleep for 5.105066 seconds and try again... (tryings = 59, bot id = 8350071126)
+ERROR 2026-01-28 14:30:37,192 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:37,192 dispatcher 14292 2620 Sleep for 4.811514 seconds and try again... (tryings = 60, bot id = 8350071126)
+ERROR 2026-01-28 14:30:42,016 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:42,016 dispatcher 14292 2620 Sleep for 5.020325 seconds and try again... (tryings = 61, bot id = 8350071126)
+ERROR 2026-01-28 14:30:47,050 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:47,051 dispatcher 14292 2620 Sleep for 5.015049 seconds and try again... (tryings = 62, bot id = 8350071126)
+ERROR 2026-01-28 14:30:52,069 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:52,069 dispatcher 14292 2620 Sleep for 5.030026 seconds and try again... (tryings = 63, bot id = 8350071126)
+ERROR 2026-01-28 14:30:57,103 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:30:57,104 dispatcher 14292 2620 Sleep for 4.827228 seconds and try again... (tryings = 64, bot id = 8350071126)
+ERROR 2026-01-28 14:31:01,943 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:01,943 dispatcher 14292 2620 Sleep for 4.974741 seconds and try again... (tryings = 65, bot id = 8350071126)
+ERROR 2026-01-28 14:31:06,930 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:06,930 dispatcher 14292 2620 Sleep for 4.966262 seconds and try again... (tryings = 66, bot id = 8350071126)
+ERROR 2026-01-28 14:31:11,899 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:11,899 dispatcher 14292 2620 Sleep for 4.932427 seconds and try again... (tryings = 67, bot id = 8350071126)
+ERROR 2026-01-28 14:31:16,842 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:16,843 dispatcher 14292 2620 Sleep for 4.967663 seconds and try again... (tryings = 68, bot id = 8350071126)
+ERROR 2026-01-28 14:31:21,816 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:21,816 dispatcher 14292 2620 Sleep for 4.987309 seconds and try again... (tryings = 69, bot id = 8350071126)
+ERROR 2026-01-28 14:31:26,809 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:26,810 dispatcher 14292 2620 Sleep for 4.951298 seconds and try again... (tryings = 70, bot id = 8350071126)
+ERROR 2026-01-28 14:31:31,768 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:31,768 dispatcher 14292 2620 Sleep for 5.154012 seconds and try again... (tryings = 71, bot id = 8350071126)
+ERROR 2026-01-28 14:31:36,926 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:36,926 dispatcher 14292 2620 Sleep for 5.051283 seconds and try again... (tryings = 72, bot id = 8350071126)
+ERROR 2026-01-28 14:31:41,990 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:41,990 dispatcher 14292 2620 Sleep for 5.026918 seconds and try again... (tryings = 73, bot id = 8350071126)
+ERROR 2026-01-28 14:31:47,030 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:47,030 dispatcher 14292 2620 Sleep for 4.944780 seconds and try again... (tryings = 74, bot id = 8350071126)
+ERROR 2026-01-28 14:31:51,991 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:51,991 dispatcher 14292 2620 Sleep for 5.017835 seconds and try again... (tryings = 75, bot id = 8350071126)
+ERROR 2026-01-28 14:31:57,013 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:31:57,014 dispatcher 14292 2620 Sleep for 5.029094 seconds and try again... (tryings = 76, bot id = 8350071126)
+ERROR 2026-01-28 14:32:02,045 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:02,045 dispatcher 14292 2620 Sleep for 4.952461 seconds and try again... (tryings = 77, bot id = 8350071126)
+ERROR 2026-01-28 14:32:07,008 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:07,009 dispatcher 14292 2620 Sleep for 4.891543 seconds and try again... (tryings = 78, bot id = 8350071126)
+ERROR 2026-01-28 14:32:11,916 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:11,917 dispatcher 14292 2620 Sleep for 5.012157 seconds and try again... (tryings = 79, bot id = 8350071126)
+ERROR 2026-01-28 14:32:16,942 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:16,942 dispatcher 14292 2620 Sleep for 4.782678 seconds and try again... (tryings = 80, bot id = 8350071126)
+ERROR 2026-01-28 14:32:21,728 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:21,728 dispatcher 14292 2620 Sleep for 4.869155 seconds and try again... (tryings = 81, bot id = 8350071126)
+ERROR 2026-01-28 14:32:26,613 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:26,614 dispatcher 14292 2620 Sleep for 4.863893 seconds and try again... (tryings = 82, bot id = 8350071126)
+ERROR 2026-01-28 14:32:31,483 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:31,483 dispatcher 14292 2620 Sleep for 4.788081 seconds and try again... (tryings = 83, bot id = 8350071126)
+ERROR 2026-01-28 14:32:36,288 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:36,289 dispatcher 14292 2620 Sleep for 4.850759 seconds and try again... (tryings = 84, bot id = 8350071126)
+ERROR 2026-01-28 14:32:41,154 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:41,154 dispatcher 14292 2620 Sleep for 4.905057 seconds and try again... (tryings = 85, bot id = 8350071126)
+ERROR 2026-01-28 14:32:46,078 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:46,078 dispatcher 14292 2620 Sleep for 5.018598 seconds and try again... (tryings = 86, bot id = 8350071126)
+ERROR 2026-01-28 14:32:51,115 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:51,115 dispatcher 14292 2620 Sleep for 5.115041 seconds and try again... (tryings = 87, bot id = 8350071126)
+ERROR 2026-01-28 14:32:56,240 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:32:56,241 dispatcher 14292 2620 Sleep for 5.067363 seconds and try again... (tryings = 88, bot id = 8350071126)
+ERROR 2026-01-28 14:33:01,323 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:01,324 dispatcher 14292 2620 Sleep for 4.934360 seconds and try again... (tryings = 89, bot id = 8350071126)
+ERROR 2026-01-28 14:33:06,267 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:06,267 dispatcher 14292 2620 Sleep for 4.958024 seconds and try again... (tryings = 90, bot id = 8350071126)
+ERROR 2026-01-28 14:33:11,228 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:11,229 dispatcher 14292 2620 Sleep for 5.110312 seconds and try again... (tryings = 91, bot id = 8350071126)
+ERROR 2026-01-28 14:33:16,350 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:16,350 dispatcher 14292 2620 Sleep for 5.115484 seconds and try again... (tryings = 92, bot id = 8350071126)
+ERROR 2026-01-28 14:33:21,482 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:21,482 dispatcher 14292 2620 Sleep for 5.074834 seconds and try again... (tryings = 93, bot id = 8350071126)
+ERROR 2026-01-28 14:33:26,565 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:26,565 dispatcher 14292 2620 Sleep for 4.996040 seconds and try again... (tryings = 94, bot id = 8350071126)
+ERROR 2026-01-28 14:33:31,574 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:31,575 dispatcher 14292 2620 Sleep for 4.959490 seconds and try again... (tryings = 95, bot id = 8350071126)
+ERROR 2026-01-28 14:33:36,549 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:36,550 dispatcher 14292 2620 Sleep for 5.127853 seconds and try again... (tryings = 96, bot id = 8350071126)
+ERROR 2026-01-28 14:33:41,696 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:41,697 dispatcher 14292 2620 Sleep for 4.923882 seconds and try again... (tryings = 97, bot id = 8350071126)
+ERROR 2026-01-28 14:33:46,628 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:46,628 dispatcher 14292 2620 Sleep for 4.821849 seconds and try again... (tryings = 98, bot id = 8350071126)
+ERROR 2026-01-28 14:33:51,466 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:51,467 dispatcher 14292 2620 Sleep for 5.026215 seconds and try again... (tryings = 99, bot id = 8350071126)
+ERROR 2026-01-28 14:33:56,502 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:33:56,502 dispatcher 14292 2620 Sleep for 4.872799 seconds and try again... (tryings = 100, bot id = 8350071126)
+ERROR 2026-01-28 14:34:01,386 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:01,387 dispatcher 14292 2620 Sleep for 4.913885 seconds and try again... (tryings = 101, bot id = 8350071126)
+ERROR 2026-01-28 14:34:06,308 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:06,308 dispatcher 14292 2620 Sleep for 4.898536 seconds and try again... (tryings = 102, bot id = 8350071126)
+ERROR 2026-01-28 14:34:11,223 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:11,224 dispatcher 14292 2620 Sleep for 4.832526 seconds and try again... (tryings = 103, bot id = 8350071126)
+ERROR 2026-01-28 14:34:16,075 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:16,075 dispatcher 14292 2620 Sleep for 4.881835 seconds and try again... (tryings = 104, bot id = 8350071126)
+ERROR 2026-01-28 14:34:20,971 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:20,972 dispatcher 14292 2620 Sleep for 5.184230 seconds and try again... (tryings = 105, bot id = 8350071126)
+ERROR 2026-01-28 14:34:26,158 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:26,159 dispatcher 14292 2620 Sleep for 4.972765 seconds and try again... (tryings = 106, bot id = 8350071126)
+ERROR 2026-01-28 14:34:31,145 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:31,145 dispatcher 14292 2620 Sleep for 4.955910 seconds and try again... (tryings = 107, bot id = 8350071126)
+ERROR 2026-01-28 14:34:36,106 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:36,107 dispatcher 14292 2620 Sleep for 4.889387 seconds and try again... (tryings = 108, bot id = 8350071126)
+ERROR 2026-01-28 14:34:41,009 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:41,009 dispatcher 14292 2620 Sleep for 5.146305 seconds and try again... (tryings = 109, bot id = 8350071126)
+ERROR 2026-01-28 14:34:46,166 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:46,166 dispatcher 14292 2620 Sleep for 5.130842 seconds and try again... (tryings = 110, bot id = 8350071126)
+ERROR 2026-01-28 14:34:51,314 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:51,315 dispatcher 14292 2620 Sleep for 5.015767 seconds and try again... (tryings = 111, bot id = 8350071126)
+ERROR 2026-01-28 14:34:56,339 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:34:56,339 dispatcher 14292 2620 Sleep for 4.997741 seconds and try again... (tryings = 112, bot id = 8350071126)
+ERROR 2026-01-28 14:35:01,341 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:01,342 dispatcher 14292 2620 Sleep for 4.905258 seconds and try again... (tryings = 113, bot id = 8350071126)
+ERROR 2026-01-28 14:35:06,256 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:06,256 dispatcher 14292 2620 Sleep for 4.957795 seconds and try again... (tryings = 114, bot id = 8350071126)
+ERROR 2026-01-28 14:35:11,220 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:11,220 dispatcher 14292 2620 Sleep for 5.043142 seconds and try again... (tryings = 115, bot id = 8350071126)
+ERROR 2026-01-28 14:35:16,273 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:16,274 dispatcher 14292 2620 Sleep for 5.053562 seconds and try again... (tryings = 116, bot id = 8350071126)
+ERROR 2026-01-28 14:35:21,339 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:21,340 dispatcher 14292 2620 Sleep for 5.071916 seconds and try again... (tryings = 117, bot id = 8350071126)
+ERROR 2026-01-28 14:35:26,427 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:26,427 dispatcher 14292 2620 Sleep for 4.977513 seconds and try again... (tryings = 118, bot id = 8350071126)
+ERROR 2026-01-28 14:35:31,416 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:31,417 dispatcher 14292 2620 Sleep for 5.100257 seconds and try again... (tryings = 119, bot id = 8350071126)
+ERROR 2026-01-28 14:35:36,528 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:36,528 dispatcher 14292 2620 Sleep for 5.017530 seconds and try again... (tryings = 120, bot id = 8350071126)
+ERROR 2026-01-28 14:35:41,550 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:41,550 dispatcher 14292 2620 Sleep for 5.035910 seconds and try again... (tryings = 121, bot id = 8350071126)
+ERROR 2026-01-28 14:35:46,589 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:46,589 dispatcher 14292 2620 Sleep for 5.020346 seconds and try again... (tryings = 122, bot id = 8350071126)
+ERROR 2026-01-28 14:35:51,623 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:51,624 dispatcher 14292 2620 Sleep for 5.045566 seconds and try again... (tryings = 123, bot id = 8350071126)
+ERROR 2026-01-28 14:35:56,674 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:35:56,674 dispatcher 14292 2620 Sleep for 5.136800 seconds and try again... (tryings = 124, bot id = 8350071126)
+ERROR 2026-01-28 14:36:01,817 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:01,817 dispatcher 14292 2620 Sleep for 4.980809 seconds and try again... (tryings = 125, bot id = 8350071126)
+ERROR 2026-01-28 14:36:06,806 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:06,806 dispatcher 14292 2620 Sleep for 5.060048 seconds and try again... (tryings = 126, bot id = 8350071126)
+ERROR 2026-01-28 14:36:11,873 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:11,873 dispatcher 14292 2620 Sleep for 5.003388 seconds and try again... (tryings = 127, bot id = 8350071126)
+ERROR 2026-01-28 14:36:16,894 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:16,894 dispatcher 14292 2620 Sleep for 5.179864 seconds and try again... (tryings = 128, bot id = 8350071126)
+ERROR 2026-01-28 14:36:22,083 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:22,083 dispatcher 14292 2620 Sleep for 5.200651 seconds and try again... (tryings = 129, bot id = 8350071126)
+ERROR 2026-01-28 14:36:27,293 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:27,293 dispatcher 14292 2620 Sleep for 5.077974 seconds and try again... (tryings = 130, bot id = 8350071126)
+ERROR 2026-01-28 14:36:32,376 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:32,377 dispatcher 14292 2620 Sleep for 4.921977 seconds and try again... (tryings = 131, bot id = 8350071126)
+ERROR 2026-01-28 14:36:37,312 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:37,312 dispatcher 14292 2620 Sleep for 4.771751 seconds and try again... (tryings = 132, bot id = 8350071126)
+ERROR 2026-01-28 14:36:42,087 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:42,087 dispatcher 14292 2620 Sleep for 5.224837 seconds and try again... (tryings = 133, bot id = 8350071126)
+ERROR 2026-01-28 14:36:47,321 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:47,321 dispatcher 14292 2620 Sleep for 4.835397 seconds and try again... (tryings = 134, bot id = 8350071126)
+ERROR 2026-01-28 14:36:52,172 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:52,173 dispatcher 14292 2620 Sleep for 5.090508 seconds and try again... (tryings = 135, bot id = 8350071126)
+ERROR 2026-01-28 14:36:57,276 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:36:57,276 dispatcher 14292 2620 Sleep for 4.873132 seconds and try again... (tryings = 136, bot id = 8350071126)
+ERROR 2026-01-28 14:37:02,159 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:02,159 dispatcher 14292 2620 Sleep for 4.954557 seconds and try again... (tryings = 137, bot id = 8350071126)
+ERROR 2026-01-28 14:37:07,131 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:07,131 dispatcher 14292 2620 Sleep for 4.915284 seconds and try again... (tryings = 138, bot id = 8350071126)
+ERROR 2026-01-28 14:37:12,060 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:12,060 dispatcher 14292 2620 Sleep for 4.909351 seconds and try again... (tryings = 139, bot id = 8350071126)
+ERROR 2026-01-28 14:37:16,986 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:16,986 dispatcher 14292 2620 Sleep for 4.973948 seconds and try again... (tryings = 140, bot id = 8350071126)
+ERROR 2026-01-28 14:37:21,963 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:21,964 dispatcher 14292 2620 Sleep for 5.162663 seconds and try again... (tryings = 141, bot id = 8350071126)
+ERROR 2026-01-28 14:37:27,136 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:27,137 dispatcher 14292 2620 Sleep for 4.948262 seconds and try again... (tryings = 142, bot id = 8350071126)
+ERROR 2026-01-28 14:37:32,096 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:32,096 dispatcher 14292 2620 Sleep for 5.075950 seconds and try again... (tryings = 143, bot id = 8350071126)
+ERROR 2026-01-28 14:37:37,175 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:37,175 dispatcher 14292 2620 Sleep for 5.007160 seconds and try again... (tryings = 144, bot id = 8350071126)
+ERROR 2026-01-28 14:37:42,199 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:42,199 dispatcher 14292 2620 Sleep for 4.997597 seconds and try again... (tryings = 145, bot id = 8350071126)
+ERROR 2026-01-28 14:37:47,209 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:47,209 dispatcher 14292 2620 Sleep for 4.930356 seconds and try again... (tryings = 146, bot id = 8350071126)
+ERROR 2026-01-28 14:37:52,155 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:52,156 dispatcher 14292 2620 Sleep for 5.008132 seconds and try again... (tryings = 147, bot id = 8350071126)
+ERROR 2026-01-28 14:37:57,175 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:37:57,176 dispatcher 14292 2620 Sleep for 4.853897 seconds and try again... (tryings = 148, bot id = 8350071126)
+ERROR 2026-01-28 14:38:02,046 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:02,047 dispatcher 14292 2620 Sleep for 5.068105 seconds and try again... (tryings = 149, bot id = 8350071126)
+ERROR 2026-01-28 14:38:07,126 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:07,126 dispatcher 14292 2620 Sleep for 5.128472 seconds and try again... (tryings = 150, bot id = 8350071126)
+ERROR 2026-01-28 14:38:12,269 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:12,270 dispatcher 14292 2620 Sleep for 5.000077 seconds and try again... (tryings = 151, bot id = 8350071126)
+ERROR 2026-01-28 14:38:17,287 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:17,287 dispatcher 14292 2620 Sleep for 4.827761 seconds and try again... (tryings = 152, bot id = 8350071126)
+ERROR 2026-01-28 14:38:22,125 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:22,125 dispatcher 14292 2620 Sleep for 4.961617 seconds and try again... (tryings = 153, bot id = 8350071126)
+ERROR 2026-01-28 14:38:27,101 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:27,101 dispatcher 14292 2620 Sleep for 4.842282 seconds and try again... (tryings = 154, bot id = 8350071126)
+ERROR 2026-01-28 14:38:31,958 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:31,958 dispatcher 14292 2620 Sleep for 5.014178 seconds and try again... (tryings = 155, bot id = 8350071126)
+ERROR 2026-01-28 14:38:36,978 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:36,979 dispatcher 14292 2620 Sleep for 5.176233 seconds and try again... (tryings = 156, bot id = 8350071126)
+ERROR 2026-01-28 14:38:42,168 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:42,169 dispatcher 14292 2620 Sleep for 5.232522 seconds and try again... (tryings = 157, bot id = 8350071126)
+ERROR 2026-01-28 14:38:47,418 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:47,418 dispatcher 14292 2620 Sleep for 5.071087 seconds and try again... (tryings = 158, bot id = 8350071126)
+ERROR 2026-01-28 14:38:52,505 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:52,506 dispatcher 14292 2620 Sleep for 4.920364 seconds and try again... (tryings = 159, bot id = 8350071126)
+ERROR 2026-01-28 14:38:57,430 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:38:57,431 dispatcher 14292 2620 Sleep for 5.030478 seconds and try again... (tryings = 160, bot id = 8350071126)
+ERROR 2026-01-28 14:39:02,477 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:02,477 dispatcher 14292 2620 Sleep for 4.938226 seconds and try again... (tryings = 161, bot id = 8350071126)
+ERROR 2026-01-28 14:39:07,432 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:07,432 dispatcher 14292 2620 Sleep for 5.025710 seconds and try again... (tryings = 162, bot id = 8350071126)
+ERROR 2026-01-28 14:39:12,476 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:12,477 dispatcher 14292 2620 Sleep for 5.202391 seconds and try again... (tryings = 163, bot id = 8350071126)
+ERROR 2026-01-28 14:39:17,696 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:17,696 dispatcher 14292 2620 Sleep for 5.089888 seconds and try again... (tryings = 164, bot id = 8350071126)
+ERROR 2026-01-28 14:39:22,796 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:22,797 dispatcher 14292 2620 Sleep for 5.219195 seconds and try again... (tryings = 165, bot id = 8350071126)
+ERROR 2026-01-28 14:39:28,030 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:28,030 dispatcher 14292 2620 Sleep for 4.883249 seconds and try again... (tryings = 166, bot id = 8350071126)
+ERROR 2026-01-28 14:39:32,931 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:32,931 dispatcher 14292 2620 Sleep for 4.921413 seconds and try again... (tryings = 167, bot id = 8350071126)
+ERROR 2026-01-28 14:39:37,860 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:37,861 dispatcher 14292 2620 Sleep for 4.966105 seconds and try again... (tryings = 168, bot id = 8350071126)
+ERROR 2026-01-28 14:39:42,836 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:42,836 dispatcher 14292 2620 Sleep for 4.794046 seconds and try again... (tryings = 169, bot id = 8350071126)
+ERROR 2026-01-28 14:39:47,642 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:47,642 dispatcher 14292 2620 Sleep for 4.895048 seconds and try again... (tryings = 170, bot id = 8350071126)
+ERROR 2026-01-28 14:39:52,542 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:52,543 dispatcher 14292 2620 Sleep for 5.009945 seconds and try again... (tryings = 171, bot id = 8350071126)
+ERROR 2026-01-28 14:39:57,562 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:39:57,563 dispatcher 14292 2620 Sleep for 5.231735 seconds and try again... (tryings = 172, bot id = 8350071126)
+ERROR 2026-01-28 14:40:02,799 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:02,800 dispatcher 14292 2620 Sleep for 4.968996 seconds and try again... (tryings = 173, bot id = 8350071126)
+ERROR 2026-01-28 14:40:07,782 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:07,782 dispatcher 14292 2620 Sleep for 4.863997 seconds and try again... (tryings = 174, bot id = 8350071126)
+ERROR 2026-01-28 14:40:12,648 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:12,649 dispatcher 14292 2620 Sleep for 4.990301 seconds and try again... (tryings = 175, bot id = 8350071126)
+ERROR 2026-01-28 14:40:17,654 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:17,654 dispatcher 14292 2620 Sleep for 5.030733 seconds and try again... (tryings = 176, bot id = 8350071126)
+ERROR 2026-01-28 14:40:22,690 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:22,690 dispatcher 14292 2620 Sleep for 4.989812 seconds and try again... (tryings = 177, bot id = 8350071126)
+ERROR 2026-01-28 14:40:27,684 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:27,684 dispatcher 14292 2620 Sleep for 5.027597 seconds and try again... (tryings = 178, bot id = 8350071126)
+ERROR 2026-01-28 14:40:32,720 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:32,721 dispatcher 14292 2620 Sleep for 5.028138 seconds and try again... (tryings = 179, bot id = 8350071126)
+ERROR 2026-01-28 14:40:37,756 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:37,756 dispatcher 14292 2620 Sleep for 5.050443 seconds and try again... (tryings = 180, bot id = 8350071126)
+ERROR 2026-01-28 14:40:42,819 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:42,819 dispatcher 14292 2620 Sleep for 4.951731 seconds and try again... (tryings = 181, bot id = 8350071126)
+ERROR 2026-01-28 14:40:47,787 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:47,787 dispatcher 14292 2620 Sleep for 4.946475 seconds and try again... (tryings = 182, bot id = 8350071126)
+ERROR 2026-01-28 14:40:52,742 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:52,742 dispatcher 14292 2620 Sleep for 4.912686 seconds and try again... (tryings = 183, bot id = 8350071126)
+ERROR 2026-01-28 14:40:57,666 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:40:57,666 dispatcher 14292 2620 Sleep for 5.013338 seconds and try again... (tryings = 184, bot id = 8350071126)
+ERROR 2026-01-28 14:41:02,685 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:02,686 dispatcher 14292 2620 Sleep for 4.898200 seconds and try again... (tryings = 185, bot id = 8350071126)
+ERROR 2026-01-28 14:41:07,597 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:07,598 dispatcher 14292 2620 Sleep for 5.027096 seconds and try again... (tryings = 186, bot id = 8350071126)
+ERROR 2026-01-28 14:41:12,633 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:12,633 dispatcher 14292 2620 Sleep for 4.869369 seconds and try again... (tryings = 187, bot id = 8350071126)
+ERROR 2026-01-28 14:41:17,514 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:17,515 dispatcher 14292 2620 Sleep for 5.077293 seconds and try again... (tryings = 188, bot id = 8350071126)
+ERROR 2026-01-28 14:41:22,609 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:22,609 dispatcher 14292 2620 Sleep for 5.127971 seconds and try again... (tryings = 189, bot id = 8350071126)
+ERROR 2026-01-28 14:41:27,740 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:27,741 dispatcher 14292 2620 Sleep for 5.063704 seconds and try again... (tryings = 190, bot id = 8350071126)
+ERROR 2026-01-28 14:41:32,808 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:32,808 dispatcher 14292 2620 Sleep for 4.744600 seconds and try again... (tryings = 191, bot id = 8350071126)
+ERROR 2026-01-28 14:41:37,566 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:37,566 dispatcher 14292 2620 Sleep for 4.962760 seconds and try again... (tryings = 192, bot id = 8350071126)
+ERROR 2026-01-28 14:41:42,544 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:42,545 dispatcher 14292 2620 Sleep for 4.931885 seconds and try again... (tryings = 193, bot id = 8350071126)
+ERROR 2026-01-28 14:41:47,480 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:47,480 dispatcher 14292 2620 Sleep for 4.960428 seconds and try again... (tryings = 194, bot id = 8350071126)
+ERROR 2026-01-28 14:41:52,456 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:52,456 dispatcher 14292 2620 Sleep for 4.841377 seconds and try again... (tryings = 195, bot id = 8350071126)
+ERROR 2026-01-28 14:41:57,307 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:41:57,307 dispatcher 14292 2620 Sleep for 4.983605 seconds and try again... (tryings = 196, bot id = 8350071126)
+ERROR 2026-01-28 14:42:02,299 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:02,299 dispatcher 14292 2620 Sleep for 5.204753 seconds and try again... (tryings = 197, bot id = 8350071126)
+ERROR 2026-01-28 14:42:07,518 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:07,519 dispatcher 14292 2620 Sleep for 5.069005 seconds and try again... (tryings = 198, bot id = 8350071126)
+ERROR 2026-01-28 14:42:12,603 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:12,603 dispatcher 14292 2620 Sleep for 5.148783 seconds and try again... (tryings = 199, bot id = 8350071126)
+ERROR 2026-01-28 14:42:17,761 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:17,762 dispatcher 14292 2620 Sleep for 4.959986 seconds and try again... (tryings = 200, bot id = 8350071126)
+ERROR 2026-01-28 14:42:22,724 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:22,724 dispatcher 14292 2620 Sleep for 4.976721 seconds and try again... (tryings = 201, bot id = 8350071126)
+ERROR 2026-01-28 14:42:27,710 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:27,710 dispatcher 14292 2620 Sleep for 4.801210 seconds and try again... (tryings = 202, bot id = 8350071126)
+ERROR 2026-01-28 14:42:32,520 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:32,520 dispatcher 14292 2620 Sleep for 4.997369 seconds and try again... (tryings = 203, bot id = 8350071126)
+ERROR 2026-01-28 14:42:37,533 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:37,534 dispatcher 14292 2620 Sleep for 5.084546 seconds and try again... (tryings = 204, bot id = 8350071126)
+ERROR 2026-01-28 14:42:42,633 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:42,633 dispatcher 14292 2620 Sleep for 5.095602 seconds and try again... (tryings = 205, bot id = 8350071126)
+ERROR 2026-01-28 14:42:47,733 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:47,733 dispatcher 14292 2620 Sleep for 5.040734 seconds and try again... (tryings = 206, bot id = 8350071126)
+ERROR 2026-01-28 14:42:52,789 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:52,789 dispatcher 14292 2620 Sleep for 4.961604 seconds and try again... (tryings = 207, bot id = 8350071126)
+ERROR 2026-01-28 14:42:57,761 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:42:57,761 dispatcher 14292 2620 Sleep for 4.849371 seconds and try again... (tryings = 208, bot id = 8350071126)
+ERROR 2026-01-28 14:43:02,629 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:02,630 dispatcher 14292 2620 Sleep for 4.963170 seconds and try again... (tryings = 209, bot id = 8350071126)
+ERROR 2026-01-28 14:43:07,597 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:07,597 dispatcher 14292 2620 Sleep for 5.110938 seconds and try again... (tryings = 210, bot id = 8350071126)
+ERROR 2026-01-28 14:43:12,715 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:12,715 dispatcher 14292 2620 Sleep for 5.105028 seconds and try again... (tryings = 211, bot id = 8350071126)
+ERROR 2026-01-28 14:43:17,825 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:17,825 dispatcher 14292 2620 Sleep for 5.055574 seconds and try again... (tryings = 212, bot id = 8350071126)
+ERROR 2026-01-28 14:43:22,893 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:22,894 dispatcher 14292 2620 Sleep for 4.864244 seconds and try again... (tryings = 213, bot id = 8350071126)
+ERROR 2026-01-28 14:43:27,768 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:27,768 dispatcher 14292 2620 Sleep for 5.057377 seconds and try again... (tryings = 214, bot id = 8350071126)
+ERROR 2026-01-28 14:43:32,841 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:32,841 dispatcher 14292 2620 Sleep for 5.012760 seconds and try again... (tryings = 215, bot id = 8350071126)
+ERROR 2026-01-28 14:43:37,867 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:37,868 dispatcher 14292 2620 Sleep for 5.024297 seconds and try again... (tryings = 216, bot id = 8350071126)
+ERROR 2026-01-28 14:43:42,909 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:42,909 dispatcher 14292 2620 Sleep for 4.970870 seconds and try again... (tryings = 217, bot id = 8350071126)
+ERROR 2026-01-28 14:43:47,888 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:47,888 dispatcher 14292 2620 Sleep for 4.923557 seconds and try again... (tryings = 218, bot id = 8350071126)
+ERROR 2026-01-28 14:43:52,819 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:52,819 dispatcher 14292 2620 Sleep for 4.966741 seconds and try again... (tryings = 219, bot id = 8350071126)
+ERROR 2026-01-28 14:43:57,791 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:43:57,792 dispatcher 14292 2620 Sleep for 4.976558 seconds and try again... (tryings = 220, bot id = 8350071126)
+ERROR 2026-01-28 14:44:02,781 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:02,782 dispatcher 14292 2620 Sleep for 4.958649 seconds and try again... (tryings = 221, bot id = 8350071126)
+ERROR 2026-01-28 14:44:07,755 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:07,756 dispatcher 14292 2620 Sleep for 4.931245 seconds and try again... (tryings = 222, bot id = 8350071126)
+ERROR 2026-01-28 14:44:12,702 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:12,703 dispatcher 14292 2620 Sleep for 4.933662 seconds and try again... (tryings = 223, bot id = 8350071126)
+ERROR 2026-01-28 14:44:17,639 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:17,639 dispatcher 14292 2620 Sleep for 5.006031 seconds and try again... (tryings = 224, bot id = 8350071126)
+ERROR 2026-01-28 14:44:22,647 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:22,647 dispatcher 14292 2620 Sleep for 4.875156 seconds and try again... (tryings = 225, bot id = 8350071126)
+ERROR 2026-01-28 14:44:27,540 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:27,541 dispatcher 14292 2620 Sleep for 4.946686 seconds and try again... (tryings = 226, bot id = 8350071126)
+ERROR 2026-01-28 14:44:32,493 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:32,493 dispatcher 14292 2620 Sleep for 5.105776 seconds and try again... (tryings = 227, bot id = 8350071126)
+ERROR 2026-01-28 14:44:37,607 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:37,608 dispatcher 14292 2620 Sleep for 4.996289 seconds and try again... (tryings = 228, bot id = 8350071126)
+ERROR 2026-01-28 14:44:42,610 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:42,610 dispatcher 14292 2620 Sleep for 4.964139 seconds and try again... (tryings = 229, bot id = 8350071126)
+ERROR 2026-01-28 14:44:47,590 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:47,591 dispatcher 14292 2620 Sleep for 4.973102 seconds and try again... (tryings = 230, bot id = 8350071126)
+ERROR 2026-01-28 14:44:52,580 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:52,580 dispatcher 14292 2620 Sleep for 5.025834 seconds and try again... (tryings = 231, bot id = 8350071126)
+ERROR 2026-01-28 14:44:57,621 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:44:57,621 dispatcher 14292 2620 Sleep for 4.909250 seconds and try again... (tryings = 232, bot id = 8350071126)
+ERROR 2026-01-28 14:45:02,537 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:02,537 dispatcher 14292 2620 Sleep for 4.984439 seconds and try again... (tryings = 233, bot id = 8350071126)
+ERROR 2026-01-28 14:45:07,526 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:07,526 dispatcher 14292 2620 Sleep for 5.106726 seconds and try again... (tryings = 234, bot id = 8350071126)
+ERROR 2026-01-28 14:45:12,635 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:12,635 dispatcher 14292 2620 Sleep for 4.969566 seconds and try again... (tryings = 235, bot id = 8350071126)
+ERROR 2026-01-28 14:45:17,608 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:17,608 dispatcher 14292 2620 Sleep for 4.978088 seconds and try again... (tryings = 236, bot id = 8350071126)
+ERROR 2026-01-28 14:45:22,603 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:22,603 dispatcher 14292 2620 Sleep for 4.949111 seconds and try again... (tryings = 237, bot id = 8350071126)
+ERROR 2026-01-28 14:45:27,563 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:27,563 dispatcher 14292 2620 Sleep for 5.089703 seconds and try again... (tryings = 238, bot id = 8350071126)
+ERROR 2026-01-28 14:45:32,658 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:32,659 dispatcher 14292 2620 Sleep for 5.084482 seconds and try again... (tryings = 239, bot id = 8350071126)
+ERROR 2026-01-28 14:45:37,751 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:37,752 dispatcher 14292 2620 Sleep for 5.100934 seconds and try again... (tryings = 240, bot id = 8350071126)
+ERROR 2026-01-28 14:45:42,869 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:42,870 dispatcher 14292 2620 Sleep for 5.039300 seconds and try again... (tryings = 241, bot id = 8350071126)
+ERROR 2026-01-28 14:45:47,917 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:47,918 dispatcher 14292 2620 Sleep for 4.907086 seconds and try again... (tryings = 242, bot id = 8350071126)
+ERROR 2026-01-28 14:45:52,836 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:52,836 dispatcher 14292 2620 Sleep for 5.022194 seconds and try again... (tryings = 243, bot id = 8350071126)
+ERROR 2026-01-28 14:45:57,866 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:45:57,866 dispatcher 14292 2620 Sleep for 4.799687 seconds and try again... (tryings = 244, bot id = 8350071126)
+ERROR 2026-01-28 14:46:02,668 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:02,669 dispatcher 14292 2620 Sleep for 5.055113 seconds and try again... (tryings = 245, bot id = 8350071126)
+ERROR 2026-01-28 14:46:07,731 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:07,731 dispatcher 14292 2620 Sleep for 4.877316 seconds and try again... (tryings = 246, bot id = 8350071126)
+ERROR 2026-01-28 14:46:12,613 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:12,614 dispatcher 14292 2620 Sleep for 4.886189 seconds and try again... (tryings = 247, bot id = 8350071126)
+ERROR 2026-01-28 14:46:17,508 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:17,508 dispatcher 14292 2620 Sleep for 5.081064 seconds and try again... (tryings = 248, bot id = 8350071126)
+ERROR 2026-01-28 14:46:22,603 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:22,603 dispatcher 14292 2620 Sleep for 4.885861 seconds and try again... (tryings = 249, bot id = 8350071126)
+ERROR 2026-01-28 14:46:27,501 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:27,501 dispatcher 14292 2620 Sleep for 5.127425 seconds and try again... (tryings = 250, bot id = 8350071126)
+ERROR 2026-01-28 14:46:32,647 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:32,647 dispatcher 14292 2620 Sleep for 4.920882 seconds and try again... (tryings = 251, bot id = 8350071126)
+ERROR 2026-01-28 14:46:37,575 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:37,576 dispatcher 14292 2620 Sleep for 4.845269 seconds and try again... (tryings = 252, bot id = 8350071126)
+ERROR 2026-01-28 14:46:42,437 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:42,438 dispatcher 14292 2620 Sleep for 4.815131 seconds and try again... (tryings = 253, bot id = 8350071126)
+ERROR 2026-01-28 14:46:47,256 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:47,256 dispatcher 14292 2620 Sleep for 4.912246 seconds and try again... (tryings = 254, bot id = 8350071126)
+ERROR 2026-01-28 14:46:52,183 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:52,183 dispatcher 14292 2620 Sleep for 5.082403 seconds and try again... (tryings = 255, bot id = 8350071126)
+ERROR 2026-01-28 14:46:57,269 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:46:57,269 dispatcher 14292 2620 Sleep for 4.914577 seconds and try again... (tryings = 256, bot id = 8350071126)
+ERROR 2026-01-28 14:47:02,192 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:02,193 dispatcher 14292 2620 Sleep for 5.073056 seconds and try again... (tryings = 257, bot id = 8350071126)
+ERROR 2026-01-28 14:47:07,275 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:07,276 dispatcher 14292 2620 Sleep for 4.881785 seconds and try again... (tryings = 258, bot id = 8350071126)
+ERROR 2026-01-28 14:47:12,173 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:12,173 dispatcher 14292 2620 Sleep for 4.903651 seconds and try again... (tryings = 259, bot id = 8350071126)
+ERROR 2026-01-28 14:47:17,087 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:17,087 dispatcher 14292 2620 Sleep for 5.013368 seconds and try again... (tryings = 260, bot id = 8350071126)
+ERROR 2026-01-28 14:47:22,110 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:22,111 dispatcher 14292 2620 Sleep for 5.162352 seconds and try again... (tryings = 261, bot id = 8350071126)
+ERROR 2026-01-28 14:47:27,283 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:27,283 dispatcher 14292 2620 Sleep for 4.962221 seconds and try again... (tryings = 262, bot id = 8350071126)
+ERROR 2026-01-28 14:47:32,259 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:32,259 dispatcher 14292 2620 Sleep for 4.980173 seconds and try again... (tryings = 263, bot id = 8350071126)
+ERROR 2026-01-28 14:47:37,242 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:37,242 dispatcher 14292 2620 Sleep for 4.993374 seconds and try again... (tryings = 264, bot id = 8350071126)
+ERROR 2026-01-28 14:47:42,250 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:42,251 dispatcher 14292 2620 Sleep for 4.866513 seconds and try again... (tryings = 265, bot id = 8350071126)
+ERROR 2026-01-28 14:47:47,132 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:47,133 dispatcher 14292 2620 Sleep for 4.960221 seconds and try again... (tryings = 266, bot id = 8350071126)
+ERROR 2026-01-28 14:47:52,106 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:52,107 dispatcher 14292 2620 Sleep for 5.049689 seconds and try again... (tryings = 267, bot id = 8350071126)
+ERROR 2026-01-28 14:47:57,160 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:47:57,160 dispatcher 14292 2620 Sleep for 5.118696 seconds and try again... (tryings = 268, bot id = 8350071126)
+ERROR 2026-01-28 14:48:02,292 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:02,292 dispatcher 14292 2620 Sleep for 4.932517 seconds and try again... (tryings = 269, bot id = 8350071126)
+ERROR 2026-01-28 14:48:07,235 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:07,235 dispatcher 14292 2620 Sleep for 5.022643 seconds and try again... (tryings = 270, bot id = 8350071126)
+ERROR 2026-01-28 14:48:12,275 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:12,276 dispatcher 14292 2620 Sleep for 5.018228 seconds and try again... (tryings = 271, bot id = 8350071126)
+ERROR 2026-01-28 14:48:17,309 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:17,309 dispatcher 14292 2620 Sleep for 4.961150 seconds and try again... (tryings = 272, bot id = 8350071126)
+ERROR 2026-01-28 14:48:22,281 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:22,281 dispatcher 14292 2620 Sleep for 4.868525 seconds and try again... (tryings = 273, bot id = 8350071126)
+ERROR 2026-01-28 14:48:27,162 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:27,162 dispatcher 14292 2620 Sleep for 5.141140 seconds and try again... (tryings = 274, bot id = 8350071126)
+ERROR 2026-01-28 14:48:32,315 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:32,315 dispatcher 14292 2620 Sleep for 4.954643 seconds and try again... (tryings = 275, bot id = 8350071126)
+ERROR 2026-01-28 14:48:37,275 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:37,275 dispatcher 14292 2620 Sleep for 5.192287 seconds and try again... (tryings = 276, bot id = 8350071126)
+ERROR 2026-01-28 14:48:42,484 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:42,485 dispatcher 14292 2620 Sleep for 5.089072 seconds and try again... (tryings = 277, bot id = 8350071126)
+ERROR 2026-01-28 14:48:47,580 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:47,581 dispatcher 14292 2620 Sleep for 5.118994 seconds and try again... (tryings = 278, bot id = 8350071126)
+ERROR 2026-01-28 14:48:52,701 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:52,701 dispatcher 14292 2620 Sleep for 5.043485 seconds and try again... (tryings = 279, bot id = 8350071126)
+ERROR 2026-01-28 14:48:57,754 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:48:57,754 dispatcher 14292 2620 Sleep for 5.068729 seconds and try again... (tryings = 280, bot id = 8350071126)
+ERROR 2026-01-28 14:49:02,840 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:02,841 dispatcher 14292 2620 Sleep for 5.133965 seconds and try again... (tryings = 281, bot id = 8350071126)
+ERROR 2026-01-28 14:49:07,981 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:07,981 dispatcher 14292 2620 Sleep for 5.081574 seconds and try again... (tryings = 282, bot id = 8350071126)
+ERROR 2026-01-28 14:49:13,068 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:13,068 dispatcher 14292 2620 Sleep for 4.962139 seconds and try again... (tryings = 283, bot id = 8350071126)
+ERROR 2026-01-28 14:49:18,041 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:18,042 dispatcher 14292 2620 Sleep for 5.063001 seconds and try again... (tryings = 284, bot id = 8350071126)
+ERROR 2026-01-28 14:49:23,108 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:23,108 dispatcher 14292 2620 Sleep for 4.915661 seconds and try again... (tryings = 285, bot id = 8350071126)
+ERROR 2026-01-28 14:49:28,041 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:28,041 dispatcher 14292 2620 Sleep for 4.885615 seconds and try again... (tryings = 286, bot id = 8350071126)
+ERROR 2026-01-28 14:49:32,936 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:32,936 dispatcher 14292 2620 Sleep for 5.028578 seconds and try again... (tryings = 287, bot id = 8350071126)
+ERROR 2026-01-28 14:49:37,969 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:37,969 dispatcher 14292 2620 Sleep for 4.993198 seconds and try again... (tryings = 288, bot id = 8350071126)
+ERROR 2026-01-28 14:49:42,968 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:42,968 dispatcher 14292 2620 Sleep for 4.950395 seconds and try again... (tryings = 289, bot id = 8350071126)
+ERROR 2026-01-28 14:49:47,926 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:47,926 dispatcher 14292 2620 Sleep for 5.036678 seconds and try again... (tryings = 290, bot id = 8350071126)
+ERROR 2026-01-28 14:49:52,979 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:52,979 dispatcher 14292 2620 Sleep for 5.006245 seconds and try again... (tryings = 291, bot id = 8350071126)
+ERROR 2026-01-28 14:49:57,994 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:49:57,995 dispatcher 14292 2620 Sleep for 4.946110 seconds and try again... (tryings = 292, bot id = 8350071126)
+ERROR 2026-01-28 14:50:02,953 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:02,953 dispatcher 14292 2620 Sleep for 5.037185 seconds and try again... (tryings = 293, bot id = 8350071126)
+ERROR 2026-01-28 14:50:08,003 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:08,003 dispatcher 14292 2620 Sleep for 4.937023 seconds and try again... (tryings = 294, bot id = 8350071126)
+ERROR 2026-01-28 14:50:12,948 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:12,948 dispatcher 14292 2620 Sleep for 4.894067 seconds and try again... (tryings = 295, bot id = 8350071126)
+ERROR 2026-01-28 14:50:17,858 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:17,858 dispatcher 14292 2620 Sleep for 5.071932 seconds and try again... (tryings = 296, bot id = 8350071126)
+ERROR 2026-01-28 14:50:22,943 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:22,943 dispatcher 14292 2620 Sleep for 5.025378 seconds and try again... (tryings = 297, bot id = 8350071126)
+ERROR 2026-01-28 14:50:27,975 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:27,975 dispatcher 14292 2620 Sleep for 5.216696 seconds and try again... (tryings = 298, bot id = 8350071126)
+ERROR 2026-01-28 14:50:33,205 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:33,205 dispatcher 14292 2620 Sleep for 4.907249 seconds and try again... (tryings = 299, bot id = 8350071126)
+ERROR 2026-01-28 14:50:38,131 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:38,131 dispatcher 14292 2620 Sleep for 4.867295 seconds and try again... (tryings = 300, bot id = 8350071126)
+ERROR 2026-01-28 14:50:43,014 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:43,014 dispatcher 14292 2620 Sleep for 5.021025 seconds and try again... (tryings = 301, bot id = 8350071126)
+ERROR 2026-01-28 14:50:48,046 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:48,046 dispatcher 14292 2620 Sleep for 5.032681 seconds and try again... (tryings = 302, bot id = 8350071126)
+ERROR 2026-01-28 14:50:53,095 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:53,095 dispatcher 14292 2620 Sleep for 4.927965 seconds and try again... (tryings = 303, bot id = 8350071126)
+ERROR 2026-01-28 14:50:58,028 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:50:58,029 dispatcher 14292 2620 Sleep for 5.105498 seconds and try again... (tryings = 304, bot id = 8350071126)
+ERROR 2026-01-28 14:51:03,140 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:51:03,140 dispatcher 14292 2620 Sleep for 5.095818 seconds and try again... (tryings = 305, bot id = 8350071126)
+ERROR 2026-01-28 14:51:08,251 dispatcher 14292 2620 Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [The network location cannot be reached. For information about network troubleshooting, see Windows Help]
+WARNING 2026-01-28 14:51:08,252 dispatcher 14292 2620 Sleep for 5.061721 seconds and try again... (tryings = 306, bot id = 8350071126)
+INFO 2026-01-28 14:51:25,680 dispatcher 14292 2620 Connection established (tryings = 307, bot id = 8350071126)
