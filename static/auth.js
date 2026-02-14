@@ -21,10 +21,10 @@ authTabs.forEach(tab => {
 // ============================================
 // FORM VALIDATION
 // ============================================
-function validatePhoneNumber(phone) {
-    // Iranian mobile number validation
-    const phoneRegex = /^09\d{9}$/;
-    return phoneRegex.test(phone);
+function validateUsername(username) {
+    // Basic username validation: 3-32 chars, alphanumeric and underscore
+    const usernameRegex = /^[a-zA-Z0-9_]{3,32}$/;
+    return usernameRegex.test(username);
 }
 
 function showError(form, message) {
@@ -63,22 +63,24 @@ const signupForm = document.getElementById('signupForm');
 
 if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
-        const phoneInput = loginForm.querySelector('input[name="phone"]');
-        const phone = phoneInput.value.trim();
+        const usernameInput = loginForm.querySelector('input[name="username"]');
+        const passwordInput = loginForm.querySelector('input[name="password"]');
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
 
         clearErrors(loginForm);
 
-        if (!phone) {
+        if (!username) {
             e.preventDefault();
-            showError(loginForm, 'شماره تلفن الزامی است');
-            phoneInput.focus();
+            showError(loginForm, 'نام کاربری الزامی است');
+            usernameInput.focus();
             return;
         }
 
-        if (!validatePhoneNumber(phone)) {
+        if (!password) {
             e.preventDefault();
-            showError(loginForm, 'شماره تلفن باید با ۰۹ شروع شود و ۱۱ رقم باشد');
-            phoneInput.focus();
+            showError(loginForm, 'رمز عبور الزامی است');
+            passwordInput.focus();
             return;
         }
     });
@@ -86,12 +88,31 @@ if (loginForm) {
 
 if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
-        const phoneInput = signupForm.querySelector('input[name="phone"]');
+        const usernameInput = signupForm.querySelector('input[name="username"]');
         const fullNameInput = signupForm.querySelector('input[name="full_name"]');
-        const phone = phoneInput.value.trim();
+        const passwordInput = signupForm.querySelector('input[name="password"]');
+        const confirmPasswordInput = signupForm.querySelector('input[name="confirm_password"]');
+        
+        const username = usernameInput.value.trim();
         const fullName = fullNameInput.value.trim();
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
 
         clearErrors(signupForm);
+
+        if (!username) {
+            e.preventDefault();
+            showError(signupForm, 'نام کاربری الزامی است');
+            usernameInput.focus();
+            return;
+        }
+
+        if (!validateUsername(username)) {
+            e.preventDefault();
+            showError(signupForm, 'نام کاربری باید ۳ تا ۳۲ کاراکتر و شامل حروف، اعداد یا زیرخط باشد');
+            usernameInput.focus();
+            return;
+        }
 
         if (!fullName) {
             e.preventDefault();
@@ -107,17 +128,24 @@ if (signupForm) {
             return;
         }
 
-        if (!phone) {
+        if (!password) {
             e.preventDefault();
-            showError(signupForm, 'شماره تلفن الزامی است');
-            phoneInput.focus();
+            showError(signupForm, 'رمز عبور الزامی است');
+            passwordInput.focus();
             return;
         }
 
-        if (!validatePhoneNumber(phone)) {
+        if (password.length < 8) {
             e.preventDefault();
-            showError(signupForm, 'شماره تلفن باید با ۰۹ شروع شود و ۱۱ رقم باشد');
-            phoneInput.focus();
+            showError(signupForm, 'رمز عبور باید حداقل ۸ کاراکتر باشد');
+            passwordInput.focus();
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            showError(signupForm, 'رمز عبور و تکرار آن مطابقت ندارند');
+            confirmPasswordInput.focus();
             return;
         }
     });

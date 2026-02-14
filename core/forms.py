@@ -1,10 +1,71 @@
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, AuthenticationForm
 
 from cards.models import UserCard, Skill, Service, Portfolio
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 from .models import CustomUser
+
+class UserSignupForm(forms.ModelForm):
+    password = forms.CharField(
+        label="رمز عبور",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'رمز عبور',
+            'dir': 'ltr',
+        }),
+        validators=[MinLengthValidator(8)]
+    )
+    confirm_password = forms.CharField(
+        label="تکرار رمز عبور",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'تکرار رمز عبور',
+            'dir': 'ltr',
+        })
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'full_name', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'نام کاربری',
+                'dir': 'ltr',
+            }),
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'نام کامل',
+                'dir': 'rtl',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'ایمیل (اختیاری)',
+                'dir': 'ltr',
+            }),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError("رمز عبور و تکرار آن مطابقت ندارند")
+        return cleaned_data
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'نام کاربری',
+        'dir': 'ltr',
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'رمز عبور',
+        'dir': 'ltr',
+    }))
 
 class UserCardForm(forms.ModelForm):
     username = forms.CharField(

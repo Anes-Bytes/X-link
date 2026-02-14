@@ -127,6 +127,7 @@ class Customer(models.Model):
     )
     is_active = models.BooleanField(
         default=True,
+        db_index=True,
         help_text="Whether to display this customer"
     )
     display_order = models.PositiveIntegerField(

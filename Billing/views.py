@@ -3,8 +3,8 @@ from django.core.cache import cache
 from django.shortcuts import render
 from django.contrib import messages
 from site_management.models import Customer
+from django.views.decorators.cache import cache_page
 from .models import Plan, Template
-
 
 def landing_view(request):
     period = request.GET.get("period", Plan.Period.MONTHLY)
@@ -15,52 +15,49 @@ def landing_view(request):
     ):
         period = Plan.Period.MONTHLY
 
-    plans_cache_key = f"landing_plans_{period}"
-    plans = cache.get(plans_cache_key)
+    cache_key = f"landing_data_{period}"
+    data = cache.get(cache_key)
 
-    if plans is None:
+    if data is None:
         plans = list(
             Plan.objects
             .select_related("discount")
             .prefetch_related("features")
             .filter(period=period)
         )
-        cache.set(plans_cache_key, plans, 60 * 15)
-
-    templates = cache.get("landing_templates")
-
-    if templates is None:
-        templates = list(
-            Template.objects.filter(is_active=True)
-        )
-        cache.set("landing_templates", templates, 60 * 60)
-
-    customers = cache.get("landing_customers")
-
-    if customers is None:
+        templates = list(Template.objects.filter(is_active=True))
         customers = list(Customer.objects.filter(is_active=True))
-        cache.set("landing_customers", customers, 60 * 60)
+        
+        data = {
+            "plans": plans,
+            "templates": templates,
+            "customers": customers,
+        }
+        cache.set(cache_key, data, 60 * 15)
+
+    context = {
+        **data,
+        "current_period": period,
+    }
 
     return render(
         request,
         "Billing/landing.html",
-        {
-            "templates": templates,
-            "customers": customers,
-            "plans": plans,
-            "current_period": period,
-        }
+        context
     )
 
 
 def pricing_view(request):
-    period = request.GET.get("period")
-    if period == "monthly":
-        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=Plan.Period.MONTHLY))
-    elif period == "annual":
-        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=Plan.Period.ANNUAL))
-    else:
-        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=Plan.Period.MONTHLY))
+    period = request.GET.get("period", Plan.Period.MONTHLY)
+    if period not in (Plan.Period.MONTHLY, Plan.Period.ANNUAL):
+        period = Plan.Period.MONTHLY
+    
+    plans_cache_key = f"pricing_plans_{period}"
+    plans = cache.get(plans_cache_key)
+    
+    if plans is None:
+        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=period))
+        cache.set(plans_cache_key, plans, 60 * 15)
 
     return render(request, 'Billing/pricing.html', context={'Billing': plans, "current_period": period,})
 
@@ -79,3 +76,9 @@ def about_view(request):
     About Us page for X-link
     """
     return render(request, 'Billing/about.html')
+
+def buy_telegram_view(request):
+    """
+    Page for purchasing subscription via Telegram
+    """
+    return render(request, 'Billing/buy_telegram.html')

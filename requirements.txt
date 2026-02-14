@@ -39,11 +39,9 @@ tzdata==2025.3
 urllib3==2.6.2
 yarl==1.22.0
 zeep==4.3.2
-mysqlclient
-mod_wsgi
-aiogram  
-tortoise-orm  
-psutil  
-apscheduler  
-aiomysql  
-aiosqlite 
+psycopg2-binary
+gunicorn
+aiopg
+psutil
+apscheduler
+aiosqlite

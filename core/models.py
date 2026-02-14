@@ -8,32 +8,34 @@ from Billing.models import UserPlan
 
 class UserManager(BaseUserManager):
     """
-    Custom manager for CustomUser model with phone-based authentication.
+    Custom manager for CustomUser model with username-based authentication.
     """
 
-    def create_user(self, phone, full_name=None, password=None):
+    def create_user(self, username, full_name=None, email=None, password=None):
         """
-        Create and save a regular user with the given phone and full_name.
+        Create and save a regular user with the given username and password.
         """
-        if not phone:
-            raise ValueError('Phone number is required')
+        if not username:
+            raise ValueError('Username is required')
 
         user = self.model(
-            phone=self.normalize_phone(phone),
+            username=username,
             full_name=full_name,
+            email=self.normalize_email(email) if email else None,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone, full_name="Admin", password=None):
+    def create_superuser(self, username, full_name="Admin", password=None, email=None):
         """
-        Create and save a superuser with the given phone and password.
+        Create and save a superuser with the given username and password.
         """
         user = self.create_user(
-            phone=phone,
+            username=username,
             full_name=full_name,
             password=password,
+            email=email
         )
         user.is_staff = True
         user.is_superuser = True
@@ -77,9 +79,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=100,
         unique=True,
-        null=True,
-        blank=True,
-        help_text="Optional username for card URL"
+        help_text="Username for login and card URL"
     )
 
     # Plan and Subscription
@@ -120,7 +120,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     # Django Auth Configuration
     EMAIL_FIELD = "email"
-    USERNAME_FIELD = "phone"
+    USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["full_name"]
 
     objects = UserManager()
@@ -185,8 +185,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         String representation of the user.
         """
         if self.full_name:
-            return f"{self.full_name} ({self.phone})"
-        return f"User {self.phone or self.id}"
+            return f"{self.full_name} ({self.username})"
+        return f"User {self.username or self.id}"
 
 
 

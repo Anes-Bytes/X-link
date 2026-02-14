@@ -28,7 +28,6 @@ env.read_env()
 def card_builder_view(request):
     user_card = (
         UserCard.objects
-        .select_related('user')
         .prefetch_related(
             'skills',
             'services',
@@ -37,7 +36,15 @@ def card_builder_view(request):
         .filter(user=request.user)
         .first()
     )
-    has_pro_plan = request.user.plan.filter(value=UserPlan.PlanChoices.Pro).exists()
+    
+    # Optimize plan checks - one query instead of multiple
+    user_plans_list = list(request.user.plan.all())
+    user_plan_values = {p.value for p in user_plans_list}
+    user_plan_ids = {p.id for p in user_plans_list}
+    
+    has_pro_plan = UserPlan.PlanChoices.Pro in user_plan_values
+    has_basic_plan = UserPlan.PlanChoices.Basic in user_plan_values
+    can_use_custom_colors = has_pro_plan or has_basic_plan
 
     if request.method == 'POST':
         form = UserCardForm(request.POST, request.FILES, instance=user_card)
@@ -78,6 +85,7 @@ def card_builder_view(request):
             )
             return redirect('card_success', card_id=card.id)
         else:
+            messages.error(request, "خطایی در اطلاعات وارد شده وجود دارد. لطفا فیلدها را بررسی کنید.")
             logger.warning(
                 "Card form validation failed for user %s",
                 request.user.username
@@ -93,14 +101,14 @@ def card_builder_view(request):
         service_formset = ServiceInlineFormSet(instance=user_card, prefix='service')
         portfolio_formset = PortfolioInlineFormSet(instance=user_card, prefix='portfolio')
 
-    user_plans = request.user.plan.all()
     templates = Template.objects.prefetch_related("allowed_plans")
 
     for t in templates:
-        # اگر allowed_plans خالی باشد یعنی همه می‌تونند استفاده کنند
+        # Optimize by checking in memory instead of triggering queries in a loop
+        allowed_plan_ids = {p.id for p in t.allowed_plans.all()}
         t.is_allowed = (
-                not t.allowed_plans.exists() or
-                t.allowed_plans.filter(id__in=user_plans).exists()
+                not allowed_plan_ids or
+                not allowed_plan_ids.isdisjoint(user_plan_ids)
         )
 
     context = {
@@ -109,7 +117,10 @@ def card_builder_view(request):
         'service_formset': service_formset,
         'portfolio_formset': portfolio_formset,
         'templates': templates,
-        'has_pro_plan':has_pro_plan
+        'has_pro_plan':has_pro_plan,
+        'has_basic_plan': has_basic_plan,
+        'can_use_custom_colors': can_use_custom_colors,
+        'color_choices': UserCard.COLOR_CHOICES
     }
 
     return render(request, 'cards/card_builder.html', context)

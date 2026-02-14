@@ -46,14 +46,19 @@
                 </div>
 
                 <!-- Login Form -->
-                <form class="auth-form active" id="loginForm" action="{% url 'request_otp' %}" method="post">
+                <form class="auth-form active" id="loginForm" action="{% url 'login' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="phone">شماره</label>
-                        <input type="phone" id="phone" name="phone" required>
+                        <label for="username">نام کاربری</label>
+                        <input type="text" id="username" name="username" required dir="ltr">
                     </div>
-                    <div class="form-options">
+                    <div class="form-group">
+                        <label for="password">رمز عبور</label>
+                        <input type="password" id="password" name="password" required dir="ltr">
                     </div>
+                    {% if next %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
                     <button type="submit" class="auth-submit-btn">
                         <span>ورود</span>
                         <i class="fas fa-arrow-right"></i>
@@ -61,15 +66,27 @@
                 </form>
 
                 <!-- Signup Form -->
-                <form class="auth-form" action="{% url 'request_otp' %}" method="post" id="signupForm">
+                <form class="auth-form" action="{% url 'signup' %}" method="post" id="signupForm">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="signupPhone">شماره</label>
-                        <input type="tel" id="signupPhone" name="phone" required>
+                        <label for="signupUsername">نام کاربری</label>
+                        <input type="text" id="signupUsername" name="username" required dir="ltr">
                     </div>
                     <div class="form-group">
                         <label for="fullname">نام کامل</label>
                         <input type="text" id="fullname" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">ایمیل (اختیاری)</label>
+                        <input type="email" id="signupEmail" name="email" dir="ltr">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">رمز عبور</label>
+                        <input type="password" id="signupPassword" name="password" required dir="ltr">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">تکرار رمز عبور</label>
+                        <input type="password" id="confirmPassword" name="confirm_password" required dir="ltr">
                     </div>
 
                     <button type="submit" class="auth-submit-btn">

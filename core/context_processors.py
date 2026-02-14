@@ -3,17 +3,15 @@ from site_management.models import SiteContext, Banners
 
 
 def site_context(request):
-    context = cache.get("site_context")
-    banners = cache.get("banners")
+    data = cache.get("site_context_data")
 
-    if context is None:
+    if data is None:
         context = SiteContext.objects.first()
-        cache.set("site_context", context, 60 * 60)
-    if banners is None:
-        banners = Banners.objects.all()
-        cache.set("banners", banners, 60 * 60)
+        banners = list(Banners.objects.all())
+        data = {
+            "site_context": context,
+            "banners": banners,
+        }
+        cache.set("site_context_data", data, 60 * 60)
 
-    return {
-        "site_context": context,
-        "banners": banners,
-    }
+    return data

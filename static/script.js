@@ -232,7 +232,7 @@ templateCards.forEach(card => {
 // ============================================
 // PRICING CARDS INTERACTIVE EFFECT
 // ============================================
-const pricingCards = document.querySelectorAll('.pricing-card');
+const pricingCards = document.querySelectorAll('.pricing-card, .pricing-card-landing');
 pricingCards.forEach(card => {
     card.addEventListener('mousemove', function(e) {
         const rect = card.getBoundingClientRect();

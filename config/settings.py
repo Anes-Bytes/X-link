@@ -23,10 +23,10 @@ PROJECT_ROOT = BASE_DIR.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True # Forced for local run as per user request
+DEBUG = env.bool('DEBUG', default=False)
 
 # Host configuration
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 # Security headers (only in production)
 if not DEBUG:
@@ -35,7 +35,7 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=True)
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
@@ -69,11 +69,22 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 ]
 
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+
 # =============================================================================
 # MIDDLEWARE CONFIGURATION
 # =============================================================================
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+]
+
+if DEBUG:
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+
+MIDDLEWARE += [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,28 +106,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # DATABASE CONFIGURATION
 # =============================================================================
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': env("DB_NAME"),
-            'USER': env("DB_USER"),
-            'PASSWORD': env("DB_PASSWORD"),
-            'HOST': env("DB_HOST", default="localhost"),
-            'PORT': env("DB_PORT", default="3306"),
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
-        }
-    }
+DATABASES = {
+    'default': env.db('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3')
+}
 
 
 
@@ -128,9 +120,9 @@ else:
 AUTH_USER_MODEL = 'core.CustomUser'
 
 # Django Allauth configuration
-SITE_ID = 1
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = False
+SITE_ID = env.int('SITE_ID', default=1)
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # 5 minutes
@@ -139,13 +131,35 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 # Social account settings
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_STORE_TOKENS = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+    'github': {
+        'SCOPE': [
+            'user',
+            'read:user',
+            'user:email',
+        ],
+    }
+}
+
 SOCIALACCOUNT_ADAPTER = 'core.adapters.CustomSocialAccountAdapter'
 ACCOUNT_ADAPTER = 'core.adapters.CustomAccountAdapter'
 
 # Authentication URLs
-LOGIN_URL = '/register'
+LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/dashboard'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -238,6 +252,9 @@ LANDING_PAGE_CACHE_TIMEOUT = 60 * 15  # 15 minutes
 TEMPLATES_CACHE_TIMEOUT = 60 * 60     # 1 hour
 CUSTOMERS_CACHE_TIMEOUT = 60 * 60     # 1 hour
 
+# Session settings - Use cache to reduce DB queries
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 # =============================================================================
 # EMAIL CONFIGURATION
 # =============================================================================
@@ -284,29 +301,24 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs' / 'django.log',
-            'formatter': 'verbose',
-        },
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': ['console'],
         'level': 'INFO',
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
         },
         'cards': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
         },
         'core': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
         },
@@ -335,3 +347,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ADMIN_SITE_HEADER = "پنل مدیریت X-Link"
 ADMIN_SITE_TITLE = "مدیریت X-Link"
 ADMIN_INDEX_TITLE = "داشبورد مدیریت"
+
+# Debug Toolbar configuration
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

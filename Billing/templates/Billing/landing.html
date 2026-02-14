@@ -1,97 +1,392 @@
 {% extends '_base.html' %}
 {% load humanize %}
 {% load static %}
-{% block page_title %} X-Link - Digital Business Card Platform {% endblock %}
+{% load custom_filters %}
 
+{% block page_title %} {{ site_context.site_name }} - پلتفرم هوشمند کارت ویزیت دیجیتال {% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'about.css' %}">
+<style>
+    /* Custom adjustments for landing page integration */
+    .hero-input-container {
+        width: 100%;
+        max-width: 500px;
+        margin: 40px auto 0;
+        position: relative;
+        z-index: 20;
+    }
+
+    .hero-input-box-modern {
+        display: flex;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px;
+        border-radius: 100px;
+        backdrop-filter: blur(20px);
+        transition: all 0.3s ease;
+    }
+
+    .hero-input-box-modern:focus-within {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(0, 246, 255, 0.5);
+        box-shadow: 0 0 30px rgba(0, 246, 255, 0.2);
+    }
+
+    .hero-input-fake-modern {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        direction: ltr;
+        min-width: 0;
+    }
+
+    .hero-domain {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 500;
+        font-size: 16px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .hero-input {
+        background: transparent;
+        border: none;
+        color: #fff;
+        padding: 12px 8px;
+        font-size: 16px;
+        flex: 1;
+        width: auto;
+        outline: none;
+        font-weight: 500;
+        min-width: 50px;
+    }
+
+    .hero-input-btn-modern {
+        background: linear-gradient(135deg, #3A86FF, #00F6FF);
+        color: #0A0F1F !important;
+        border: none;
+        padding: 0 30px;
+        border-radius: 100px;
+        font-weight: 700;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 576px) {
+        .hero-input-box-modern {
+            flex-direction: column;
+            border-radius: 20px;
+            padding: 8px;
+            gap: 10px;
+        }
+
+        .hero-input-fake-modern {
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .hero-input-btn-modern {
+            width: 100%;
+            justify-content: center;
+            padding: 15px;
+        }
+    }
+
+    .hero-input-btn-modern:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0, 246, 255, 0.4);
+    }
+
+    .hero-input-hint {
+        margin-top: 16px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+        text-align: center;
+    }
+
+    /* Template Grid Styling Adjustment */
+    .templates-section {
+        padding: 100px 0;
+        background: rgba(10, 15, 31, 0.5);
+    }
+
+    .templates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 32px;
+        margin-top: 60px;
+    }
+
+    .template-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+    }
+
+    .template-card:hover {
+        transform: translateY(-10px);
+        border-color: rgba(0, 246, 255, 0.3);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .template-image-wrapper {
+        position: relative;
+        padding-top: 140%;
+        overflow: hidden;
+    }
+
+    .template-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .template-info {
+        padding: 24px;
+        text-align: center;
+    }
+
+    .template-name {
+        color: #fff;
+        margin-bottom: 8px;
+        font-size: 18px;
+    }
+
+    .template-description {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .template-select-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: rgba(58, 134, 255, 0.1);
+        color: #3A86FF;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .template-select-btn:hover {
+        background: #3A86FF;
+        color: #fff;
+    }
+
+    /* Pricing Section Styling Adjustment */
+    .pricing-section-landing {
+        padding: 120px 0;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .period-toggle {
+        display: inline-flex;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px;
+        border-radius: 100px;
+        margin: 40px 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .toggle-period-btn {
+        padding: 10px 24px;
+        border-radius: 100px;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .toggle-period-btn.active {
+        background: #3A86FF;
+        color: #fff;
+    }
+
+    .pricing-cards-landing {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 32px;
+        margin-top: 40px;
+    }
+
+    .pricing-card-landing {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 32px;
+        padding: 48px 32px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .pricing-card-landing.featured {
+        background: rgba(58, 134, 255, 0.05);
+        border-color: rgba(58, 134, 255, 0.3);
+        transform: scale(1.05);
+    }
+
+    .price-value {
+        font-size: 48px;
+        font-weight: 800;
+        color: #fff;
+    }
+
+    .features-list-landing {
+        list-style: none;
+        padding: 0;
+        margin: 32px 0;
+        text-align: right;
+    }
+
+    .features-list-landing li {
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .features-list-landing li i {
+        color: #00F6FF;
+    }
+
+    .cta-button-landing {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 16px;
+        border-radius: 16px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+
+    .cta-primary-landing {
+        background: linear-gradient(135deg, #3A86FF, #00F6FF);
+        color: #0A0F1F;
+    }
+
+    .cta-secondary-landing {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+</style>
+{% endblock %}
 
 {% block page_content %}
-
-
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-background">
-
+            <div class="stars">
+                {% for i in "12345678901234567890" %}
+                <div class="star" style="top: {{ forloop.counter|add:10 }}%; left: {% widthratio forloop.counter 1 5 %}%; width: 2px; height: 2px; animation-delay: {{ forloop.counter|mul:0.2 }}s"></div>
+                {% endfor %}
+            </div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star diagonal"></div>
+            <div class="comet"></div>
+            
             <div class="gradient-orb orb-1"></div>
             <div class="gradient-orb orb-2"></div>
         </div>
-
-        <!-- Navigation -->
 
         <!-- Hero Content -->
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
-                    <span class="title-line">{{ site_context.hero_section_text_part1 }}</span>
-                    <span class="title-line">{{ site_context.hero_section_text_part2 }}</span>
+                    <span class="title-main">{{ site_context.hero_section_text_part1 }}</span>
+                    <span class="title-subtitle">{{ site_context.hero_section_text_part2 }}</span>
                 </h1>
-                <p class="hero-description">
-                    {{ site_context.hero_section_text_description }}
-                </p>
-<div class="hero-input-box">
-    <div class="hero-input-fake">
-        <span class="hero-domain">x-link.ir/</span>
-        <input
-            type="text"
-            class="hero-input"
-            autocomplete="off"
-        >
-    </div>
+                
+                <div class="hero-description">
+                    <p>{{ site_context.hero_section_text_description }}</p>
+                </div>
 
-    <a href="{% url 'card_builder' %}" class="hero-input-btn">
-        ادامه
-    </a>
-</div>
+                <!-- Username Input for Landing -->
+                <div class="hero-input-container">
+                    <div class="hero-input-box-modern">
+                        <div class="hero-input-fake-modern">
+                            <span class="hero-domain">x-link.ir/</span>
+                            <input
+                                type="text"
+                                class="hero-input"
+                                placeholder="username"
+                                autocomplete="off"
+                                id="heroUsername"
+                            >
+                        </div>
+                        <button onclick="redirectToBuilder()" class="hero-input-btn-modern">
+                            <span>ساخت رایگان</span>
+                            <i class="fas fa-magic"></i>
+                        </button>
+                    </div>
+                    <div class="hero-input-hint">کارت ویزیت هوشمند خود را در کمتر از ۱ دقیقه بسازید</div>
+                </div>
 
-            </div>
-        </div>
-
-        <!-- Hero Slider -->
-        <div class="hero-slider">
-            <div class="slider-container" id="heroSlider">
-                {% for banner in banners %}
-                <div class="slide {% if forloop.counter == 1 %}active{% endif %}">
-                    <div class="slide-content">
-                        <h3>{{ banner.title }}</h3>
-                        <p>{{ banner.description }}</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5k+</div>
+                        <div class="stat-label">کاربر فعال</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">قالب حرفه‌ای</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">۲۴/۷</div>
+                        <div class="stat-label">پشتیبانی</div>
                     </div>
                 </div>
-                {% endfor %}
-
-            </div>
-            <div class="slider-dots">
-                {% for banner in banners %}
-                <span class="dot {% if forloop.counter == 1 %}active{% endif %}" data-slide="{{ forloop.counter }}"></span>
-                {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Brand Slider Section -->
+    <!-- Customers/Brands Section (Original Landing) -->
     <section class="customers-section" id="customers">
         <div class="container">
-            <h2 class="section-title">X-Link Customers</h2>
+            <h2 class="section-title">مشتریان هوشمند X-Link</h2>
             <div class="brand-slider-container">
                 <div class="brand-slider-track" id="brandSlider">
                     {% for customer in customers %}
                     <div class="brand-item">
                         {% if customer.company_logo %}
                         <div class="brand-logo">
-                            <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                            <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" style="height: 40px; opacity: 0.6; filter: invert(1);">
                         </div>
                         {% else %}
-                        <div class="brand-logo brand-logo-text">{{ customer.company_name }}</div>
+                        <div class="brand-logo-text-modern">{{ customer.company_name }}</div>
                         {% endif %}
                     </div>
                     {% endfor %}
-                    <!-- Duplicate for continuous scroll -->
+                    <!-- Duplicate for loop -->
                     {% for customer in customers %}
                     <div class="brand-item">
                         {% if customer.company_logo %}
                         <div class="brand-logo">
-                            <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" title="{{ customer.company_name }}">
+                            <img src="{{ customer.company_logo.url }}" alt="{{ customer.company_name }}" style="height: 40px; opacity: 0.6; filter: invert(1);">
                         </div>
                         {% else %}
-                        <div class="brand-logo brand-logo-text">{{ customer.company_name }}</div>
+                        <div class="brand-logo-text-modern">{{ customer.company_name }}</div>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -100,11 +395,52 @@
         </div>
     </section>
 
-    <!-- Templates Preview Section -->
+    <!-- Mission Section (From About) -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <div class="mission-text">
+                    <h2 class="section-title" style="text-align: right;">هدف ما</h2>
+                    <p class="mission-description">
+                        ایکس لینک با این هدف ساخته شده که به کسب‌وکارها و افراد حرفه‌ای کمک کند تا برند شخصی و کسب‌وکار خود را به بهترین شکل ممکن معرفی کنند.
+                        ما معتقدیم که در عصر دیجیتال، داشتن یک حضور آنلاین قدرتمند و حرفه‌ای کلید موفقیت است.
+                    </p>
+
+                    <div class="mission-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🎯</div>
+                            <div class="highlight-text">
+                                <h4>رشد برند</h4>
+                                <p>استراتژی‌های مدرن بازاریابی و برندینگ برای توسعه حضور دیجیتال شما</p>
+                            </div>
+                        </div>
+
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🚀</div>
+                            <div class="highlight-text">
+                                <h4>تجربه کاربری عالی</h4>
+                                <p>رابط کاربری ساده و کاربرپسند در تمام دستگاه‌ها و پلتفرم‌ها</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mission-visual">
+                    <div class="visual-circle">
+                        <div class="circle-content">
+                            <div class="circle-icon">🚀</div>
+                            <div class="circle-text">رشد برند</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Preview Section (Original Landing) -->
     <section class="templates-section" id="templates">
         <div class="container">
-            <h2 class="section-title">قالب های جذاب X-Link</h2>
-
+            <h2 class="section-title">قالب‌های جذاب X-Link</h2>
             <div class="templates-grid">
                 {% for template in templates %}
                 <div class="template-card">
@@ -113,271 +449,112 @@
                     </div>
                     <div class="template-info">
                         <h3 class="template-name">{{ template.name }}</h3>
-                        <h5>{{ template.description }}</h5>
-                        <a href="{% url 'card_builder' %}" class="template-select-btn">
-                            ساخت کارت ویزیت
-                        </a>
+                        <p class="template-description">{{ template.description }}</p>
+                        <a href="{% url 'card_builder' %}" class="template-select-btn">ساخت کارت ویزیت</a>
                     </div>
                 </div>
-                {% empty %}
-                <p class="no-templates">هیچ قالبی موجود نیست</p>
                 {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing-section-landing" id="pricing-landing">
+    <!-- Team Section (From About) -->
+    <section class="team-section">
         <div class="container">
-            <!-- Header Section -->
-            <div class="pricing-header-landing">
-                <h2 class="section-title">پلن مناسب خود را انتخاب کنید</h2>
-                <p class="pricing-subtitle">با پلن‌های اشتراک انعطاف‌پذیر ما حضور آنلاین خود را گسترش دهید. رایگان شروع کنید و هر زمان ارتقا دهید.</p>
-
-                <!-- Period Toggle -->
-                <div class="period-toggle">
-                    <a href="?period=monthly#pricing-landing" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">
-                        <span>ماهانه</span>
-                    </a>
-                    <a href="?period=annual#pricing-landing" class="toggle-period-btn {% if current_period == 'annual' %}active{% endif %}">
-                        <span>سالانه</span>
-                        <span class="discount-label">۲۵٪ تخفیف</span>
-                    </a>
-                </div>
+            <div class="section-header">
+                <h2 class="section-title">ایکس تیم</h2>
+                <p class="section-subtitle" style="text-align: center; color: rgba(255,255,255,0.5);">تیم خلاق و متخصص پشت پرده ایکس لینک</p>
             </div>
 
-            <!-- Monthly Pricing Section -->
-            <div class="pricing-cards-landing" id="monthly-pricing">
-                {% for plan in plans %}
-                <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}" data-plan="{{ plan.type }}">
-                    {% if plan.plan_type == "Pro" %}
-                    <div class="featured-badge">پرمیوم</div>
-                    <span class="plan-badge">Premium</span>
-                    {% elif plan.plan_type == "Basic" %}
-                    <div class="featured-badge">پرمخاطب</div>
-                    {% else %}
-                    <div class="featured-badge">رایگان</div>
-                    {% endif %}
-
-                    <div class="card-header-landing">
-                        <h3 class="plan-name-landing">
-                            {% if plan.plan_type == "Pro" %}
-                                حرفه‌ای
-                            {% elif plan.plan_type == "Basic" %}
-                                پایه
-                            {% else %}
-                                رایگان
-                            {% endif %}
-                        </h3>
-<p class="plan-description-landing">
-    {% if plan.plan_type == "Pro" %}
-        مناسب حرفه‌ای‌هایی که در حال رشد هستند
-    {% elif plan.plan_type == "Basic" %}
-        مناسب کسب‌وکارهای کوچک و نوپا
-    {% else %}
-        مناسب شروع و آشنایی با سرویس
-    {% endif %}
-</p>
-                    </div>
-
-                    <div class="price-section-landing">
-                        <div class="price-wrapper-landing">
-                            <span class="price-value">{{ plan.get_discounted_price|floatformat|intcomma }}</span>
-                            <span class="price-currency">تومان</span>
-                        {% if plan.period == "monthly" %}
-                        <span class="period">/ماه</span>
-                        {% else %}
-                        <span class="period">/سال</span>
-                        {% endif %}                        </div>
-                        {% if plan.discount %}
-                        <div class="price-info-landing">
-                            <span class="original-price">قیمت اصلی: {{ plan.price }} تومان</span>
-                            <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
+            <div class="team-grid">
+                <!-- Founder -->
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <div class="avatar-placeholder" style="width: 80px; height: 80px; background: rgba(58, 134, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-code" style="font-size: 30px; color: #3A86FF;"></i>
                         </div>
-                        {% endif %}
+                        <div class="member-badge" style="background: #3A86FF; color: white; padding: 4px 12px; border-radius: 100px; font-size: 12px; display: inline-block; margin-bottom: 15px;">بنیان‌گذار</div>
                     </div>
+                    <h3 style="color: white; margin-bottom: 5px;">آنس</h3>
+                    <p style="color: #00F6FF; font-size: 14px; margin-bottom: 15px;">Full-Stack Developer</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.6;">بنیان‌گذار و برنامه‌نویس اصلی ایکس لینک با بیش از ۵ سال تجربه.</p>
+                </div>
 
+                <!-- Co-Founder -->
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <div class="avatar-placeholder" style="width: 80px; height: 80px; background: rgba(0, 246, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-lightbulb" style="font-size: 30px; color: #00F6FF;"></i>
+                        </div>
+                        <div class="member-badge" style="background: #00F6FF; color: #0A0F1F; padding: 4px 12px; border-radius: 100px; font-size: 12px; display: inline-block; margin-bottom: 15px;">هم‌بنیان‌گذار</div>
+                    </div>
+                    <h3 style="color: white; margin-bottom: 5px;">صدرا </h3>
+                    <p style="color: #3A86FF; font-size: 14px; margin-bottom: 15px;">Co-Founder</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.6;">هم‌بنیان‌گذار ایکس لینک با تمرکز بر استراتژی کسب‌وکار و توسعه محصول.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Original Landing) -->
+    <section class="pricing-section-landing" id="pricing-landing">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">پلن مناسب خود را انتخاب کنید</h2>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 30px;">رایگان شروع کنید و هر زمان ارتقا دهید.</p>
+
+            <div class="period-toggle">
+                <a href="?period=monthly#pricing-landing" class="toggle-period-btn {% if current_period != 'annual' %}active{% endif %}">ماهانه</a>
+                <a href="?period=annual#pricing-landing" class="toggle-period-btn {% if current_period == 'annual' %}active{% endif %}">سالانه</a>
+            </div>
+
+            <div class="pricing-cards-landing">
+                {% for plan in plans %}
+                <div class="pricing-card-landing {% if plan.plan_type == 'Pro' %}featured{% endif %}">
+                    <h3 style="color: white; margin-bottom: 15px;">{{ plan.plan_type }}</h3>
+                    <div class="price-section">
+                        <span class="price-value">{{ plan.get_discounted_price|floatformat|intcomma }}</span>
+                        <span style="color: rgba(255,255,255,0.5);">تومان / {{ plan.period }}</span>
+                    </div>
+                    
                     <ul class="features-list-landing">
-                        {% for feature in plan.Features.all %}
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>{{ feature.name }}</span>
-                        </li>
+                        {% for feature in plan.features.all %}
+                        <li><i class="fas fa-check"></i> {{ feature.name }}</li>
                         {% endfor %}
                     </ul>
 
-                    <div class="card-actions-landing">
-                        {% if plan.plan_type == "Pro" or plan.plan_type == "Basic" %}
-                        <a href="{% url 'pricing' %}" class="cta-button-landing cta-primary-landing">
-                            <span>انتخاب</span>
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'card_builder' %}" class="cta-button-landing cta-secondary-landing">
-                            <span>شروع رایگان</span>
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        {% endif %}
-                    </div>
+                    {% if plan.plan_type == "Free" %}
+                    <a href="{% url 'card_builder' %}" class="cta-button-landing cta-secondary-landing">شروع رایگان</a>
+                    {% else %}
+                    <a href="{% url 'buy_telegram' %}" class="cta-button-landing cta-primary-landing">انتخاب پلن</a>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
-<style>
-.hero-input-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 24px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
 
-.hero-input {
-    width: 100%;
-    max-width: 260px;
-    height: 48px;
-    padding: 0 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-}
+    <!-- Final CTA -->
+    <section class="about-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>آماده شروع هستید؟</h2>
+                <p>با ایکس لینک برند خود را به سطح بعدی ببرید</p>
+                <a href="{% url 'card_builder' %}" class="cta-button" style="background: linear-gradient(135deg, #3A86FF, #00F6FF); color: #0A0F1F; padding: 16px 40px; border-radius: 100px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700;">
+                    <span>شروع کنید</span>
+                    <i class="fas fa-rocket"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
-.hero-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.hero-input:focus {
-    border-color: #2fd3ff;
-}
-
-.hero-input-btn {
-    height: 48px;
-    padding: 0 22px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #2fd3ff, #1aa7ff);
-    color: #000;
-    font-weight: 600;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.hero-input-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(47, 211, 255, 0.35);
-}
-.hero-input-fake {
-    display: flex;
-    align-items: center;
-    height: 48px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.05);
-}
-
-.hero-domain {
-    padding: 0 12px;
-    color: rgba(255,255,255,0.5);
-    font-size: 14px;
-    user-select: none;
-    white-space: nowrap;
-}
-
-.hero-input {
-    flex: 1;
-    height: 100%;
-    border: none;
-    background: transparent;
-    color: #fff;
-    padding-right: 12px;
-    font-size: 14px;
-    outline: none;
-}
-.hero-input-box {
-    margin-top: 32px;
-}
-.hero-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-.hero-content {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;      /* وسط عمودی */
-    justify-content: center;  /* وسط افقی */
-}
-
-/* Responsive Styles for Hero Section */
-@media (max-width: 768px) {
-    .hero-input-box {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        max-width: 350px;
-    }
-
-    .hero-input-fake {
-        width: 100%;
-    }
-
-    .hero-input-btn {
-        width: 100%;
-        padding: 0 16px;
-    }
-
-    .hero-title {
-        font-size: 2.5rem;
-        gap: 10px;
-    }
-
-    .hero-description {
-        font-size: 16px;
-        margin-bottom: 40px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-input-box {
-        max-width: 300px;
-    }
-
-    .hero-title {
-        font-size: 2rem;
-        gap: 8px;
-    }
-
-    .hero-description {
-        font-size: 15px;
-        margin-bottom: 35px;
-    }
-
-    .hero-input,
-    .hero-input-fake {
-        height: 44px;
-    }
-
-    .hero-input-btn {
-        height: 44px;
-    }
-}
-
-</style>
-<script>
-    const input = document.querySelector('.hero-input');
-    const domain = document.querySelector('.hero-domain');
-
-    input.addEventListener('input', () => {
-        domain.style.opacity = input.value ? '1' : '0.5';
-    });
-</script>
-
+    <script>
+        function redirectToBuilder() {
+            const username = document.getElementById('heroUsername').value;
+            if (username) {
+                window.location.href = "{% url 'card_builder' %}?username=" + username;
+            } else {
+                window.location.href = "{% url 'card_builder' %}";
+            }
+        }
+    </script>
 {% endblock %}

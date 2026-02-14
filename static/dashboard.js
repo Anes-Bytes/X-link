@@ -138,16 +138,43 @@ navLinks.forEach(link => {
 });
 
 function showSection(sectionId) {
-    // Hide all sections
+    // Hide all sections with a fade-out effect
     sections.forEach(section => {
-        section.style.display = 'none';
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            section.style.display = 'none';
+        }, 300);
     });
     
-    // Show the selected section
-    const selectedSection = document.getElementById(sectionId + '-section');
-    if (selectedSection) {
-        selectedSection.style.display = 'block';
-    }
+    // Show the selected section with a fade-in effect
+    setTimeout(() => {
+        const selectedSection = document.getElementById(sectionId + '-section');
+        if (selectedSection) {
+            selectedSection.style.display = 'block';
+            // Force reflow
+            selectedSection.offsetHeight;
+            selectedSection.style.opacity = '1';
+            selectedSection.style.transform = 'translateY(0)';
+            selectedSection.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Re-animate cards within the section
+            animateCards(selectedSection);
+        }
+    }, 305);
+}
+
+function animateCards(parent) {
+    const cards = parent.querySelectorAll('.card, .stat-card, .activity-item, .link-item');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 100 + (index * 50));
+    });
 }
 
 /* ============================================
@@ -558,6 +585,11 @@ function initializeDashboard() {
     // Set first nav item as active
     if (navLinks.length > 0) {
         navLinks[0].parentElement.classList.add('active');
+        const firstSectionId = navLinks[0].getAttribute('data-section');
+        const activeSection = document.getElementById(firstSectionId + '-section');
+        if (activeSection) {
+            animateCards(activeSection);
+        }
     }
     
     // Initialize dark mode

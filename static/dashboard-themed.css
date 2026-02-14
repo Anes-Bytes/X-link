@@ -16,24 +16,43 @@
     --info: #3A86FF;
 
     /* Card & Border Colors */
-    --card-bg: rgba(58, 134, 255, 0.05);
-    --card-border: rgba(0, 246, 255, 0.2);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover-bg: rgba(255, 255, 255, 0.06);
+    --card-hover-border: rgba(0, 246, 255, 0.3);
+    --border-color: rgba(58, 134, 255, 0.15);
+
+    /* Shadows & Effects */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+    --glow-blue: 0 0 20px rgba(58, 134, 255, 0.3);
+    --glow-cyan: 0 0 20px rgba(0, 246, 255, 0.3);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
     direction: rtl;
 }
-    --card-hover: rgba(58, 134, 255, 0.1);
-    --border-color: rgba(58, 134, 255, 0.15);
 
-    /* Shadows & Effects */
-    --shadow-sm: 0 2px 8px rgba(58, 134, 255, 0.1);
-    --shadow-md: 0 8px 24px rgba(58, 134, 255, 0.15);
-    --shadow-lg: 0 20px 40px rgba(58, 134, 255, 0.2);
-    --glow-blue: 0 0 20px rgba(58, 134, 255, 0.3);
-    --glow-cyan: 0 0 20px rgba(0, 246, 255, 0.3);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
 }
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(58, 134, 255, 0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 246, 255, 0.3);
+}
+
 
 /* ============================================
    GLOBAL STYLES
@@ -177,12 +196,19 @@ body {
     transition: var(--transition);
     border-left: 3px solid transparent;
     position: relative;
+    overflow: hidden;
 }
 
 .nav-link:hover {
     color: var(--cyan-neon);
-    background-color: var(--card-hover);
+    background-color: var(--card-hover-bg);
     border-left-color: var(--primary-blue);
+    padding-right: 2rem;
+}
+
+[dir="rtl"] .nav-link:hover {
+    padding-right: 0;
+    padding-left: 2rem;
 }
 
 .nav-item.active .nav-link {
@@ -596,18 +622,39 @@ body {
 .card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0, 246, 255, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    transition: var(--transition);
+    opacity: 0;
 }
 
 .card:hover {
-    box-shadow: var(--shadow-md), var(--glow-blue);
-    transform: translateY(-4px);
-    border-color: var(--cyan-neon);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(58, 134, 255, 0.1);
+    transform: translateY(-8px);
+    border-color: var(--card-hover-border);
+    background: var(--card-hover-bg);
+}
+
+.card:hover::after {
+    opacity: 1;
 }
 
 .card h3 {
