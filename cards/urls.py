@@ -5,7 +5,7 @@ urlpatterns = [
     # Card Builder and Management
     path('card/builder/', views.card_builder_view, name='card_builder'),
     path('card/success/<int:card_id>/', views.card_success_view, name='card_success'),
-    path('<str:username>', views.view_card, name='view_card'),
+    path('<str:username>/', views.view_card, name='view_card'),
 
 
     # AJAX endpoints

@@ -69,9 +69,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 ]
 
-if DEBUG:
-    INSTALLED_APPS += ['debug_toolbar']
-
 # =============================================================================
 # MIDDLEWARE CONFIGURATION
 # =============================================================================
@@ -79,12 +76,6 @@ if DEBUG:
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
-]
-
-if DEBUG:
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
-
-MIDDLEWARE += [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -107,7 +98,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # =============================================================================
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -159,8 +153,8 @@ SOCIALACCOUNT_ADAPTER = 'core.adapters.CustomSocialAccountAdapter'
 ACCOUNT_ADAPTER = 'core.adapters.CustomAccountAdapter'
 
 # Authentication URLs
-LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/dashboard'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Password validation
@@ -347,8 +341,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ADMIN_SITE_HEADER = "پنل مدیریت X-Link"
 ADMIN_SITE_TITLE = "مدیریت X-Link"
 ADMIN_INDEX_TITLE = "داشبورد مدیریت"
-
-# Debug Toolbar configuration
-INTERNAL_IPS = [
-    "127.0.0.1",
-]

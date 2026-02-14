@@ -7,6 +7,9 @@ from django.views.decorators.cache import cache_page
 from .models import Plan, Template
 
 def landing_view(request):
+    """
+    Landing page displaying plans, templates, and customers.
+    """
     period = request.GET.get("period", Plan.Period.MONTHLY)
 
     if period not in (
@@ -48,6 +51,9 @@ def landing_view(request):
 
 
 def pricing_view(request):
+    """
+    Pricing page displaying available plans.
+    """
     period = request.GET.get("period", Plan.Period.MONTHLY)
     if period not in (Plan.Period.MONTHLY, Plan.Period.ANNUAL):
         period = Plan.Period.MONTHLY

@@ -3,7 +3,7 @@ Test utilities and helper functions for Django testing.
 """
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from cards.models import UserCard
 from Billing.models import UserPlan, Template, Discount, Plan
@@ -11,6 +11,7 @@ from Billing.models import UserPlan, Template, Discount, Plan
 User = get_user_model()
 
 
+@override_settings(SECURE_SSL_REDIRECT=False)
 class XLinkTestCase(TestCase):
     """
     Base test case class with common test utilities for X-Link project.
@@ -32,19 +33,27 @@ class XLinkTestCase(TestCase):
             from allauth.socialaccount.models import SocialApp
             from django.contrib.sites.models import Site
             site = Site.objects.get_or_create(id=1, defaults={'domain': 'example.com', 'name': 'Example'})[0]
-            SocialApp.objects.get_or_create(
+            
+            google_app, _ = SocialApp.objects.get_or_create(
                 provider='google',
-                defaults={'name': 'Google', 'client_id': 'test', 'secret': 'test', 'sites': [site]}
+                defaults={'name': 'Google', 'client_id': 'test', 'secret': 'test'}
             )
-        except ImportError:
-            pass  # allauth not available, skip
-        except Exception:
-            pass  # Any other error, skip
+            google_app.sites.add(site)
+            
+            github_app, _ = SocialApp.objects.get_or_create(
+                provider='github',
+                defaults={'name': 'GitHub', 'client_id': 'test', 'secret': 'test'}
+            )
+            github_app.sites.add(site)
+            
+        except Exception as e:
+            # print(f"DEBUG: Error in setUp: {e}")
+            pass  
 
-    def create_test_user(self, phone="09123456789", full_name="Test User", password="testpass123", **kwargs):
+    def create_test_user(self, username="testuser", full_name="Test User", password="testpass123", **kwargs):
         """Create a test user with default values"""
         return User.objects.create_user(
-            phone=phone,
+            username=username,
             full_name=full_name,
             password=password,
             **kwargs
@@ -73,7 +82,7 @@ class XLinkTestCase(TestCase):
             discount = Discount.objects.create(value=0)
 
         defaults = {
-            'type': plan_type,
+            'plan_type': plan_type,
             'name': name,
             'price': price,
             'discount': discount,
@@ -91,7 +100,6 @@ class XLinkTestCase(TestCase):
             'image': self.test_image,
             'delay': 5,
             'is_active': True,
-            'only_for_premium': False,
         }
         defaults.update(kwargs)
 
@@ -105,7 +113,7 @@ class XLinkTestCase(TestCase):
         """Login a user for testing authenticated views"""
         if user is None:
             user = self.create_test_user()
-        self.client.login(phone=user.phone, password="testpass123")
+        self.client.login(username=user.username, password="testpass123")
         return user
 
     def assert_response_unauthenticated(self, url, method='get', data=None):
@@ -118,7 +126,7 @@ class XLinkTestCase(TestCase):
             raise ValueError(f"Unsupported method: {method}")
 
         self.assertEqual(response.status_code, 302)  # Redirect to login
-        self.assertIn('/register', response['Location'])
+        self.assertIn('/login', response['Location'])
 
 
 def create_authenticated_client(user=None):
@@ -131,13 +139,13 @@ def create_authenticated_client(user=None):
     if user is None:
         # Create a test user
         user = User.objects.create_user(
-            phone="09123456789",
+            username="testuser",
             full_name="Test User",
             password="testpass123"
         )
 
     client = Client()
-    client.login(phone=user.phone, password="testpass123")
+    client.login(username=user.username, password="testpass123")
     return client, user
 
 
@@ -147,7 +155,7 @@ def create_user_with_card(plan_type=None):
     Returns (user, user_card)
     """
     user = User.objects.create_user(
-        phone="09123456789",
+        username="testuser",
         full_name="Test User",
         password="testpass123"
     )

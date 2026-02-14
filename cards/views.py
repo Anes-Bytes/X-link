@@ -14,7 +14,7 @@ from environs import Env
 
 # Local app imports
 from core.models import UserPlan
-from cards.models import *
+from cards.models import UserCard, Skill, Service, Portfolio, Template
 from core.forms import UserCardForm, SkillInlineFormSet, ServiceInlineFormSet, PortfolioInlineFormSet
 
 # Logger setup

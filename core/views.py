@@ -17,16 +17,14 @@ from melipayamak import Api
 from environs import Env
 
 # Local app imports
-from cards.models import *
+from cards.models import UserCard
 from core.models import CustomUser
 from .forms import UserSignupForm, UserLoginForm
+from .utils import get_client_ip
+from .signals import user_registered
 
 # Logger setup
 logger = logging.getLogger(__name__)
-
-# Env setup
-env = Env()
-env.read_env()
 
 
 def signup_view(request):
@@ -41,14 +39,8 @@ def signup_view(request):
             user.save()
 
             # Send registration signal
-            if hasattr(request, 'META') and 'HTTP_X_FORWARDED_FOR' in request.META:
-                ip = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()
-            elif hasattr(request, 'META') and 'REMOTE_ADDR' in request.META:
-                ip = request.META['REMOTE_ADDR']
-            else:
-                ip = 'unknown'
+            ip = get_client_ip(request)
 
-            from .signals import user_registered
             user_registered.send(
                 sender=user.__class__,
                 user=user,

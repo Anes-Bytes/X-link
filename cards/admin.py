@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db.models import Prefetch
+from django.utils.html import format_html
 
 from Billing.models import UserPlan
 from cards.models import UserCard, Skill, Service, Portfolio
@@ -133,9 +134,8 @@ class UserCardAdmin(admin.ModelAdmin):
     def get_card_url_link(self, obj):
         """Display clickable link to the card."""
         url = obj.get_card_url()
-        return f'<a href="{url}" target="_blank">{url}</a>'
+        return format_html('<a href="{}" target="_blank">{}</a>', url, url)
     get_card_url_link.short_description = 'لینک کارت'
-    get_card_url_link.allow_tags = True
 
     # Actions
     def publish_cards(self, request, queryset):
