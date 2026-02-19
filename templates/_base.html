@@ -240,7 +240,7 @@
         <!-- Navigation Menu -->
         <ul class="nav-menu" id="navMenu">
             <li><a href="{% url 'home' %}" class="nav-link">خانه</a></li>
-            <li><a href="{% url 'pricing' %}" class="nav-link">خرید اشتراک</a></li>
+            <li><a href="{% url 'home' %}#pricing-landing" class="nav-link">خرید اشتراک</a></li>
             <li><a href="#templates" class="nav-link">قالب‌ها</a></li>
             <li><a href="{% url 'about' %}" class="nav-link">درباره ما</a></li>
         </ul>
@@ -262,7 +262,7 @@
                 <ul class="footer-links">
                     <li><a href="#features">قابلیت‌ها</a></li>
                     <li><a href="#templates">قالب‌ها</a></li>
-                    <li><a href="#pricing">قیمت</a></li>
+                    <li><a href="{% url 'home' %}#pricing-landing">قیمت</a></li>
                 </ul>
             </div>
 
@@ -281,7 +281,7 @@
                 <ul class="footer-links footer-team">
                     <li>
                         <span class="team-role">Founder & Developer:</span>
-                        <a href="https://t.me/Razpy" target="_blank">@Razpy</a>
+                        <a href="https://t.me/AnesPy" target="_blank">@AnesPy</a>
                     </li>
                     <li>
                         <span class="team-role">Co-founder:</span>
@@ -326,8 +326,8 @@
     <p>© 2025 X-Link — تمامی حقوق محفوظ است.</p>
     <p>
         Made with ❤️ and lots of ☕️ by
-        <a href="https://t.me/Razpy" target="_blank" class="footer-credit">
-            @Razpy
+        <a href="https://t.me/AnesPy" target="_blank" class="footer-credit">
+            @AnesPy
         </a>
     </p>
 
@@ -349,5 +349,6 @@
     <script src="{% static 'script.js' %}"></script>
     <script src="{% static 'carousel.js' %}"></script>
     <script src="{% static 'pricing-landing.js' %}"></script>
+    <script src="{% static 'plan-ajax.js' %}"></script>
 </body>
 </html>

@@ -231,26 +231,23 @@ class UserCard(models.Model):
         return links
 
     def can_use_color(self, color):
-        if not self.user_id:
+        # سعی کنیم یوزر را از خود آبجکت بگیریم (ممکن است هنوز ذخیره نشده باشد)
+        user = getattr(self, 'user', None)
+        
+        if not user:
             return color == 'default'
 
         if color == 'default':
             return True
 
-        return self.user.has_plan('Basic') or self.user.has_plan('Pro')
+        return user.has_plan('Basic') or user.has_plan('Pro')
 
     def clean(self):
         super().clean()
 
-        # اگر یوزر هنوز ست نشده
-        if not self.user_id:
-            if self.color != 'default':
-                raise ValidationError({
-                    'color': 'در حال حاضر فقط رنگ پیش‌فرض قابل انتخاب است.'
-                })
-            return
+        user = getattr(self, 'user', None)
 
-        # Validate color permissions (وقتی user داریم)
+        # Validate color permissions
         if not self.can_use_color(self.color):
             raise ValidationError({
                 'color': 'این رنگ فقط برای کاربران با پلن پایه یا حرفه‌ای فعال است. لطفاً پلن خود را ارتقا دهید.'

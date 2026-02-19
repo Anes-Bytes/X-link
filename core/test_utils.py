@@ -28,28 +28,6 @@ class XLinkTestCase(TestCase):
         # Ensure Free plan exists for signals
         UserPlan.objects.get_or_create(value="Free")
 
-        # Create minimal SocialApp objects for allauth template tags
-        try:
-            from allauth.socialaccount.models import SocialApp
-            from django.contrib.sites.models import Site
-            site = Site.objects.get_or_create(id=1, defaults={'domain': 'example.com', 'name': 'Example'})[0]
-            
-            google_app, _ = SocialApp.objects.get_or_create(
-                provider='google',
-                defaults={'name': 'Google', 'client_id': 'test', 'secret': 'test'}
-            )
-            google_app.sites.add(site)
-            
-            github_app, _ = SocialApp.objects.get_or_create(
-                provider='github',
-                defaults={'name': 'GitHub', 'client_id': 'test', 'secret': 'test'}
-            )
-            github_app.sites.add(site)
-            
-        except Exception as e:
-            # print(f"DEBUG: Error in setUp: {e}")
-            pass  
-
     def create_test_user(self, username="testuser", full_name="Test User", password="testpass123", **kwargs):
         """Create a test user with default values"""
         return User.objects.create_user(

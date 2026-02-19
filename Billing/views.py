@@ -26,7 +26,7 @@ def landing_view(request):
             Plan.objects
             .select_related("discount")
             .prefetch_related("features")
-            .filter(period=period)
+            .filter(period=period, is_active=True)
         )
         templates = list(Template.objects.filter(is_active=True))
         customers = list(Customer.objects.filter(is_active=True))
@@ -36,7 +36,10 @@ def landing_view(request):
             "templates": templates,
             "customers": customers,
         }
-        cache.set(cache_key, data, 60 * 15)
+        cache.set(cache_key, data, 60 * 60) # Cache for 1 hour
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'Billing/partials/pricing_cards.html', {'plans': data['plans'], "current_period": period})
 
     context = {
         **data,
@@ -49,23 +52,6 @@ def landing_view(request):
         context
     )
 
-
-def pricing_view(request):
-    """
-    Pricing page displaying available plans.
-    """
-    period = request.GET.get("period", Plan.Period.MONTHLY)
-    if period not in (Plan.Period.MONTHLY, Plan.Period.ANNUAL):
-        period = Plan.Period.MONTHLY
-    
-    plans_cache_key = f"pricing_plans_{period}"
-    plans = cache.get(plans_cache_key)
-    
-    if plans is None:
-        plans = list(Plan.objects.select_related("discount").prefetch_related("features").filter(period=period))
-        cache.set(plans_cache_key, plans, 60 * 15)
-
-    return render(request, 'Billing/pricing.html', context={'Billing': plans, "current_period": period,})
 
 @login_required
 def payment_success_view(request):

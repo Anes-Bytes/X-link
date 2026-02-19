@@ -1,5 +1,7 @@
 import json
 import logging
+import base64
+from django.core.files.base import ContentFile
 
 # Django imports
 from django.shortcuts import render, redirect, get_object_or_404
@@ -23,6 +25,17 @@ logger = logging.getLogger(__name__)
 # Env setup
 env = Env()
 env.read_env()
+
+def base64_file(data, name):
+    if not data or not data.startswith('data:image'):
+        return None
+    
+    try:
+        format, imgstr = data.split(';base64,')
+        ext = format.split('/')[-1]
+        return ContentFile(base64.b64decode(imgstr), name=f'{name}.{ext}')
+    except Exception:
+        return None
 
 @login_required
 def card_builder_view(request):
@@ -48,6 +61,11 @@ def card_builder_view(request):
 
     if request.method == 'POST':
         form = UserCardForm(request.POST, request.FILES, instance=user_card)
+        
+        # Assign user before validation so clean() can check plan permissions
+        if not user_card:
+            form.instance.user = request.user
+            
         skill_formset = SkillInlineFormSet(request.POST, instance=user_card, prefix='skill')
         service_formset = ServiceInlineFormSet(request.POST, instance=user_card, prefix='service')
         portfolio_formset = PortfolioInlineFormSet(request.POST, request.FILES, instance=user_card, prefix='portfolio')
@@ -61,6 +79,11 @@ def card_builder_view(request):
             card = form.save(commit=False)
             card.user = request.user
 
+            # Handle persisted profile picture if no new file uploaded
+            if not request.FILES.get('profile_picture'):
+                persisted_data = form.cleaned_data.get('profile_picture_data')
+                if persisted_data:
+                    card.profile_picture = base64_file(persisted_data, f"profile_{request.user.id}")
 
             if has_pro_plan:
                 card.black_background = bool(request.POST.get("black_bg"))
@@ -76,6 +99,18 @@ def card_builder_view(request):
             service_formset.save()
 
             portfolio_formset.instance = card
+            
+            # Handle persisted portfolio images
+            for p_form in portfolio_formset:
+                if p_form.is_valid() and not p_form.cleaned_data.get('DELETE'):
+                    if not p_form.cleaned_data.get('image'):
+                        p_img_data = p_form.cleaned_data.get('image_data')
+                        if p_img_data:
+                            p_instance = p_form.save(commit=False)
+                            p_instance.image = base64_file(p_img_data, f"portfolio_{p_instance.title or 'item'}")
+                            # The formset.save() will handle the actual save, 
+                            # but we need to ensure the image is set on the instance.
+
             portfolio_formset.save()
 
             logger.info(

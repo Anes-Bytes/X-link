@@ -1,6 +1,5 @@
 {% extends '_base.html' %}
 {% load static %}
-{% load socialaccount %}
 
 {% block page_title %} ورود & ثبت نام - X-Link {% endblock %}
 
@@ -24,25 +23,6 @@
                     <button class="auth-tab" data-tab="signup">
                         ثبت نام
                     </button>
-                </div>
-
-                <!-- Social Login Buttons -->
-                <div class="social-login">
-                    <button class="social-btn google-btn"
-                            onclick="window.location.href='{% provider_login_url 'google' %}'">
-                        <i class="fab fa-google"></i>
-                        <span>Continue with Google</span>
-                    </button>
-
-                    <button class="social-btn github-btn"
-                            onclick="window.location.href='{% provider_login_url 'github' %}'">
-                        <i class="fab fa-github"></i>
-                        <span>Continue with GitHub</span>
-                    </button>
-                </div>
-
-                <div class="divider">
-                    <span>یا</span>
                 </div>
 
                 <!-- Login Form -->
@@ -83,10 +63,6 @@
                     <div class="form-group">
                         <label for="signupPassword">رمز عبور</label>
                         <input type="password" id="signupPassword" name="password" required dir="ltr">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">تکرار رمز عبور</label>
-                        <input type="password" id="confirmPassword" name="confirm_password" required dir="ltr">
                     </div>
 
                     <button type="submit" class="auth-submit-btn">

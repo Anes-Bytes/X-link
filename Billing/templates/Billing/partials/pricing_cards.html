@@ -1,0 +1,52 @@
+{% load humanize %}
+{% for plan in plans %}
+    <div class="pricing-card-landing {% if plan.is_special %}featured{% endif %}">
+        {% if plan.is_special %}
+            <div class="featured-badge">توصیه شده</div>
+        {% endif %}
+        
+        <div class="card-header-landing">
+            <span class="plan-badge">
+                {% if plan.plan_type == "Pro" %}حرفه‌ای{% elif plan.plan_type == "Basic" %}پایه{% else %}رایگان{% endif %}
+            </span>
+            <h3 class="plan-name-landing">{{ plan.name }}</h3>
+            <p class="plan-description-landing">
+                {% if plan.plan_type == "Pro" %}مناسب کسب‌وکارها و کاربران حرفه‌ای با دسترسی به تمامی امکانات پیشرفته{% elif plan.plan_type == "Basic" %}انتخابی اقتصادی برای استفاده روزمره با امکانات ضروری{% else %}بهترین گزینه برای شروع و آشنایی با امکانات پایه{% endif %}
+            </p>
+        </div>
+
+        <div class="price-section-landing">
+            <div class="price-wrapper-landing">
+                <span class="price-value">{{ plan.get_discounted_price|intcomma }}</span>
+                <span class="price-currency">تومان</span>
+                <span class="price-period">/ {% if plan.plan_type == "Free" %}نامحدود{% elif plan.period == "monthly" %}ماهانه{% else %}سالانه{% endif %}</span>
+            </div>
+            {% if plan.discount %}
+                <div class="price-info-landing">
+                    <span class="original-price">تومان {{ plan.price|intcomma }}</span>
+                    <span class="discount-badge">{{ plan.discount.value }}٪ تخفیف</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <ul class="features-list-landing">
+            {% for feature in plan.features.all %}
+                <li><i class="fas fa-check"></i> <span>{{ feature.name }}</span></li>
+            {% endfor %}
+        </ul>
+
+        <div class="card-actions-landing">
+            {% if plan.plan_type == "Free" %}
+                <a href="{% url 'card_builder' %}" class="cta-button-landing cta-secondary-landing">
+                    <span>شروع رایگان</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'buy_telegram' %}" class="cta-button-landing cta-primary-landing">
+                    <span>انتخاب پلن</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

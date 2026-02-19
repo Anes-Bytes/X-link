@@ -16,14 +16,6 @@ class UserSignupForm(forms.ModelForm):
         }),
         validators=[MinLengthValidator(8)]
     )
-    confirm_password = forms.CharField(
-        label="تکرار رمز عبور",
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'تکرار رمز عبور',
-            'dir': 'ltr',
-        })
-    )
 
     class Meta:
         model = CustomUser
@@ -48,11 +40,6 @@ class UserSignupForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
-
-        if password != confirm_password:
-            raise forms.ValidationError("رمز عبور و تکرار آن مطابقت ندارند")
         return cleaned_data
 
 class UserLoginForm(AuthenticationForm):
@@ -162,8 +149,15 @@ class UserCardForm(forms.ModelForm):
             'color': forms.Select(attrs={
                 'class': 'form-control color-select',
             }),
-
+            'profile_picture': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*',
+                'id': 'profile_picture_input'
+            }),
         }
+    
+    # Hidden field to persist image data across form errors
+    profile_picture_data = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 
 class SkillForm(forms.ModelForm):
@@ -257,6 +251,9 @@ class PortfolioForm(forms.ModelForm):
                 'dir': 'ltr',
             }),
         }
+
+    # Hidden field to persist image data across form errors
+    image_data = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 
 class PortfolioFormSet(forms.BaseInlineFormSet):

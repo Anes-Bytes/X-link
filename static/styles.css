@@ -509,6 +509,8 @@ body {
     .nav-container {
         padding: 0 20px;
         position: relative;
+        flex-direction: row-reverse; /* Starts from Left in RTL */
+        justify-content: flex-start;
     }
 
     .nav-menu {
@@ -534,19 +536,23 @@ body {
 
     .hamburger {
         display: flex;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
+        position: static;
+        transform: none;
         z-index: 10;
+        order: 2; /* Rightmost in row-reverse RTL */
+        margin-left: 0;
     }
 
     .nav-user-section {
-        position: absolute;
-        right: 70px; /* Position user button to the left of hamburger */
-        top: 50%;
-        transform: translateY(-50%);
-        order: 1;
+        position: static;
+        transform: none;
+        order: 1; /* Middle-Right */
+        margin-left: 0;
+        margin-right: auto; /* Pushes Logo (order 0) to the far left */
+    }
+
+    .logo-link {
+        order: 0; /* Leftmost in row-reverse RTL */
     }
 }
 
@@ -587,7 +593,19 @@ body {
     position: absolute;
     background: #ffffff;
     border-radius: 50%;
-    animation: twinkle 3s infinite ease-in-out;
+    animation: twinkle 4s infinite ease-in-out;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
 }
 
 .star:nth-child(odd) {
@@ -625,10 +643,10 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
+    width: 15px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
-    transform: translateX(-50px);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), transparent);
+    transform: translateX(-7px);
     animation: trail 10s linear infinite;
     will-change: transform;
 }
@@ -694,9 +712,9 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
+    width: 25px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), transparent);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
     transform: translate(-50%, -50%);
     animation: comet-trail 15s linear infinite;
     will-change: transform;
@@ -737,9 +755,9 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 80px;
+    width: 15px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), transparent);
     transform: translate(-50%, -50%) rotate(30deg);
     animation: meteor-trail 4s linear infinite;
 }
@@ -4028,36 +4046,62 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    margin-top: 40px;
-    flex-wrap: wrap;
+    gap: 0;
+    margin: 40px auto 0;
+    background: rgba(58, 134, 255, 0.05);
+    border: 1px solid rgba(58, 134, 255, 0.2);
+    border-radius: 50px;
+    padding: 5px;
+    width: fit-content;
+    position: relative;
+    overflow: hidden;
+    direction: rtl;
+}
+
+.period-indicator {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    width: calc(50% - 5px);
+    background: linear-gradient(135deg, var(--primary-blue), var(--cyan-neon));
+    border-radius: 40px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+    z-index: 1;
+}
+
+.period-toggle[data-active="monthly"] .period-indicator {
+    right: 5px;
+    left: auto;
+}
+
+.period-toggle[data-active="annual"] .period-indicator {
+    right: calc(50% );
+    left: auto;
 }
 
 .toggle-period-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    padding: 12px 24px;
-    border: 2px solid rgba(58, 134, 255, 0.3);
+    padding: 12px 30px;
+    border: none;
     background: transparent;
     color: var(--text-white);
-    border-radius: 8px;
+    border-radius: 40px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
-    font-size: 16px;
+    font-size: 15px;
     text-decoration: none;
-}
-
-.toggle-period-btn:hover {
-    border-color: var(--primary-blue);
-    background: rgba(58, 134, 255, 0.1);
+    position: relative;
+    z-index: 2;
+    min-width: 140px;
 }
 
 .toggle-period-btn.active {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-    color: white;
+    color: var(--bg-dark) !important;
 }
 
 .discount-label {

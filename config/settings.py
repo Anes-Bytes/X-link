@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'django.contrib.humanize',
 
     # Project apps
@@ -62,11 +61,6 @@ INSTALLED_APPS = [
     'site_management',
 
     # Third-party apps
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
 ]
 
 # =============================================================================
@@ -81,7 +75,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -112,45 +105,6 @@ DATABASES = {
 # =============================================================================
 
 AUTH_USER_MODEL = 'core.CustomUser'
-
-# Django Allauth configuration
-SITE_ID = env.int('SITE_ID', default=1)
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # 5 minutes
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-
-# Social account settings
-SOCIALACCOUNT_LOGIN_ON_GET = True
-SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
-SOCIALACCOUNT_QUERY_EMAIL = True
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_STORE_TOKENS = True
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    },
-    'github': {
-        'SCOPE': [
-            'user',
-            'read:user',
-            'user:email',
-        ],
-    }
-}
-
-SOCIALACCOUNT_ADAPTER = 'core.adapters.CustomSocialAccountAdapter'
-ACCOUNT_ADAPTER = 'core.adapters.CustomAccountAdapter'
 
 # Authentication URLs
 LOGIN_URL = '/login/'

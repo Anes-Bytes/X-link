@@ -6,10 +6,6 @@
 
 {% block page_content %}
 
-<br>
-<br>
-<br>
-
 <div class="card-builder-container">
     <div class="container">
         <div class="builder-header">
@@ -81,7 +77,13 @@
 
         <div class="portfolio-input-wrapper">
             <input type="text" name="portfolio-__prefix__-title" class="portfolio-input" placeholder="عنوان پروژه" maxlength="255" id="id_portfolio-__prefix__-title">
-            <input type="file" name="portfolio-__prefix__-image" class="portfolio-input" accept="image/*" id="id_portfolio-__prefix__-image">
+            <input type="hidden" name="portfolio-__prefix__-image_data" id="id_portfolio-__prefix__-image_data">
+            <div class="portfolio-image-upload">
+                <input type="file" name="portfolio-__prefix__-image" class="portfolio-input" accept="image/*" id="id_portfolio-__prefix__-image">
+                <div class="portfolio-preview-container" id="preview_portfolio-__prefix__" style="display:none;">
+                    <img src="" alt="Preview" class="portfolio-preview-img">
+                </div>
+            </div>
             <input type="url" name="portfolio-__prefix__-url" class="portfolio-input" placeholder="https://example.com" id="id_portfolio-__prefix__-url">
             <textarea name="portfolio-__prefix__-description" class="portfolio-input" placeholder="توضیح پروژه" rows="3" maxlength="500" id="id_portfolio-__prefix__-description"></textarea>
 
@@ -213,7 +215,7 @@
                             <input type="checkbox" disabled>
                             <label>تیک آبی <i class="fas fa-lock"></i></label>
                         </div>
-                        <p class="pro-upgrade-hint">برای استفاده از این قابلیت‌ها <a href="{% url 'pricing' %}">اشتراک خود را ارتقا دهید</a></p>
+                        <p class="pro-upgrade-hint">برای استفاده از این قابلیت‌ها <a href="{% url 'home' %}#pricing-landing">اشتراک خود را ارتقا دهید</a></p>
                     </div>
                     {% endif %}
                 </div>
@@ -244,19 +246,16 @@
                         {% endif %}
                         <small class="help-text">مثال: +98 912 345 6789</small>
                     </div>
-                    <!-- آپلود عکس پروفایل -->
                     <div class="form-group">
                         <label for="{{ form.profile_picture.id_for_label }}">آپلود عکس پروفایل *</label>
+                        {{ form.profile_picture_data }}
                         <div class="profile-upload-wrapper">
-                            {% if form.instance.profile_picture %}
-                            <div class="current-image-preview">
-                                <img src="{{ form.instance.profile_picture.url }}" alt="عکس پروفایل فعلی">
-                                <div class="image-overlay"><i class="fas fa-camera"></i></div>
+                            <div class="profile-preview-container" id="profile_preview_container" style="{% if not form.instance.profile_picture %}display:none;{% endif %}">
+                                <img src="{% if form.instance.profile_picture %}{{ form.instance.profile_picture.url }}{% endif %}" id="profile_preview_img" alt="پیش‌نمایش">
                             </div>
-                            {% endif %}
                             <div class="file-input-custom">
                                 {{ form.profile_picture }}
-                                <span><i class="fas fa-upload"></i> انتخاب فایل جدید</span>
+                                <span><i class="fas fa-upload"></i> انتخاب فایل</span>
                             </div>
                         </div>
                         {% if form.profile_picture.errors %}
@@ -445,10 +444,11 @@
                             {{ portfolio_form.id }}
                             <div class="portfolio-input-wrapper">
                                 {{ portfolio_form.title }}
+                                {{ portfolio_form.image_data }}
                                 <div class="portfolio-image-upload">
-                                    {% if portfolio_form.instance.image %}
-                                        <img src="{{ portfolio_form.instance.image.url }}" class="portfolio-preview" alt="Portfolio Image">
-                                    {% endif %}
+                                    <div class="portfolio-preview-container" id="preview_{{ portfolio_form.prefix }}" style="{% if not portfolio_form.instance.image %}display:none;{% endif %}">
+                                        <img src="{% if portfolio_form.instance.image %}{{ portfolio_form.instance.image.url }}{% endif %}" class="portfolio-preview-img" alt="پیش‌نمایش">
+                                    </div>
                                     {{ portfolio_form.image }}
                                 </div>
                                 {{ portfolio_form.url }}
@@ -481,24 +481,27 @@
     let currentStep = 1;
 
     function showStep(step) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const currentActive = document.querySelector('.step-content.active');
         const nextTarget = document.getElementById(`step${step}`);
         
         if (currentActive && currentActive !== nextTarget) {
-            currentActive.style.opacity = '0';
-            currentActive.style.transform = 'translateY(-20px)';
-            currentActive.style.transition = 'all 0.3s ease-in';
+            // Exit animation
+            currentActive.classList.add('exit');
+            currentActive.classList.remove('active');
             
             setTimeout(() => {
-                currentActive.classList.remove('active');
+                currentActive.style.display = 'none';
+                currentActive.classList.remove('exit');
                 activateNextStep(nextTarget, step);
-            }, 300);
+            }, 500); // Matches CSS transition duration
         } else {
             activateNextStep(nextTarget, step);
         }
     }
 
     function activateNextStep(nextTarget, step) {
+        // Update Stepper UI
         document.querySelectorAll('.stepper-item').forEach(item => {
             const itemStep = parseInt(item.dataset.step);
             item.classList.remove('active', 'completed');
@@ -509,19 +512,21 @@
             }
         });
 
-        nextTarget.classList.add('active');
+        // Entrance animation
+        nextTarget.style.display = 'block';
+        // Reset transform before adding active
+        nextTarget.style.transform = 'translateX(30px)';
         nextTarget.style.opacity = '0';
-        nextTarget.style.transform = 'translateY(20px)';
         
         // Force reflow
         nextTarget.offsetHeight;
         
-        nextTarget.style.opacity = '1';
-        nextTarget.style.transform = 'translateY(0)';
-        nextTarget.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        
-        currentStep = step;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+            nextTarget.classList.add('active');
+            nextTarget.style.transform = ''; // Clear inline styles to use CSS
+            nextTarget.style.opacity = '';
+            currentStep = step;
+        }, 50);
     }
 
     function nextStep(step) {
@@ -612,7 +617,73 @@
 
         if (addSkillBtn) addSkillBtn.addEventListener('click', () => addForm('skillsContainer', 'empty-skill-form', 'skill-TOTAL_FORMS'));
         if (addServiceBtn) addServiceBtn.addEventListener('click', () => addForm('servicesContainer', 'empty-service-form', 'service-TOTAL_FORMS'));
-        if (addPortfolioBtn) addPortfolioBtn.addEventListener('click', () => addForm('portfolioContainer', 'empty-portfolio-form', 'portfolio-TOTAL_FORMS'));
+        
+        if (addPortfolioBtn) {
+            addPortfolioBtn.addEventListener('click', () => {
+                addForm('portfolioContainer', 'empty-portfolio-form', 'portfolio-TOTAL_FORMS');
+                // Setup preview for the newly added form
+                const totalForms = document.querySelector('[name="portfolio-TOTAL_FORMS"]');
+                const newIndex = parseInt(totalForms.value) - 1;
+                const newFileInput = document.querySelector(`[name="portfolio-${newIndex}-image"]`);
+                const newHiddenInput = document.querySelector(`[name="portfolio-${newIndex}-image_data"]`);
+                const newPreviewContainer = document.getElementById(`preview_portfolio-${newIndex}`);
+                const newPreviewImg = newPreviewContainer ? newPreviewContainer.querySelector('img') : null;
+                
+                if (newFileInput) {
+                    setupImagePreview(newFileInput, newHiddenInput, newPreviewContainer, newPreviewImg);
+                }
+            });
+        }
+
+        // Image Persistence & Preview Logic
+        function setupImagePreview(fileInput, hiddenInput, previewContainer, previewImg) {
+            if (!fileInput) return;
+            
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const base64Data = e.target.result;
+                        if (hiddenInput) hiddenInput.value = base64Data;
+                        if (previewImg) previewImg.src = base64Data;
+                        if (previewContainer) previewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Setup for Profile Picture
+        const profileInput = document.getElementById('profile_picture_input');
+        const profileHidden = document.querySelector('[name="profile_picture_data"]');
+        const profilePreviewContainer = document.getElementById('profile_preview_container');
+        const profilePreviewImg = document.getElementById('profile_preview_img');
+        
+        setupImagePreview(profileInput, profileHidden, profilePreviewContainer, profilePreviewImg);
+
+        // Setup for existing Portfolio items
+        document.querySelectorAll('.portfolio-form-group').forEach(group => {
+            const idx = group.dataset.formIndex;
+            if (idx === undefined) return;
+            const fInput = group.querySelector(`[name="portfolio-${idx}-image"]`);
+            const hInput = group.querySelector(`[name="portfolio-${idx}-image_data"]`);
+            const pContainer = document.getElementById(`preview_portfolio-${idx}`);
+            const pImg = pContainer ? pContainer.querySelector('img') : null;
+            setupImagePreview(fInput, hInput, pContainer, pImg);
+            
+            // If we have persisted data (from a previous error), show it
+            if (hInput && hInput.value && pImg && pContainer) {
+                pImg.src = hInput.value;
+                pContainer.style.display = 'block';
+            }
+        });
+
+        // Persist profile picture if hidden data exists
+        if (profileHidden && profileHidden.value && profilePreviewImg && profilePreviewContainer) {
+            profilePreviewImg.src = profileHidden.value;
+            profilePreviewContainer.style.display = 'block';
+        }
     });
 </script>
 
@@ -626,22 +697,23 @@
 <style>
 /* Modern Card Builder Styles */
 .card-builder-container {
-    min-height: 100vh;
-    padding: 60px 20px;
+    min-height: auto;
+    padding: 70px 20px 40px;
     background: radial-gradient(circle at top right, rgba(58, 134, 255, 0.1), transparent),
                 radial-gradient(circle at bottom left, rgba(0, 246, 255, 0.05), transparent),
                 linear-gradient(135deg, #0A0F1F 0%, #16213E 100%);
+    display: block;
 }
 
 .builder-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .builder-header h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 800;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, #fff 0%, var(--cyan-neon) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -651,10 +723,10 @@
 .stepper-wrapper {
     display: flex;
     justify-content: space-between;
-    max-width: 900px;
-    margin: 0 auto 50px;
+    max-width: 800px;
+    margin: 0 auto 30px;
     position: relative;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 
 .stepper-wrapper::before {
@@ -724,17 +796,21 @@
     display: none;
     max-width: 900px;
     margin: 0 auto;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
 }
 
 .step-content.active {
-    display: block;
-    animation: fadeInStep 0.5s ease-out;
+    display: block !important;
+    opacity: 1;
+    transform: translateX(0);
 }
 
-@keyframes fadeInStep {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.step-content.exit {
+    opacity: 0;
+    transform: translateX(-30px);
 }
 
 /* Glassmorphism Section */
@@ -744,17 +820,17 @@
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
-    padding: 40px;
-    margin-bottom: 30px;
+    padding: 30px;
+    margin-bottom: 25px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .form-section h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -873,13 +949,12 @@ select option {
 .color-preview.green { background: #00ff00; }
 
 .color-preview.blurred {
-    filter: blur(4px);
     opacity: 0.6;
 }
 
 .color-item.locked {
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.8;
     background: rgba(255, 255, 255, 0.01);
 }
 
@@ -1002,7 +1077,6 @@ select option {
 
 .template-option.locked {
     cursor: not-allowed;
-    filter: grayscale(0.5);
 }
 
 .template-lock-overlay {
@@ -1057,8 +1131,8 @@ select option {
 }
 
 .pro-option {
-    background: rgba(255, 215, 0, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    background: rgba(0, 246, 255, 0.05);
+    border: 1px solid rgba(0, 246, 255, 0.2);
     padding: 15px;
     border-radius: 12px;
     display: flex;
@@ -1067,7 +1141,7 @@ select option {
 }
 
 .badge-pro {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
+    background: linear-gradient(135deg, #00F6FF, #00D1FF);
     color: #000;
     font-size: 10px;
     font-weight: 900;
@@ -1152,23 +1226,23 @@ select option {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Profile Image Upload */
-.profile-upload-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.current-image-preview {
-    position: relative;
+.profile-preview-container, .portfolio-preview-container {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--cyan-neon);
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.2);
 }
 
-.current-image-preview img {
+.portfolio-preview-container {
+    border-radius: 12px;
+    width: 150px;
+    height: 100px;
+}
+
+.profile-preview-container img, .portfolio-preview-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1228,6 +1302,9 @@ select option {
     }
     .form-row {
         grid-template-columns: 1fr;
+    }
+    .card-builder-container {
+        padding-top: 80px;
     }
 }
 </style>

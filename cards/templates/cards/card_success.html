@@ -561,12 +561,31 @@ function copyToClipboard(text) {
     });
 }
 
-function downloadQRCode() {
-    const link = document.createElement('a');
+async function downloadQRCode() {
     const cardUrl = document.getElementById('cardUrl').value;
-    link.href = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${cardUrl}`;
-    link.download = 'card-qr-code.png';
-    link.click();
+    if (!cardUrl) return;
+
+    try {
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(cardUrl)}`;
+        const response = await fetch(qrUrl);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'card-qr-code.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+        console.error('Download failed:', error);
+        const link = document.createElement('a');
+        link.href = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(cardUrl)}`;
+        link.download = 'card-qr-code.png';
+        link.target = '_blank';
+        link.click();
+    }
 }
 
 function shareOnTelegram(url) {

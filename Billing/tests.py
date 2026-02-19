@@ -100,10 +100,3 @@ class BillingViewsTestCase(XLinkTestCase):
         self.assertTemplateUsed(response, 'Billing/landing.html')
         self.assertIn('plans', response.context)
         self.assertIn('customers', response.context)
-
-    def test_pricing_view(self):
-        """Test pricing view"""
-        response = self.client.get(reverse('pricing'))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'Billing/pricing.html')

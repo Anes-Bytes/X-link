@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.db.models import Q
 from core.models import CustomUser, UserPlan
+from cards.models import UserCard
 
 
 class Command(BaseCommand):
@@ -55,26 +56,37 @@ class Command(BaseCommand):
 
                 # Add Free plan to expired user
                 try:
-                    free_plan = UserPlan.objects.get(value='Free')
+                    free_plan, _ = UserPlan.objects.get_or_create(value='Free')
                     user.plan.add(free_plan)
                     user.plan_expires_at = None
                     user.save()
 
+                    # Reset premium card features
+                    try:
+                        card = user.user_card
+                        card.black_background = False
+                        card.stars_background = False
+                        card.blue_tick = False
+                        card.color = 'default'
+                        card.save()
+                    except UserCard.DoesNotExist:
+                        pass
+
                     self.stdout.write(
                         self.style.SUCCESS(
                             f'Expired Billing for user {user.full_name or user.phone}: '
-                            f'{", ".join(plan_names)} → Added Free plan'
+                            f'{", ".join(plan_names)} → Added Free plan and reset features'
                         )
                     )
-                except UserPlan.DoesNotExist:
-                    # If Free plan doesn't exist, just clear Billing
+                except Exception as e:
+                    # If error occurred, just clear Billing
                     user.plan_expires_at = None
                     user.save()
 
                     self.stdout.write(
                         self.style.ERROR(
                             f'Expired Billing for user {user.full_name or user.phone}: '
-                            f'{", ".join(plan_names)} → Free plan not found!'
+                            f'{", ".join(plan_names)} → Error: {e}'
                         )
                     )
 

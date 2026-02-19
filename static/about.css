@@ -102,6 +102,7 @@ body {
     background: #ffffff;
     border-radius: 50%;
     animation: twinkle 3s infinite ease-in-out;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
 }
 
 .star:nth-child(odd) {
@@ -139,10 +140,10 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
+    width: 15px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), transparent);
-    transform: translateX(-50px);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), transparent);
+    transform: translateX(-7px);
     animation: trail 10s linear infinite;
     will-change: transform;
 }
@@ -196,9 +197,9 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 180px;
+    width: 20px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), transparent);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
     transform: translate(-50%, -50%);
     animation: comet-trail 15s linear infinite;
     will-change: transform;
