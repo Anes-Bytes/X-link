@@ -41,3 +41,4 @@ zeep==4.3.2
 psutil
 apscheduler
 aiosqlite
+psycopg2-binary==2.9.9
