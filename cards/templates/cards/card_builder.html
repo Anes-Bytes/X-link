@@ -233,10 +233,15 @@
                     <div class="form-group">
                         <label for="{{ form.username.id_for_label }}">نام کاربری *</label>
                         {{ form.username }}
+                        <div
+                            id="subdomain-status"
+                            class="subdomain-status"
+                            data-check-url="{% url 'check_subdomain' %}"
+                        ></div>
                         {% if form.username.errors %}
                         <div class="error-message">{{ form.username.errors }}</div>
                         {% endif %}
-                        <small class="help-text">نام کاربری برای لینک کارت (مثال: example.com/username)</small>
+                        <small class="help-text">ساب‌دامین شما به این شکل ساخته می‌شود: username.{{ request.get_host }}</small>
                     </div>
                     <div class="form-group">
                         <label for="{{ form.phone_number.id_for_label }}">شماره تماس</label>
@@ -477,6 +482,7 @@
                     <button type="submit" class="btn-submit">ثبت و ایجاد کارت <i class="fas fa-check"></i></button>
                 </div>
             </div>
+<script src="{% static 'subdomain-check.js' %}"></script>
 <script>
     let currentStep = 1;
 
@@ -1189,6 +1195,21 @@ select option {
     list-style: none;
     display: block;
     font-weight: 600;
+}
+
+.subdomain-status {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+.subdomain-status.is-ok {
+    color: #22c55e;
+}
+
+.subdomain-status.is-error {
+    color: #ef4444;
 }
 
 .errorlist li {

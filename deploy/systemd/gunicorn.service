@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn daemon for X-Link Django project
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/x-link
+EnvironmentFile=/var/www/x-link/.env
+ExecStart=/var/www/x-link/.venv/bin/gunicorn config.wsgi:application --config /var/www/x-link/gunicorn_config.py
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

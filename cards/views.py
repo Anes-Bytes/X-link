@@ -5,7 +5,7 @@ from django.core.files.base import ContentFile
 
 # Django imports
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -16,6 +16,7 @@ from environs import Env
 
 # Local app imports
 from core.models import UserPlan
+from core.services.subdomains import assign_subdomain_to_user
 from cards.models import UserCard, Skill, Service, Portfolio, Template
 from core.forms import UserCardForm, SkillInlineFormSet, ServiceInlineFormSet, PortfolioInlineFormSet
 
@@ -90,6 +91,10 @@ def card_builder_view(request):
                 card.stars_background = bool(request.POST.get("stars_bg"))
                 card.blue_tick = bool(request.POST.get("blue_tick"))
 
+            subdomain_result = assign_subdomain_to_user(request.user, card.username)
+            if not subdomain_result.available:
+                messages.error(request, f"Subdomain error: {subdomain_result.reason}")
+                return redirect("card_builder")
             card.save()
 
             skill_formset.instance = card
@@ -167,7 +172,7 @@ def card_success_view(request, card_id):
         id=card_id,
         user=request.user
     )
-    card_url = user_card.get_card_url()
+    card_url = user_card.get_card_url(request=request)
 
     logger.info("Card success page viewed by user %s for card_id=%s", request.user.username, card_id)
     messages.success(request, "کارت ویزیت شما با موفقیت ساخته شد")
@@ -190,6 +195,21 @@ def view_card(request, username):
     }
 
     return render(request, 'cards/card_view.html', context)
+
+
+def view_card_by_subdomain(request):
+    if not getattr(request, "subdomain", None):
+        raise Http404("Subdomain not found.")
+
+    user_card = get_object_or_404(
+        UserCard.objects.select_related("user", "user__subdomain").prefetch_related("skills", "services", "portfolio_items"),
+        user__subdomain__subdomain=request.subdomain,
+        user__subdomain__is_active=True,
+        is_published=True,
+    )
+
+    UserCard.objects.filter(id=user_card.id).update(views=F('views') + 1)
+    return render(request, "cards/card_view.html", {"user_card": user_card})
 
 
 @require_http_methods(["POST"])

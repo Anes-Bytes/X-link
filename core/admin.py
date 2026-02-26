@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.db.models import Prefetch, Count
 
 from cards.models import UserCard
-from .models import CustomUser, OTP
+from .models import CustomUser, OTP, UserSubdomain
 from .forms import CustomUserChangeForm
 
 
@@ -244,3 +244,11 @@ class OTPAdmin(admin.ModelAdmin):
         if obj and obj.is_expired():
             return True
         return super().has_delete_permission(request, obj)
+
+
+@admin.register(UserSubdomain)
+class UserSubdomainAdmin(admin.ModelAdmin):
+    list_display = ("subdomain", "user", "is_active", "created_at")
+    list_filter = ("is_active", "created_at")
+    search_fields = ("subdomain", "user__username", "user__email", "user__phone")
+    ordering = ("subdomain",)

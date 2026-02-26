@@ -5,6 +5,7 @@ from cards.models import UserCard, Skill, Service, Portfolio
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 from .models import CustomUser
+from .services.subdomains import check_subdomain_availability
 
 class UserSignupForm(forms.ModelForm):
     password = forms.CharField(
@@ -41,6 +42,13 @@ class UserSignupForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         return cleaned_data
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username", "")
+        result = check_subdomain_availability(username)
+        if not result.available:
+            raise forms.ValidationError(f"ساب‌دامین معتبر نیست: {result.reason}")
+        return result.name
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
@@ -159,6 +167,13 @@ class UserCardForm(forms.ModelForm):
     # Hidden field to persist image data across form errors
     profile_picture_data = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    def clean_username(self):
+        username = self.cleaned_data.get("username", "")
+        result = check_subdomain_availability(username, user=getattr(self.instance, "user", None))
+        if not result.available:
+            raise forms.ValidationError(f"ساب‌دامین معتبر نیست: {result.reason}")
+        return result.name
+
 
 class SkillForm(forms.ModelForm):
     class Meta:
@@ -197,12 +212,12 @@ class ServiceForm(forms.ModelForm):
         fields = ['title', 'description']  # Removed 'icon' field
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control service-input',
                 'placeholder': 'عنوان خدمت',
                 'dir': 'rtl',
             }),
             'description': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control service-input',
                 'placeholder': 'توضیح خدمت',
                 'rows': 3,
                 'dir': 'rtl',
@@ -231,22 +246,22 @@ class PortfolioForm(forms.ModelForm):
         fields = ['title', 'description', 'image', 'url']
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control portfolio-input',
                 'placeholder': 'عنوان پروژه',
                 'dir': 'rtl',
             }),
             'description': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control portfolio-input',
                 'placeholder': 'توضیح پروژه',
                 'rows': 3,
                 'dir': 'rtl',
             }),
             'image': forms.FileInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control portfolio-input',
                 'accept': 'image/*',
             }),
             'url': forms.URLInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control portfolio-input',
                 'placeholder': 'https://example.com',
                 'dir': 'ltr',
             }),

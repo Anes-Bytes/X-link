@@ -1,49 +1,167 @@
-# X-Link (ایکس لینک) 🚀
-**پلتفرم هوشمند کارت ویزیت دیجیتال**
+# X-Link Deployment Guide (Ubuntu + Nginx + Gunicorn + PostgreSQL)
 
-ایکس لینک یک راهکار مدرن و حرفه‌ای برای جایگزینی کارت ویزیت‌های کاغذی سنتی است. با استفاده از این پلتفرم، کاربران می‌توانند کارت ویزیت دیجیتال اختصاصی خود را با قابلیت‌های پیشرفته طراحی و مدیریت کنند.
+This project is a Django SaaS for digital business cards and shop pages, deployed on:
+- Domain: `x-link.ir`
+- App server: `Gunicorn`
+- Reverse proxy: `Nginx`
+- Database: `PostgreSQL`
 
-## قابلیت‌های کلیدی ✨
-- **Card Builder حرفه‌ای**: ابزار اختصاصی برای طراحی مرحله‌به‌مرحله کارت با انیمیشن‌های نرم.
-- **قالب‌های متنوع**: انتخاب از بین چندین قالب مدرن و مینیمال (رایگان و حرفه‌ای).
-- **بک‌گراند ستاره‌ای (PRO)**: امکان فعال‌سازی پس‌زمینه متحرک کهکشانی برای کاربران ویژه.
-- **تیک آبی (PRO)**: قابلیت نمایش تیک تایید در پروفایل.
-- **QR Code اختصاصی**: تولید خودکار کد QR با قابلیت دانلود برای هر کارت.
-- **داشبورد مدیریت**: مشاهده آمار بازدید، مدیریت کارت‌ها و ارتقای اشتراک.
-- **لندینگ هوشمند**: معرفی خدمات و پلن‌های اشتراک به صورت تعاملی.
-- **سیستم پیامک**: اطلاع‌رسانی و احراز هویت از طریق پنل ملی‌پیامک.
+## 1. Server prerequisites
 
-## تکنولوژی‌های استفاده شده 🛠️
-- **Backend**: Python 3.10+ & Django 5.x
-- **Frontend**: HTML5, CSS3 (Glassmorphism), Vanilla JavaScript
-- **Database**: SQLite (قابل ارتقا به PostgreSQL)
-- **Deployment**: Gunicorn & Nginx
-- **API**: QR Server API for code generation
+```bash
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip postgresql postgresql-contrib nginx certbot python3-certbot-nginx
+```
 
-## نصب و راه‌اندازی ⚙️
-1. کلون کردن پروژه:
-   ```bash
-   git clone https://github.com/your-repo/x-link.git
-   ```
-2. نصب وابستگی‌ها:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. تنظیم متغیرهای محیطی:
-   یک فایل `.env` بر اساس تنظیمات پروژه ایجاد کنید.
-4. اجرای مهاجرت‌ها و جمع‌آوری استاتیک:
-   ```bash
-   python manage.py migrate
-   python manage.py collectstatic
-   ```
-5. اجرای سرور توسعه:
-   ```bash
-   python manage.py runserver
-   ```
+## 2. Project path
 
-## توسعه‌دهندگان 💻
-- **آنس (Anes)**: بنیان‌گذار و برنامه‌نویس فول‌استک
-- **صدرا (Sadra)**: هم‌بنیان‌گذار و استراتژیست محصول
+Use this path in production:
+- `/var/www/x-link`
 
----
-ساخته شده با ❤️ برای بهبود حضور دیجیتال شما.
+Copy your project there, then:
+
+```bash
+cd /var/www/x-link
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+## 3. Environment variables
+
+Create `.env` from `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Set production values, especially:
+- `SECRET_KEY`
+- `DEBUG=False`
+- `BASE_DOMAIN=x-link.ir`
+- `ALLOWED_HOSTS=x-link.ir,www.x-link.ir,.x-link.ir`
+- PostgreSQL variables: `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`
+
+## 4. PostgreSQL setup
+
+Create DB and user (example):
+
+```bash
+sudo -u postgres psql
+CREATE DATABASE x_link_db;
+CREATE USER x_link_user WITH PASSWORD 'strong-password';
+ALTER ROLE x_link_user SET client_encoding TO 'utf8';
+ALTER ROLE x_link_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE x_link_user SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE x_link_db TO x_link_user;
+\q
+```
+
+## 5. Django migrate + collectstatic
+
+```bash
+cd /var/www/x-link
+source .venv/bin/activate
+python manage.py migrate
+python manage.py collectstatic --noinput
+```
+
+## 6. Gunicorn service (systemd)
+
+File provided:
+- `deploy/systemd/gunicorn.service`
+
+Install:
+
+```bash
+sudo cp deploy/systemd/gunicorn.service /etc/systemd/system/gunicorn.service
+sudo systemctl daemon-reload
+sudo systemctl enable gunicorn
+sudo systemctl start gunicorn
+sudo systemctl status gunicorn
+```
+
+## 7. Nginx config
+
+File provided:
+- `deploy/nginx/x-link.ir.conf`
+
+Install:
+
+```bash
+sudo cp deploy/nginx/x-link.ir.conf /etc/nginx/sites-available/x-link.ir
+sudo ln -s /etc/nginx/sites-available/x-link.ir /etc/nginx/sites-enabled/x-link.ir
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+If default site is enabled, disable it:
+
+```bash
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+## 8. SSL (x-link.ir + wildcard subdomains)
+
+For wildcard subdomains (`*.x-link.ir`), use DNS challenge (DNS-01).
+
+Example (manual):
+
+```bash
+sudo certbot certonly --manual --preferred-challenges dns -d x-link.ir -d "*.x-link.ir"
+```
+
+Then ensure cert paths in nginx config are valid:
+- `/etc/letsencrypt/live/x-link.ir/fullchain.pem`
+- `/etc/letsencrypt/live/x-link.ir/privkey.pem`
+
+Reload Nginx after issuing certs.
+
+## 9. DNS records required
+
+At your DNS provider:
+- `A` record: `@ -> SERVER_IP`
+- `A` record: `* -> SERVER_IP`
+- `A` or `CNAME`: `www -> @`
+
+Optional IPv6:
+- `AAAA @ -> SERVER_IPV6`
+- `AAAA * -> SERVER_IPV6`
+
+## 10. Plan expiration command (cron)
+
+Management command:
+
+```bash
+python manage.py check_user_plans
+```
+
+Dry run:
+
+```bash
+python manage.py check_user_plans --dry-run
+```
+
+Example daily cron (02:00):
+
+```bash
+0 2 * * * cd /var/www/x-link && /var/www/x-link/.venv/bin/python manage.py check_user_plans >> /var/log/x-link-plan-expiry.log 2>&1
+```
+
+## 11. Useful checks
+
+```bash
+sudo systemctl status gunicorn
+sudo systemctl status nginx
+sudo journalctl -u gunicorn -f
+sudo tail -f /var/log/nginx/x-link.error.log
+```
+
+## 12. Notes
+
+- SQLite is not used in production. Database is PostgreSQL via `.env`.
+- `media/` is runtime upload storage; keep it writable by web user.
+- `staticfiles/` is generated by `collectstatic`.

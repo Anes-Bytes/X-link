@@ -1,4 +1,4 @@
-from django.contrib import admin
+﻿from django.contrib import admin
 
 from .models import SiteContext, Customer, Banners
 
@@ -14,10 +14,10 @@ class SiteContextAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
 
     fieldsets = (
-        ('اطلاعات پایه', {
+        ('Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ù¾Ø§ÛŒÙ‡', {
             'fields': ('site_name', 'logo')
         }),
-        ('محتوای قهرمان', {
+        ('Ù…Ø­ØªÙˆØ§ÛŒ Ù‚Ù‡Ø±Ù…Ø§Ù†', {
             'fields': (
                 'hero_section_text_part1',
                 'hero_section_text_part2',
@@ -25,18 +25,18 @@ class SiteContextAdmin(admin.ModelAdmin):
             ),
             'classes': ('collapse',)
         }),
-        ('فوتر', {
+        ('ÙÙˆØªØ±', {
             'fields': ('footer_section_text_part1',),
             'classes': ('collapse',)
         }),
-        ('شبکه‌های اجتماعی', {
+        ('Ø´Ø¨Ú©Ù‡â€ŒÙ‡Ø§ÛŒ Ø§Ø¬ØªÙ…Ø§Ø¹ÛŒ', {
             'fields': (
                 ('footer_telegram_url', 'footer_linkedin_url'),
                 ('footer_github_url', 'footer_instagram_url'),
             ),
             'classes': ('collapse',)
         }),
-        ('تاریخچه', {
+        ('ØªØ§Ø±ÛŒØ®Ú†Ù‡', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
@@ -60,23 +60,24 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = (
         'company_name',
         'company_url',
+        'is_test',
         'is_active',
         'display_order',
         'get_site_context'
     )
-    list_filter = ('is_active', 'site_context', 'created_at')
+    list_filter = ('is_test', 'is_active', 'site_context', 'created_at')
     search_fields = ('company_name', 'company_url')
     readonly_fields = ('created_at',)
-    list_editable = ('is_active', 'display_order')
+    list_editable = ('is_test', 'is_active', 'display_order')
 
     fieldsets = (
-        ('اطلاعات شرکت', {
+        ('Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø´Ø±Ú©Øª', {
             'fields': ('company_name', 'company_url',)
         }),
-        ('پیکربندی', {
-            'fields': ('site_context', 'is_active', 'display_order')
+        ('Ù¾ÛŒÚ©Ø±Ø¨Ù†Ø¯ÛŒ', {
+            'fields': ('site_context', 'is_test', 'is_active', 'display_order')
         }),
-        ('تاریخچه', {
+        ('ØªØ§Ø±ÛŒØ®Ú†Ù‡', {
             'fields': ('created_at',),
             'classes': ('collapse',)
         }),
@@ -88,7 +89,7 @@ class CustomerAdmin(admin.ModelAdmin):
     def get_site_context(self, obj):
         """Display site context name."""
         return obj.site_context.site_name
-    get_site_context.short_description = 'سایت'
+    get_site_context.short_description = 'Ø³Ø§ÛŒØª'
     get_site_context.admin_order_field = 'site_context__site_name'
 
 
@@ -103,11 +104,12 @@ class BannersAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
 
     fieldsets = (
-        ('محتوا', {
+        ('Ù…Ø­ØªÙˆØ§', {
             'fields': ('title', 'description')
         }),
-        ('تاریخچه', {
+        ('ØªØ§Ø±ÛŒØ®Ú†Ù‡', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
     )
+

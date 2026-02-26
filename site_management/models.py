@@ -130,6 +130,11 @@ class Customer(models.Model):
         db_index=True,
         help_text="Whether to display this customer"
     )
+    is_test = models.BooleanField(
+        default=False,
+        db_index=True,
+        help_text="Whether this customer is marked as test data"
+    )
     display_order = models.PositiveIntegerField(
         default=0,
         help_text="Display order (lower numbers appear first)"

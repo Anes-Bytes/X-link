@@ -24,9 +24,22 @@ PROJECT_ROOT = BASE_DIR.parent
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env.bool('DEBUG', default=False)
+BASE_DOMAIN = env('BASE_DOMAIN', default='x-link.ir').strip().lower()
 
 # Host configuration
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+ALLOWED_HOSTS = env.list(
+    'ALLOWED_HOSTS',
+    default=[
+        BASE_DOMAIN,
+        f'www.{BASE_DOMAIN}',
+        f'.{BASE_DOMAIN}',
+        'localhost',
+        '127.0.0.1',
+        '[::1]',
+    ],
+)
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Security headers (only in production)
 if not DEBUG:
@@ -39,6 +52,14 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
+else:
+    # Force plain HTTP behavior in local development.
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    SECURE_HSTS_SECONDS = 0
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_HSTS_PRELOAD = False
 
 # =============================================================================
 # APPLICATION DEFINITION
@@ -59,6 +80,7 @@ INSTALLED_APPS = [
     'cards',
     'Billing',
     'site_management',
+    'shop',
 
     # Third-party apps
 ]
@@ -72,6 +94,7 @@ MIDDLEWARE = [
     'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'core.middleware.SubdomainMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -96,8 +119,12 @@ DATABASES = {
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env.int('DB_PORT', default=5432),
+        'HOST': env('DB_HOST', default='127.0.0.1'),
+        'PORT': env('DB_PORT', default='5432'),
+        'CONN_MAX_AGE': env.int('DB_CONN_MAX_AGE', default=60),
+        'OPTIONS': {
+            'sslmode': env('DB_SSLMODE', default='prefer'),
+        },
     }
 }
 

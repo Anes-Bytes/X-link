@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+{% load humanize %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ shop.name }} | فروشگاه</title>
+    <link rel="icon" href="{{ shop.logo.url }}" type="image/png">
+    <style>
+        :root {
+            --x-primary: #3a86ff;
+            --x-accent: #00f6ff;
+            --x-bg: #070d1a;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: radial-gradient(circle at 15% 20%, rgba(58, 134, 255, 0.16), transparent 35%),
+                        radial-gradient(circle at 90% 0%, rgba(0, 246, 255, 0.12), transparent 35%),
+                        var(--x-bg);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .shop-wrap {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 28px 16px 40px;
+        }
+        .shop-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+        .shop-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 2px solid rgba(58, 134, 255, 0.45);
+        }
+        .shop-title {
+            margin: 0;
+            font-size: clamp(1.4rem, 2.6vw, 2rem);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+        .page-link {
+            min-width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #cfe8ff;
+            border: 1px solid rgba(127, 216, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0 10px;
+        }
+        .page-link.active {
+            color: #081326;
+            background: linear-gradient(135deg, var(--x-primary), var(--x-accent));
+            border: none;
+            font-weight: 700;
+        }
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            backdrop-filter: blur(10px);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            border-color: rgba(58, 134, 255, 0.55);
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: #0f1a2f;
+            display: block;
+        }
+        .product-body { padding: 14px; }
+        .product-name { margin: 0 0 8px; font-size: 1.05rem; }
+        .product-desc { color: rgba(255, 255, 255, 0.72); font-size: .92rem; min-height: 44px; }
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 8px 0 14px;
+        }
+        .old-price {
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: line-through;
+            font-size: .88rem;
+        }
+        .final-price { color: var(--x-accent); font-weight: 800; }
+        .discount-badge {
+            background: rgba(58, 134, 255, .2);
+            border: 1px solid rgba(58, 134, 255, .45);
+            color: #79beff;
+            font-size: .75rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+        .buy-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--x-primary), var(--x-accent));
+            color: #081326;
+        }
+        .buy-btn.muted {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.56);
+            pointer-events: none;
+        }
+        .shop-footer {
+            margin-top: 26px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: .9rem;
+        }
+        .shop-footer a {
+            color: #7fd8ff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .shop-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="shop-wrap">
+        <header class="shop-header">
+            <img src="{{ shop.logo.url }}" alt="{{ shop.name }}" class="shop-logo">
+            <h1 class="shop-title">{{ shop.name }}</h1>
+        </header>
+
+        {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+            <article class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                <div class="product-body">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-desc">{{ product.short_description }}</p>
+                    <div class="price-row">
+                        {% if product.discount_percent > 0 %}
+                        <span class="old-price">{{ product.price|intcomma }} تومان</span>
+                        <span class="discount-badge">{{ product.discount_percent }}٪ تخفیف</span>
+                        {% endif %}
+                        <span class="final-price">{{ product.final_price|intcomma }} تومان</span>
+                    </div>
+                    {% if product.buy_link %}
+                    <a href="{{ product.buy_link }}" class="buy-btn" target="_blank" rel="noopener">خرید</a>
+                    {% else %}
+                    <span class="buy-btn muted">لینک خرید ثبت نشده</span>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="color:#fff;">فعلا محصولی برای این فروشگاه ثبت نشده است.</p>
+        {% endif %}
+
+        {% if page_obj and page_obj.paginator.num_pages > 1 %}
+        <nav class="pagination" aria-label="صفحه‌بندی محصولات">
+            {% if page_obj.has_previous %}
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                <span class="page-link active">{{ num }}</span>
+                {% elif num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+
+        <footer class="shop-footer">
+            ساخته شده با سایت ساز ایکس لینک
+            <a href="https://x-link.ir" target="_blank" rel="noopener">x-link.ir</a>
+        </footer>
+    </div>
+</body>
+</html>

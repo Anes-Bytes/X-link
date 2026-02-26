@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.conf import settings
 
 from Billing.models import Template
 from core.models import CustomUser
@@ -180,12 +181,22 @@ class UserCard(models.Model):
         Returns:
             str: Full URL to the card
         """
+        subdomain = getattr(self.user, "subdomain", None)
+        if subdomain and subdomain.is_active:
+            if request:
+                scheme = request.scheme
+                host = request.get_host().split(":", 1)[0]
+                base_domain = getattr(settings, "BASE_DOMAIN", host)
+                return f"{scheme}://{subdomain.subdomain}.{base_domain}/"
+
+            base_domain = getattr(settings, "BASE_DOMAIN", "x-link.ir")
+            return f"https://{subdomain.subdomain}.{base_domain}/"
+
         if request:
             scheme = request.scheme
             host = request.get_host()
             return f"{scheme}://{host}/{self.username}/"
 
-        # Fallback - should be configurable
         return f"https://x-link.ir/{self.username}/"
 
     def increment_views(self):
@@ -298,4 +309,3 @@ class Portfolio(models.Model):
 
     def __str__(self):
         return f"{self.user_card.name} - {self.title}"
-

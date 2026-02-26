@@ -18,12 +18,12 @@ timeout = 30
 keepalive = 2
 
 # Logging
-accesslog = "/var/log/gunicorn/access.log"
-errorlog = "/var/log/gunicorn/error.log"
+accesslog = "/var/log/gunicorn/x-link-access.log"
+errorlog = "/var/log/gunicorn/x-link-error.log"
 loglevel = "info"
 
 # Process naming
-proc_name = "x_link_gunicorn"
+proc_name = "x-link-gunicorn"
 
 # Daemonize the process (set to False if running under systemd)
 daemon = False

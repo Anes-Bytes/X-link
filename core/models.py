@@ -3,8 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.utils import timezone
 from datetime import timedelta
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 from Billing.models import UserPlan
+from .subdomains import validate_subdomain_format, is_reserved_subdomain, normalize_subdomain_name
 
 class UserManager(BaseUserManager):
     """
@@ -257,3 +259,44 @@ class OTP(models.Model):
         String representation of the OTP.
         """
         return f"OTP for {self.user.phone}: {self.code}"
+
+
+def validate_subdomain_value(value):
+    normalized = normalize_subdomain_name(value)
+    if not validate_subdomain_format(normalized):
+        raise ValidationError(
+            "Subdomain must be 3-30 chars and include only lowercase letters, numbers, and hyphens."
+        )
+    if is_reserved_subdomain(normalized):
+        raise ValidationError("This subdomain is reserved.")
+
+
+class UserSubdomain(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subdomain",
+    )
+    subdomain = models.CharField(
+        max_length=30,
+        unique=True,
+        db_index=True,
+        validators=[validate_subdomain_value],
+    )
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["subdomain"]
+        indexes = [
+            models.Index(fields=["is_active", "subdomain"]),
+            models.Index(fields=["created_at"]),
+        ]
+
+    def save(self, *args, **kwargs):
+        self.subdomain = normalize_subdomain_name(self.subdomain)
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.subdomain} -> {self.user_id}"

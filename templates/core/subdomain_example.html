@@ -1,0 +1,12 @@
+{% load static %}
+<div class="subdomain-field">
+    <label for="id_username">Choose your subdomain</label>
+    <input id="id_username" name="username" type="text" autocomplete="off" />
+    <div
+        id="subdomain-status"
+        class="subdomain-status"
+        data-check-url="{% url 'check_subdomain' %}"
+    ></div>
+</div>
+
+<script src="{% static 'subdomain-check.js' %}"></script>

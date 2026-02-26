@@ -309,32 +309,6 @@ window.addEventListener('load', () => {
 });
 
 // ============================================
-// CURSOR GLOW EFFECT (OPTIONAL ENHANCEMENT)
-// ============================================
-let cursorGlow = null;
-
-document.addEventListener('mousemove', (e) => {
-    if (!cursorGlow) {
-        cursorGlow = document.createElement('div');
-        cursorGlow.style.cssText = `
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(58, 134, 255, 0.3), transparent);
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: screen;
-        `;
-        document.body.appendChild(cursorGlow);
-    }
-
-    cursorGlow.style.left = e.clientX - 10 + 'px';
-    cursorGlow.style.top = e.clientY - 10 + 'px';
-});
-
-// ============================================
 // PERFORMANCE OPTIMIZATION: THROTTLE SCROLL EVENTS
 // ============================================
 function throttle(func, wait) {

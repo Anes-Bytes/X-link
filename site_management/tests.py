@@ -44,9 +44,11 @@ class CustomerModelTestCase(XLinkTestCase):
         customer = Customer.objects.create(
             site_context=self.site_context,
             company_name="Test Company",
-            company_url="https://test.com"
+            company_url="https://test.com",
+            is_test=True,
         )
         self.assertEqual(customer.company_name, "Test Company")
+        self.assertTrue(customer.is_test)
         self.assertEqual(str(customer), "Test Company")
 
 
