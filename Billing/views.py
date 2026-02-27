@@ -6,6 +6,56 @@ from site_management.models import Customer
 from django.views.decorators.cache import cache_page
 from .models import Plan, Template
 
+BASE_SEO_KEYWORDS = [
+    "ایکس لینک",
+    "x-link",
+    "xlink",
+    "سایت ساز ایکس لینک",
+    "منو ساز ایکس لینک",
+    "X-Link",
+    "آنس سلیمان زاده",
+    "صدرا آبکار",
+    "pokerjoon",
+    "AnesPy",
+    "کارت ویزیت دیجیتال",
+    "سایت ساز",
+]
+
+LANDING_SEO_PHRASES = [
+    "قالب ها",
+    "خرید اشتراک",
+    "دریافت پلن رایگان نامحدود",
+    "ساخت سایت در کمتر از 10 ثانیه",
+]
+
+
+def build_landing_seo_data(templates):
+    template_names = [t.name.strip() for t in templates if t.name]
+    template_descriptions = [t.description.strip() for t in templates if t.description]
+
+    keywords = []
+    for keyword in BASE_SEO_KEYWORDS + LANDING_SEO_PHRASES + template_names:
+        cleaned = (keyword or "").strip()
+        if cleaned and cleaned not in keywords:
+            keywords.append(cleaned)
+
+    description_parts = [
+        "ایکس لینک یک پلتفرم SaaS برای ساخت سایت و کارت ویزیت دیجیتال است.",
+        "قالب ها، خرید اشتراک، دریافت پلن رایگان نامحدود و ساخت سایت در کمتر از 10 ثانیه.",
+    ]
+
+    if template_descriptions:
+        description_parts.append("توضیحات قالب‌ها: " + " | ".join(template_descriptions[:3]))
+
+    seo_description = " ".join(description_parts)
+
+    return {
+        "seo_title": "ایکس لینک | سایت ساز ایکس لینک و منو ساز ایکس لینک",
+        "seo_description": seo_description[:320],
+        "seo_keywords": ", ".join(keywords[:35]),
+    }
+
+
 def landing_view(request):
     """
     Landing page displaying plans, templates, and customers.
@@ -44,6 +94,7 @@ def landing_view(request):
     context = {
         **data,
         "current_period": period,
+        **build_landing_seo_data(data["templates"]),
     }
 
     return render(

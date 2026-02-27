@@ -3,7 +3,33 @@
 {% load static %}
 {% load custom_filters %}
 
-{% block page_title %} {{ site_context.site_name }} - پلتفرم هوشمند کارت ویزیت دیجیتال {% endblock %}
+{% block page_title %}{% firstof seo_title site_context.site_name "X-Link" %}{% endblock %}
+
+{% block seo_meta %}
+<meta name="description" content="{{ seo_description }}">
+<meta name="keywords" content="{{ seo_keywords }}">
+<meta name="author" content="X-Link">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ seo_title }}">
+<meta property="og:description" content="{{ seo_description }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:site_name" content="{{ site_context.site_name }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title }}">
+<meta name="twitter:description" content="{{ seo_description }}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "X-Link",
+  "applicationCategory": "BusinessApplication",
+  "description": "{{ seo_description|escapejs }}",
+  "url": "{{ request.build_absolute_uri }}",
+  "keywords": "{{ seo_keywords|escapejs }}"
+}
+</script>
+{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'about.css' %}">
@@ -328,6 +354,87 @@
         background: rgba(255, 255, 255, 0.1);
         color: #fff;
     }
+
+    .support-fab-wrap {
+        position: fixed;
+        left: 22px;
+        bottom: 22px;
+        z-index: 2500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        direction: rtl;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .support-fab-wrap.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .support-fab {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #0A0F1F;
+        background: linear-gradient(135deg, #00F6FF, #3A86FF);
+        box-shadow: 0 10px 28px rgba(0, 246, 255, 0.35);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .support-fab:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 14px 32px rgba(58, 134, 255, 0.42);
+    }
+
+    .support-fab i {
+        font-size: 24px;
+    }
+
+    .support-bubble {
+        max-width: min(78vw, 250px);
+        background: rgba(10, 15, 31, 0.95);
+        border: 1px solid rgba(0, 246, 255, 0.35);
+        color: #F5F8FF;
+        border-radius: 16px;
+        padding: 12px 14px;
+        font-size: 13px;
+        line-height: 1.8;
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .support-bubble.show {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+    }
+
+    @media (max-width: 576px) {
+        .support-fab-wrap {
+            left: 14px;
+            bottom: 14px;
+            gap: 8px;
+        }
+
+        .support-fab {
+            width: 52px;
+            height: 52px;
+        }
+
+        .support-bubble {
+            font-size: 12px;
+            padding: 10px 12px;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -566,6 +673,15 @@
         </div>
     </section>
 
+    <div id="supportWidget" class="support-fab-wrap" hidden>
+        <a href="{{ site_context.footer_telegram_url|default:'https://t.me/AnesPy' }}" target="_blank" rel="noopener noreferrer" class="support-fab" aria-label="پشتیبانی">
+            <i class="fas fa-headset"></i>
+        </a>
+        <a id="supportBubble" href="{{ site_context.footer_telegram_url|default:'https://t.me/AnesPy' }}" target="_blank" rel="noopener noreferrer" class="support-bubble">
+            سوالی دارید؟ با پشتیبانی در تماس باشید.
+        </a>
+    </div>
+
     <script>
         function redirectToBuilder() {
             const username = document.getElementById('heroUsername').value;
@@ -575,5 +691,19 @@
                 window.location.href = "{% url 'card_builder' %}";
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const supportWidget = document.getElementById('supportWidget');
+            const supportBubble = document.getElementById('supportBubble');
+            if (!supportWidget || !supportBubble) return;
+
+            setTimeout(function () {
+                supportWidget.hidden = false;
+                requestAnimationFrame(function () {
+                    supportWidget.classList.add('show');
+                });
+                supportBubble.classList.add('show');
+            }, 3000);
+        });
     </script>
 {% endblock %}

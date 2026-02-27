@@ -10,32 +10,32 @@ from .services.subdomains import check_subdomain_availability
 class UserSignupForm(forms.ModelForm):
     password = forms.CharField(
         label="رمز عبور",
+        min_length=8,
         widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'رمز عبور',
-            'dir': 'ltr',
+            "class": "form-control",
+            "placeholder": "رمز عبور",
+            "dir": "ltr",
         }),
-        validators=[MinLengthValidator(8)]
+        validators=[MinLengthValidator(8)],
+        error_messages={
+            "required": "رمز عبور الزامی است.",
+            "min_length": "رمز عبور باید حداقل ۸ کاراکتر باشد.",
+        },
     )
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'full_name', 'email']
+        fields = ["username", "full_name"]
         widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'نام کاربری',
-                'dir': 'ltr',
+            "username": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "نام کاربری",
+                "dir": "ltr",
             }),
-            'full_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'نام کامل',
-                'dir': 'rtl',
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'ایمیل (اختیاری)',
-                'dir': 'ltr',
+            "full_name": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "نام کامل",
+                "dir": "rtl",
             }),
         }
 
@@ -47,20 +47,37 @@ class UserSignupForm(forms.ModelForm):
         username = self.cleaned_data.get("username", "")
         result = check_subdomain_availability(username)
         if not result.available:
-            raise forms.ValidationError(f"ساب‌دامین معتبر نیست: {result.reason}")
+            reason_messages = {
+                "invalid_format": "نام کاربری نامعتبر است.",
+                "reserved": "این نام کاربری قابل استفاده نیست.",
+                "taken": "این نام کاربری قبلاً ثبت شده است.",
+            }
+            raise forms.ValidationError(reason_messages.get(result.reason, "نام کاربری نامعتبر است."))
         return result.name
 
+
 class UserLoginForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'نام کاربری',
-        'dir': 'ltr',
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'رمز عبور',
-        'dir': 'ltr',
-    }))
+    error_messages = {
+        "invalid_login": "نام کاربری یا رمز عبور اشتباه است.",
+        "inactive": "حساب کاربری شما غیرفعال است.",
+    }
+
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "نام کاربری",
+            "dir": "ltr",
+        }),
+        error_messages={"required": "نام کاربری الزامی است."},
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            "placeholder": "رمز عبور",
+            "dir": "ltr",
+        }),
+        error_messages={"required": "رمز عبور الزامی است."},
+    )
 
 class UserCardForm(forms.ModelForm):
     username = forms.CharField(

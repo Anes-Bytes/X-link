@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0F1F">
     <title>{% block page_title %}{% endblock %}</title>
     {% block seo_meta %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ site_context.logo.url }}">
@@ -137,7 +138,8 @@
     }
     </style>
 </head>
-<body class="loading">
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <!-- Preloader -->
     <div class="preloader" id="preloader">
@@ -160,19 +162,29 @@
 
     <!-- Preloader Script -->
     <script>
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            const preloader = document.getElementById('preloader');
-            const body = document.body;
+    (function () {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
 
+        const hidePreloader = function () {
             preloader.classList.add('hidden');
-            body.classList.remove('loading');
-
-            setTimeout(function() {
+            setTimeout(function () {
                 preloader.style.display = 'none';
             }, 500);
-        }, 500);
-    });
+        };
+
+        const hasHero = !!document.querySelector('.hero');
+        if (!hasHero) {
+            hidePreloader();
+            return;
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 250);
+        }, { once: true });
+
+        setTimeout(hidePreloader, 2200);
+    })();
     </script>
 
     <!-- Messages -->
@@ -208,7 +220,9 @@
         {% endif %}
     </div>
 
-    {% block page_content %} {% endblock %}
+    <main id="main-content">
+        {% block page_content %} {% endblock %}
+    </main>
 <nav class="navbar">
     <div class="nav-container">
         <a href="{% url 'home' %}" class="logo-link">
@@ -281,11 +295,11 @@
                 <ul class="footer-links footer-team">
                     <li>
                         <span class="team-role">Founder & Developer:</span>
-                        <a href="https://t.me/AnesPy" target="_blank">@AnesPy</a>
+                        <a href="https://t.me/AnesPy" target="_blank" rel="noopener noreferrer">@AnesPy</a>
                     </li>
                     <li>
                         <span class="team-role">Co-founder:</span>
-                        <a href="https://t.me/PokerJoon" target="_blank">@PokerJoon</a>
+                        <a href="https://t.me/PokerJoon" target="_blank" rel="noopener noreferrer">@PokerJoon</a>
                     </li>
                 </ul>
             </div>
@@ -295,29 +309,29 @@
                 <h4 class="footer-section-title">شبکه‌های اجتماعی</h4>
                 <div class="social-icons">
                     {% if site_context.footer_instagram_url %}
-                    <a href="{{ site_context.footer_instagram_url }}" class="social-icon" aria-label="Instagram" target="_blank">
+                    <a href="{{ site_context.footer_instagram_url }}" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-instagram"></i>
                     </a>
                     {% endif %}
                     {% if site_context.footer_linkedin_url %}
-                    <a href="{{ site_context.footer_linkedin_url }}" class="social-icon" aria-label="LinkedIn" target="_blank">
+                    <a href="{{ site_context.footer_linkedin_url }}" class="social-icon" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                     {% endif %}
                     {% if site_context.footer_github_url %}
-                    <a href="{{ site_context.footer_github_url }}" class="social-icon" aria-label="GitHub" target="_blank">
+                    <a href="{{ site_context.footer_github_url }}" class="social-icon" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-github"></i>
                     </a>
                     {% endif %}
                     {% if site_context.footer_telegram_url %}
-                    <a href="{{ site_context.footer_telegram_url }}" class="social-icon" aria-label="Telegram" target="_blank">
+                    <a href="{{ site_context.footer_telegram_url }}" class="social-icon" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-telegram-plane"></i>
                     </a>
                     {% endif %}
                 </div>
                 {% if site_context.footer_enamad_badge %}
                 <div class="enamad-badge">
-                    <img src="{{ site_context.footer_enamad_badge }}" alt="E-NAMAD Badge">
+                    <img src="{{ site_context.footer_enamad_badge }}" alt="E-NAMAD Badge" loading="lazy" decoding="async">
                 </div>
                 {% endif %}
             </div>
@@ -326,7 +340,7 @@
     <p>© 2025 X-Link — تمامی حقوق محفوظ است.</p>
     <p>
         Made with ❤️ and lots of ☕️ by
-        <a href="https://t.me/AnesPy" target="_blank" class="footer-credit">
+        <a href="https://t.me/AnesPy" target="_blank" rel="noopener noreferrer" class="footer-credit">
             @AnesPy
         </a>
     </p>
@@ -346,9 +360,9 @@
 </footer>
 
 
-    <script src="{% static 'script.js' %}"></script>
-    <script src="{% static 'carousel.js' %}"></script>
-    <script src="{% static 'pricing-landing.js' %}"></script>
-    <script src="{% static 'plan-ajax.js' %}"></script>
+    <script src="{% static 'script.js' %}" defer></script>
+    <script src="{% static 'carousel.js' %}" defer></script>
+    <script src="{% static 'pricing-landing.js' %}" defer></script>
+    <script src="{% static 'plan-ajax.js' %}" defer></script>
 </body>
 </html>

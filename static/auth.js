@@ -90,14 +90,10 @@ if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
         const usernameInput = signupForm.querySelector('input[name="username"]');
         const fullNameInput = signupForm.querySelector('input[name="full_name"]');
-        const passwordInput = signupForm.querySelector('input[name="password"]');
-        const confirmPasswordInput = signupForm.querySelector('input[name="confirm_password"]');
-        
+        const passwordInput = signupForm.querySelector('input[name="password"]');        
         const username = usernameInput.value.trim();
         const fullName = fullNameInput.value.trim();
         const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
         clearErrors(signupForm);
 
         if (!username) {
@@ -139,13 +135,6 @@ if (signupForm) {
             e.preventDefault();
             showError(signupForm, 'رمز عبور باید حداقل ۸ کاراکتر باشد');
             passwordInput.focus();
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            e.preventDefault();
-            showError(signupForm, 'رمز عبور و تکرار آن مطابقت ندارند');
-            confirmPasswordInput.focus();
             return;
         }
     });

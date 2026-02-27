@@ -17,16 +17,16 @@
             <div class="auth-card" data-aos="fade-up">
                 <!-- Tabs -->
                 <div class="auth-tabs">
-                    <button class="auth-tab active" data-tab="login">
+                    <button class="auth-tab {% if active_tab != 'signup' %}active{% endif %}" data-tab="login">
                         ورود
                     </button>
-                    <button class="auth-tab" data-tab="signup">
+                    <button class="auth-tab {% if active_tab == 'signup' %}active{% endif %}" data-tab="signup">
                         ثبت نام
                     </button>
                 </div>
 
                 <!-- Login Form -->
-                <form class="auth-form active" id="loginForm" action="{% url 'login' %}" method="post">
+                <form class="auth-form {% if active_tab != 'signup' %}active{% endif %}" id="loginForm" action="{% url 'login' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="username">نام کاربری</label>
@@ -46,7 +46,7 @@
                 </form>
 
                 <!-- Signup Form -->
-                <form class="auth-form" action="{% url 'signup' %}" method="post" id="signupForm">
+                <form class="auth-form {% if active_tab == 'signup' %}active{% endif %}" action="{% url 'signup' %}" method="post" id="signupForm">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="signupUsername">نام کاربری</label>
@@ -55,10 +55,6 @@
                     <div class="form-group">
                         <label for="fullname">نام کامل</label>
                         <input type="text" id="fullname" name="full_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupEmail">ایمیل (اختیاری)</label>
-                        <input type="email" id="signupEmail" name="email" dir="ltr">
                     </div>
                     <div class="form-group">
                         <label for="signupPassword">رمز عبور</label>

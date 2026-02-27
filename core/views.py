@@ -26,6 +26,12 @@ from .utils import get_client_ip
 logger = logging.getLogger(__name__)
 
 
+def _push_form_errors(request, form):
+    for field_errors in form.errors.values():
+        for error in field_errors:
+            messages.error(request, error)
+
+
 def signup_view(request):
     if request.user.is_authenticated:
         return redirect("dashboard")
@@ -36,7 +42,13 @@ def signup_view(request):
             requested_subdomain = form.cleaned_data["username"]
             check = check_subdomain_availability(requested_subdomain)
             if not check.available:
-                form.add_error("username", f"Subdomain error: {check.reason}")
+                reason_messages = {
+                    "invalid_format": "نام کاربری نامعتبر است.",
+                    "reserved": "این نام کاربری قابل استفاده نیست.",
+                    "taken": "این نام کاربری قبلاً ثبت شده است.",
+                }
+                form.add_error("username", reason_messages.get(check.reason, "نام کاربری نامعتبر است."))
+                _push_form_errors(request, form)
                 return render(request, "core/login.html", {"form": form, "active_tab": "signup"})
 
             user = form.save(commit=False)
@@ -54,8 +66,10 @@ def signup_view(request):
             )
 
             login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-            messages.success(request, "ثبت نام با موفقیت انجام شد. خوش آمدید!")
+            messages.success(request, "ثبت‌نام با موفقیت انجام شد. خوش آمدید!")
             return redirect("dashboard")
+
+        _push_form_errors(request, form)
     else:
         form = UserSignupForm()
 
@@ -73,15 +87,17 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, "با موفقیت وارد شدید")
+            messages.success(request, "با موفقیت وارد شدید.")
 
             if next_page and url_has_allowed_host_and_scheme(next_page, allowed_hosts={request.get_host()}):
                 return redirect(next_page)
             return redirect("dashboard")
+
+        _push_form_errors(request, form)
     else:
         form = UserLoginForm()
 
-    return render(request, "core/login.html", {"form": form, "next": next_page})
+    return render(request, "core/login.html", {"form": form, "next": next_page, "active_tab": "login"})
 
 
 @login_required
