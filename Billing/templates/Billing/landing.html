@@ -355,6 +355,81 @@
         color: #fff;
     }
 
+    @media (max-width: 768px) {
+        .period-toggle {
+            width: min(100%, 360px);
+            margin: 24px auto 0;
+            padding: 6px;
+            border-radius: 18px;
+        }
+
+        .toggle-period-btn {
+            flex: 1 1 50%;
+            min-width: 120px;
+            padding: 11px 14px;
+            font-size: 14px;
+        }
+
+        .pricing-cards-landing {
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .pricing-card-landing {
+            padding: 28px 18px;
+            border-radius: 20px;
+        }
+
+        .pricing-card-landing.featured {
+            transform: none;
+        }
+
+        .card-actions-landing {
+            width: 100%;
+        }
+
+        .cta-button-landing {
+            width: 100%;
+            padding: 13px 14px;
+            font-size: 14px;
+            white-space: normal;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .period-toggle {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            border-radius: 14px;
+            width: min(100%, 320px);
+        }
+
+        .period-indicator {
+            display: none;
+        }
+
+        .toggle-period-btn {
+            width: 100%;
+            min-width: 0;
+            border-radius: 10px;
+            padding: 12px;
+            color: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .toggle-period-btn.active {
+            color: #0A0F1F;
+            background: linear-gradient(135deg, #3A86FF, #00F6FF);
+        }
+
+        .cta-button-landing {
+            font-size: 13px;
+            line-height: 1.4;
+            gap: 6px;
+        }
+    }
+
     .support-fab-wrap {
         position: fixed;
         left: 22px;
